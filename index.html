@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Matrix Eventus - Confirmador de Presença</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at center, #0a0f0a, #030603);
+            font-family: 'Courier New', 'Fira Code', monospace;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            color: #00ff41;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Efeito Matrix de código caindo */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0, 255, 65, 0.03) 0px, rgba(0, 255, 65, 0.03) 2px, transparent 2px, transparent 6px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+            opacity: 0.15;
+            font-family: monospace;
+            font-size: 16px;
+            white-space: pre;
+            color: #0f0;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header Matrix */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .header-image {
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            filter: drop-shadow(0 0 8px #00ff41);
+        }
+
+        .header-image img {
+            width: auto;
+            height: auto;
+            max-width: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 0 3px #00ff41, 0 0 0 6px #005c1a, 0 5px 15px black;
+            transition: all 0.3s ease;
+        }
+
+        .header-image img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 5px #0f0, 0 0 0 10px #004d00;
+        }
+
+        .header p {
+            color: #00ff99;
+            font-weight: bold;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-shadow: 0 0 5px #00ff41;
+            background: rgba(0, 20, 0, 0.7);
+            display: inline-block;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid #0f0;
+            margin-top: 0.5rem;
+        }
+
+        /* Banner convidado */
+        .guest-banner {
+            background: rgba(0, 20, 0, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid #00ff41;
+            border-radius: 1rem;
+            padding: 0.9rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+        }
+
+        .guest-banner span {
+            color: #8affb3;
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-shadow: 0 0 3px #0f0;
+        }
+
+        /* Grid cards estilo Matrix */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: rgba(0, 15, 0, 0.75);
+            backdrop-filter: blur(8px);
+            border-radius: 1.5rem;
+            border: 1px solid #00ff41;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 255, 65, 0.1);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #8affb3;
+            box-shadow: 0 12px 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .card-header {
+            padding: 1.3rem 1.8rem 0.8rem 1.8rem;
+            border-bottom: 1px solid #00ff41;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, rgba(0, 30, 0, 0.7), rgba(0, 0, 0, 0.9));
+        }
+
+        .card-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #b3ffcf;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 0 3px #0f0;
+        }
+
+        .card-header .emoji {
+            font-size: 1.7rem;
+            filter: drop-shadow(0 0 4px #0f0);
+        }
+
+        .card-body {
+            padding: 1.6rem 1.8rem 1.8rem;
+        }
+
+        /* Formulários Matrix */
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #8affb3;
+            font-weight: bold;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background: #0a120a;
+            border: 1px solid #2a7a2a;
+            border-radius: 1rem;
+            color: #c0ffc0;
+            font-size: 0.95rem;
+            font-family: monospace;
+            transition: all 0.25s;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #00ff41;
+            box-shadow: 0 0 0 2px rgba(0, 255, 65, 0.3);
+            background: #030903;
+        }
+
+        /* Botões Matrix */
+        button {
+            background: linear-gradient(105deg, #003300, #006600);
+            color: #d0ffd0;
+            border: 1px solid #00ff41;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            font-size: 0.9rem;
+            font-family: monospace;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            justify-content: center;
+            letter-spacing: 1px;
+            text-shadow: 0 0 2px black;
+        }
+
+        button:hover {
+            background: #009900;
+            color: white;
+            box-shadow: 0 0 12px #00ff41;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: #1a2a1a;
+            border-color: #6f9e6f;
+        }
+
+        .btn-danger {
+            background: #440000;
+            border-color: #ff5555;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #00ff41;
+            color: #aaffaa;
+        }
+
+        .btn-outline:hover {
+            background: rgba(0, 255, 65, 0.2);
+        }
+
+        /* Lista de eventos */
+        .events-list {
+            max-height: 420px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .event-item {
+            background: #0a130a;
+            border-radius: 1rem;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid #2c6e2c;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .event-item:hover {
+            border-color: #00ff41;
+            background: #0f1a0f;
+            transform: translateX(6px);
+        }
+
+        .event-item.active {
+            border-color: #0f0;
+            background: #0b1a0b;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
+        }
+
+        .event-name {
+            font-weight: bold;
+            color: #c0ffc0;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-desc {
+            font-size: 0.75rem;
+            color: #9eff9e;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            color: #6f9e6f;
+        }
+
+        /* Lista de convidados */
+        .guest-item {
+            background: #0a130a;
+            padding: 0.7rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #2a6e2a;
+        }
+
+        .guest-name {
+            font-weight: 600;
+            color: #b3ffb3;
+        }
+
+        .guest-status {
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .status-confirm {
+            background: #005c00;
+            color: #bbffbb;
+            border: 1px solid #0f0;
+        }
+
+        .status-decline {
+            background: #5a0000;
+            color: #ffb3b3;
+            border: 1px solid #f55;
+        }
+
+        /* Estatísticas - layout fixo horizontal */
+        .stats {
+            background: #051005;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            border: 1px solid #2c6e2c;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            text-align: center;
+        }
+        .stat-card {
+            flex: 1;
+            background: #0b130b;
+            padding: 0.6rem 0.2rem;
+            border-radius: 1rem;
+            transition: 0.2s;
+        }
+        .stat-number {
+            color: #8affb3;
+            font-weight: bold;
+            font-size: 1.8rem;
+            text-shadow: 0 0 5px #0f0;
+        }
+        .stat-label {
+            color: #7ab87a;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+
+        /* Link compartilhamento */
+        .link-share {
+            background: #0a100a;
+            border: 1px solid #2c6e2c;
+            border-radius: 1rem;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .link-share code {
+            background: #010501;
+            color: #8affb3;
+            padding: 0.3rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            word-break: break-all;
+            flex: 1;
+        }
+        .link-share button {
+            width: auto;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* Botão WhatsApp integrado */
+        .whatsapp-float {
+            background: #075e54;
+            border: 2px solid #25D366;
+            box-shadow: 0 0 10px #25d36680;
+        }
+
+        .empty-state {
+            color: #609e60;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Rolagem personalizada */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a1a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2e8b2e;
+            border-radius: 10px;
+        }
+
+        @keyframes blink {
+            0% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        .card-header h2 {
+            animation: blink 1s infinite alternate;
+        }
+    </style>
+</head>
+<body>
+<div class="matrix-bg"></div>
+<div class="app-container">
+    <div class="header">
+        <div class="header-image">
+            <img 
+                src="https://i.im.ge/QMlfSoh/Image.png"
+                alt="Logo Matrix Eventus"
+                width="140"
+                height="140"
+                loading="eager"
+                fetchpriority="high"
+                style="border-radius: 50%; object-fit: cover;"
+            >
+        </div>
+        <p>［ ＭＡＴＲＩＸ  ＥＶＥＮＴＵＳ ］ •  ｓｉｓｔｅｍａ ｄｅ ｃｏｎｆｉｒｍａçãｏ</p>
+    </div>
+
+    <!-- Banner de modo convidado -->
+    <div id="guestModeBanner" class="guest-banner hidden">
+        <span>🧬 Modo Convidado • Decodifique sua presença 🧬</span>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Painel ESQUERDO: Gestão de Eventos (organizador) -->
+        <div id="adminPanel" class="card">
+            <div class="card-header">
+                <span class="emoji">💾</span>
+                <h2>Matrix Admin</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>⚡ Nome do evento</label>
+                    <input type="text" id="newEventName" placeholder="Ex: Recarregamento do Sistema">
+                </div>
+                <div class="form-group">
+                    <label>📟 Descrição (local/data)</label>
+                    <textarea id="newEventDesc" rows="2" placeholder="Zion - 12/06 às 20h"></textarea>
+                </div>
+                <button id="createEventBtn" style="width: 100%;">➕ Inicializar Evento</button>
+                
+                <div style="margin-top: 1.8rem;">
+                    <label>🔌 Eventos Ativos</label>
+                    <div id="eventsListContainer" class="events-list">
+                        <div class="empty-state">Nenhum evento na matriz</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel CENTRAL: Confirmação de presença -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">🔓</span>
+                <h2>Confirmar Conexão</h2>
+            </div>
+            <div class="card-body">
+                <div id="currentEventInfo">
+                    <div class="empty-state">Selecione um evento na matriz</div>
+                </div>
+                
+                <div id="confirmationArea" style="display: none;">
+                    <div class="form-group">
+                        <label>👤 Nome do operador</label>
+                        <input type="text" id="guestName" placeholder="Digite seu nome">
+                    </div>
+                    <div style="display: flex; gap: 0.9rem; margin-top: 0.5rem;">
+                        <button id="confirmYesBtn" style="flex: 1;">🔘 Sim, estou online</button>
+                        <button id="confirmNoBtn" class="btn-danger" style="flex: 1;">⛔ Desconectar</button>
+                    </div>
+                </div>
+
+                <div id="statsArea" style="display: none; margin-top: 1.5rem;">
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCount">0</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="confirmCount">0</div>
+                            <div class="stat-label">Online</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="declineCount">0</div>
+                            <div class="stat-label">Offline</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="shareLinkArea" style="display: none;">
+                    <div class="link-share">
+                        <code id="shareLinkText">carregando...</code>
+                        <button id="copyLinkBtn" class="btn-outline" style="width: auto;">📋 Copiar</button>
+                    </div>
+                    <small style="color: #7ab87a; display: block; margin-top: 0.5rem;">🔗 Envie o código de acesso</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel DIREITO: Participantes -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">👾</span>
+                <h2>Usuários</h2>
+            </div>
+            <div class="card-body">
+                <div id="guestListContainer">
+                    <div class="empty-state">Nenhum dado ainda</div>
+                </div>
+                <button id="resetResponsesBtn" class="btn-secondary" style="width: 100%; margin-top: 1.2rem;">🔄 Limpar registros</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botão flutuante WhatsApp (link original) -->
+<a href="https://api.whatsapp.com/send/?phone=5596991287196&text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+evento+Jb+Eventus.&type=phone_number&app_absent=0" id="whatsappButton" style="position: fixed; bottom: 25px; right: 25px; background-color: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 12px black; text-decoration: none; z-index: 1000; border: none;" target="_blank" rel="noopener noreferrer">💬</a>
+
+<script>
+    // =================== SISTEMA DE ARMAZENAMENTO (PERSISTÊNCIA TOTAL) ===================
+    let events = new Map();
+
+    function loadEvents() {
+        const saved = localStorage.getItem('eventmaster_pro');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                events.clear();
+                for (const [id, ev] of Object.entries(parsed)) {
+                    events.set(id, ev);
+                }
+            } catch(e) { console.warn(e); }
+        }
+        if (events.size === 0) {
+            const demoId = generateId();
+            events.set(demoId, {
+                id: demoId,
+                name: "Confraternização Anual",
+                description: "Dia 20/12 às 20h - Buffet Jardins",
+                guests: {},
+                createdAt: new Date().toISOString()
+            });
+            saveEvents();
+        }
+    }
+
+    function saveEvents() {
+        const obj = Object.fromEntries(events);
+        localStorage.setItem('eventmaster_pro', JSON.stringify(obj));
+    }
+
+    function generateId() {
+        return 'evt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    function createEvent(name, description) {
+        if (!name.trim()) {
+            alert("Por favor, informe o nome do evento");
+            return null;
+        }
+        const id = generateId();
+        const newEvent = {
+            id: id,
+            name: name.trim(),
+            description: description?.trim() || "",
+            guests: {},
+            createdAt: new Date().toISOString()
+        };
+        events.set(id, newEvent);
+        saveEvents();
+        return newEvent;
+    }
+
+    function editEvent(eventId, newName, newDescription) {
+        const event = events.get(eventId);
+        if (!event) return false;
+        if (newName?.trim()) event.name = newName.trim();
+        if (newDescription !== undefined) event.description = newDescription?.trim() || "";
+        saveEvents();
+        return true;
+    }
+
+    function deleteEvent(eventId) {
+        if (!events.has(eventId)) return false;
+        events.delete(eventId);
+        saveEvents();
+        return true;
+    }
+
+    function setGuestResponse(eventId, guestName, status) {
+        const event = events.get(eventId);
+        if (!event) return false;
+        if (!guestName.trim()) return false;
+        if (status !== 'confirmado' && status !== 'recusado') return false;
+        if (!event.guests) event.guests = {};
+        event.guests[guestName.trim()] = status;
+        saveEvents();
+        return true;
+    }
+
+    function clearResponses(eventId) {
+        const event = events.get(eventId);
+        if (!event) return false;
+        event.guests = {};
+        saveEvents();
+        return true;
+    }
+
+    function getStats(eventId) {
+        const event = events.get(eventId);
+        if (!event) return { total: 0, confirmed: 0, declined: 0 };
+        const guests = event.guests || {};
+        const total = Object.keys(guests).length;
+        const confirmed = Object.values(guests).filter(v => v === 'confirmado').length;
+        const declined = Object.values(guests).filter(v => v === 'recusado').length;
+        return { total, confirmed, declined };
+    }
+
+    // ====================== MODOS: ADMIN x GUEST ======================
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventIdFromUrl = urlParams.get('event');
+    const isAdminMode = urlParams.has('admin');
+    const isGuestMode = !isAdminMode && eventIdFromUrl !== null;
+
+    let currentEventId = null;
+
+    function applyModeUI() {
+        const adminPanel = document.getElementById('adminPanel');
+        const resetBtn = document.getElementById('resetResponsesBtn');
+        const guestBanner = document.getElementById('guestModeBanner');
+        const shareArea = document.getElementById('shareLinkArea');
+
+        if (isGuestMode) {
+            if (adminPanel) adminPanel.classList.add('hidden');
+            if (resetBtn) resetBtn.classList.add('hidden');
+            if (guestBanner) guestBanner.classList.remove('hidden');
+            if (shareArea) shareArea.style.display = 'none';
+        } else {
+            if (adminPanel) adminPanel.classList.remove('hidden');
+            if (resetBtn) resetBtn.classList.remove('hidden');
+            if (guestBanner) guestBanner.classList.add('hidden');
+        }
+    }
+
+    // ====================== UI RENDER ======================
+    function renderEventsList() {
+        const container = document.getElementById('eventsListContainer');
+        if (!container) return;
+        if (events.size === 0) {
+            container.innerHTML = '<div class="empty-state">Nenhum evento criado ainda</div>';
+            return;
+        }
+        
+        let html = '';
+        for (const [id, event] of events) {
+            const isActive = (currentEventId === id);
+            const activeClass = isActive ? 'active' : '';
+            const confirmCount = Object.values(event.guests || {}).filter(v => v === 'confirmado').length;
+            html += `
+                <div class="event-item ${activeClass}" data-event-id="${id}">
+                    <div class="event-name">
+                        <span>💾 ${escapeHtml(event.name)}</span>
+                        <div class="event-actions">
+                            <button class="btn-sm edit-event-btn" data-id="${id}" style="background: transparent; border: 1px solid #3a7a3a; font-size: 0.7rem; padding: 0.2rem 0.6rem;">✏️</button>
+                            <button class="btn-sm delete-event-btn" data-id="${id}" style="background: #440000; border: 1px solid #ff5555; font-size: 0.7rem; padding: 0.2rem 0.6rem;">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="event-desc">${event.description ? escapeHtml(event.description) : 'Sem descrição'}</div>
+                    <div class="event-meta">
+                        <span>✅ ${confirmCount} confirmados</span>
+                        <span>📅 ${new Date(event.createdAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+        
+        document.querySelectorAll('.event-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-event-btn') || e.target.classList.contains('delete-event-btn')) return;
+                const id = el.dataset.eventId;
+                if (id) selectEvent(id);
+            });
+        });
+        
+        document.querySelectorAll('.edit-event-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.dataset.id;
+                showEditModal(id);
+            });
+        });
+        
+        document.querySelectorAll('.delete-event-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.dataset.id;
+                if (confirm('Tem certeza que deseja excluir este evento? Todas as confirmações serão perdidas.')) {
+                    if (currentEventId === id) {
+                        currentEventId = null;
+                    }
+                    deleteEvent(id);
+                    renderEventsList();
+                    if (currentEventId === null) {
+                        renderCurrentEventDisplay();
+                        renderGuestList();
+                        updateStatsAndShare();
+                    } else {
+                        selectEvent(currentEventId);
+                    }
+                }
+            });
+        });
+    }
+    
+    function showEditModal(eventId) {
+        const event = events.get(eventId);
+        if (!event) return;
+        const newName = prompt("Editar nome do evento:", event.name);
+        if (newName !== null && newName.trim()) {
+            const newDesc = prompt("Editar descrição:", event.description) || "";
+            editEvent(eventId, newName, newDesc);
+            renderEventsList();
+            if (currentEventId === eventId) {
+                selectEvent(eventId);
+            }
+        }
+    }
+    
+    function selectEvent(eventId) {
+        if (!events.has(eventId)) return;
+        currentEventId = eventId;
+        renderEventsList();
+        renderCurrentEventDisplay();
+        renderGuestList();
+        updateStatsAndShare();
+        
+        document.getElementById('confirmationArea').style.display = 'block';
+        document.getElementById('statsArea').style.display = 'block';
+        
+        if (!isGuestMode) {
+            document.getElementById('shareLinkArea').style.display = 'block';
+            const baseUrl = window.location.href.split('?')[0];
+            const shareUrl = `${baseUrl}?event=${currentEventId}`;
+            document.getElementById('shareLinkText').innerText = shareUrl;
+            const copyBtn = document.getElementById('copyLinkBtn');
+            const newCopy = copyBtn.cloneNode(true);
+            copyBtn.parentNode.replaceChild(newCopy, copyBtn);
+            newCopy.addEventListener('click', () => {
+                navigator.clipboard.writeText(shareUrl).then(() => alert('Link copiado!'));
+            });
+        } else {
+            document.getElementById('shareLinkArea').style.display = 'none';
+        }
+    }
+    
+    function renderCurrentEventDisplay() {
+        const container = document.getElementById('currentEventInfo');
+        if (!currentEventId || !events.has(currentEventId)) {
+            container.innerHTML = '<div class="empty-state">⚠️ Nenhum evento selecionado. Contate o organizador.</div>';
+            document.getElementById('confirmationArea').style.display = 'none';
+            document.getElementById('statsArea').style.display = 'none';
+            if (!isGuestMode) document.getElementById('shareLinkArea').style.display = 'none';
+            return;
+        }
+        const event = events.get(currentEventId);
+        container.innerHTML = `
+            <div style="background: #0a120a; border: 1px solid #2a7a2a; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem;">
+                <h3 style="color: #aaffaa; margin-bottom: 0.5rem;">⚡ ${escapeHtml(event.name)}</h3>
+                <p style="color: #9eff9e;">${escapeHtml(event.description) || 'Sem descrição adicional'}</p>
+                <div style="font-size: 0.65rem; color: #5a9e5a; margin-top: 0.5rem;">ID: ${event.id.substring(0, 12)}...</div>
+            </div>
+        `;
+        document.getElementById('confirmationArea').style.display = 'block';
+        document.getElementById('statsArea').style.display = 'block';
+    }
+    
+    function renderGuestList() {
+        const container = document.getElementById('guestListContainer');
+        if (!currentEventId || !events.has(currentEventId)) {
+            container.innerHTML = '<div class="empty-state">Selecione um evento para ver os participantes</div>';
+            return;
+        }
+        const event = events.get(currentEventId);
+        const guests = event.guests || {};
+        const entries = Object.entries(guests);
+        
+        if (entries.length === 0) {
+            container.innerHTML = '<div class="empty-state">✨ Nenhuma resposta ainda. Compartilhe o link!</div>';
+            return;
+        }
+        
+        let html = '<div class="guest-list">';
+        entries.forEach(([name, status]) => {
+            const statusText = status === 'confirmado' ? '✅ Online' : '❌ Offline';
+            const statusClass = status === 'confirmado' ? 'status-confirm' : 'status-decline';
+            html += `
+                <div class="guest-item">
+                    <span class="guest-name">🧬 ${escapeHtml(name)}</span>
+                    <span class="guest-status ${statusClass}">${statusText}</span>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
+    
+    function updateStatsAndShare() {
+        if (!currentEventId || !events.has(currentEventId)) return;
+        const stats = getStats(currentEventId);
+        document.getElementById('totalCount').innerText = stats.total;
+        document.getElementById('confirmCount').innerText = stats.confirmed;
+        document.getElementById('declineCount').innerText = stats.declined;
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // ====================== INICIALIZAÇÃO E EVENTOS ======================
+    function init() {
+        loadEvents();
+        applyModeUI();
+        
+        // Botão criar evento
+        document.getElementById('createEventBtn')?.addEventListener('click', () => {
+            const name = document.getElementById('newEventName').value;
+            const desc = document.getElementById('newEventDesc').value;
+            const newEv = createEvent(name, desc);
+            if (newEv) {
+                document.getElementById('newEventName').value = '';
+                document.getElementById('newEventDesc').value = '';
+                renderEventsList();
+                selectEvent(newEv.id);
+                alert(`Evento "${newEv.name}" criado com sucesso!`);
+            } else {
+                alert('Digite o nome do evento');
+            }
+        });
+        
+        // Confirmações
+        document.getElementById('confirmYesBtn').addEventListener('click', () => {
+            if (!currentEventId) {
+                alert('Selecione um evento primeiro');
+                return;
+            }
+            const name = document.getElementById('guestName').value;
+            if (!name.trim()) {
+                alert('Digite seu nome');
+                return;
+            }
+            setGuestResponse(currentEventId, name, 'confirmado');
+            document.getElementById('guestName').value = '';
+            renderGuestList();
+            updateStatsAndShare();
+            alert(`✅ Presença confirmada, ${name}! Obrigado.`);
+        });
+        
+        document.getElementById('confirmNoBtn').addEventListener('click', () => {
+            if (!currentEventId) {
+                alert('Selecione um evento primeiro');
+                return;
+            }
+            const name = document.getElementById('guestName').value;
+            if (!name.trim()) {
+                alert('Digite seu nome');
+                return;
+            }
+            setGuestResponse(currentEventId, name, 'recusado');
+            document.getElementById('guestName').value = '';
+            renderGuestList();
+            updateStatsAndShare();
+            alert(`❌ Presença recusada, ${name}. Sentiremos sua falta.`);
+        });
+        
+        const resetBtn = document.getElementById('resetResponsesBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (!currentEventId) {
+                    alert('Selecione um evento');
+                    return;
+                }
+                const event = events.get(currentEventId);
+                if (confirm(`Limpar TODAS as respostas do evento "${event.name}"?`)) {
+                    clearResponses(currentEventId);
+                    renderGuestList();
+                    updateStatsAndShare();
+                    alert('Respostas removidas com sucesso');
+                }
+            });
+        }
+        
+        // Tratamento modo convidado: se guestMode e evento não existe, exibir aviso
+        if (isGuestMode && eventIdFromUrl) {
+            if (events.has(eventIdFromUrl)) {
+                selectEvent(eventIdFromUrl);
+            } else {
+                document.getElementById('currentEventInfo').innerHTML = '<div class="empty-state" style="color:#ff7777;">❌ Evento não encontrado na matrix. Contate o administrador.</div>';
+                document.getElementById('confirmationArea').style.display = 'none';
+                document.getElementById('statsArea').style.display = 'none';
+                document.getElementById('guestListContainer').innerHTML = '<div class="empty-state">Evento inválido</div>';
+            }
+        } else if (!isGuestMode && events.size > 0 && !eventIdFromUrl) {
+            const firstEventId = Array.from(events.keys())[0];
+            selectEvent(firstEventId);
+        } else if (!isGuestMode && events.size > 0 && eventIdFromUrl && events.has(eventIdFromUrl)) {
+            selectEvent(eventIdFromUrl);
+        } else if (!isGuestMode && events.size > 0) {
+            selectEvent(Array.from(events.keys())[0]);
+        }
+        
+        renderEventsList();
+    }
+    
+    init();
+</script>
+
+<script>
+    // efeito matrix background animado (chuvas de caracteres)
+    (function() {
+        const bg = document.querySelector('.matrix-bg');
+        if (bg) {
+            let chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+            let matrixHtml = "";
+            for (let i = 0; i < 60; i++) {
+                let line = "";
+                for (let j = 0; j < 35; j++) {
+                    line += chars[Math.floor(Math.random() * chars.length)] + " ";
+                }
+                matrixHtml += "<div style='white-space: nowrap; opacity: 0.3; font-size: 14px; line-height: 1.2;'>" + line + "</div>";
+            }
+            bg.innerHTML = matrixHtml;
+            setInterval(() => {
+                if (bg.firstChild) {
+                    bg.appendChild(bg.firstChild);
+                }
+            }, 220);
+        }
+    })();
+</script>
+</body>
+</html>
