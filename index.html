@@ -26,7 +26,6 @@
             z-index: 2;
         }
 
-        /* Header */
         .header {
             text-align: center;
             margin-bottom: 2rem;
@@ -67,7 +66,6 @@
             margin-top: 0.3rem;
         }
 
-        /* Banner convidado */
         .guest-banner {
             background: #eef2ff;
             border: 1px solid #cbd5e1;
@@ -88,7 +86,6 @@
             font-weight: 600;
         }
 
-        /* Grid cards */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -135,7 +132,6 @@
             padding: 1.3rem 1.5rem 1.5rem;
         }
 
-        /* Formulários */
         .form-group {
             margin-bottom: 1.2rem;
         }
@@ -168,7 +164,6 @@
             box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
         }
 
-        /* Botões modernos - touch friendly */
         button {
             background: #3b82f6;
             color: white;
@@ -223,7 +218,6 @@
             transform: translateY(-1px);
         }
 
-        /* Lista de eventos */
         .events-list {
             max-height: 420px;
             overflow-y: auto;
@@ -279,7 +273,6 @@
             color: #6c757d;
         }
 
-        /* Botões de ação nos eventos - área de toque maior */
         .event-actions {
             display: flex;
             gap: 0.4rem;
@@ -300,11 +293,7 @@
             border: 1px solid #fecaca;
             color: #b91c1c;
         }
-        .edit-event-btn:hover, .delete-event-btn:hover {
-            transform: translateY(-1px);
-        }
 
-        /* Lista de convidados */
         .guest-item {
             background: #f8fafc;
             padding: 0.7rem 1rem;
@@ -344,7 +333,6 @@
             border: 1px solid #fecaca;
         }
 
-        /* Estatísticas */
         .stats {
             background: #f1f5f9;
             border-radius: 1rem;
@@ -374,7 +362,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Link compartilhamento */
         .link-share {
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
@@ -404,7 +391,6 @@
             min-height: 38px;
         }
 
-        /* Botão WhatsApp fixo - ajuste mobile */
         .whatsapp-float {
             background-color: #25D366;
             color: white;
@@ -435,7 +421,6 @@
             display: none;
         }
 
-        /* Scroll */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -447,7 +432,6 @@
             border-radius: 10px;
         }
 
-        /* Ajustes para dispositivos pequenos */
         @media (max-width: 640px) {
             body {
                 padding: 1rem 0.8rem;
@@ -515,13 +499,11 @@
         <p>📅 ＥＶＥＮＴＵＳ  •  ｓｉｓｔｅｍａ ｄｅ ｃｏｎｆｉｒｍａçãｏ</p>
     </div>
 
-    <!-- Banner de modo convidado -->
     <div id="guestModeBanner" class="guest-banner hidden">
         <span>🔗 Modo Convidado • Confirme sua presença</span>
     </div>
 
     <div class="dashboard-grid">
-        <!-- Painel ESQUERDO: Gestão de Eventos (organizador) -->
         <div id="adminPanel" class="card">
             <div class="card-header">
                 <span class="emoji">📋</span>
@@ -547,7 +529,6 @@
             </div>
         </div>
 
-        <!-- Painel CENTRAL: Confirmação de presença -->
         <div class="card">
             <div class="card-header">
                 <span class="emoji">✅</span>
@@ -596,7 +577,6 @@
             </div>
         </div>
 
-        <!-- Painel DIREITO: Participantes -->
         <div class="card">
             <div class="card-header">
                 <span class="emoji">👥</span>
@@ -612,11 +592,10 @@
     </div>
 </div>
 
-<!-- Botão flutuante WhatsApp (link original) -->
 <a href="https://api.whatsapp.com/send/?phone=5596991287196&text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+evento+Jb+Eventus.&type=phone_number&app_absent=0" id="whatsappButton" class="whatsapp-float" style="position: fixed; bottom: 20px; right: 20px;" target="_blank" rel="noopener noreferrer">💬</a>
 
 <script>
-    // =================== SISTEMA DE ARMAZENAMENTO (PERSISTÊNCIA TOTAL) ===================
+    // =================== SISTEMA DE ARMAZENAMENTO ===================
     let events = new Map();
 
     function loadEvents() {
@@ -715,7 +694,7 @@
         return { total, confirmed, declined };
     }
 
-    // ====================== MODOS: ADMIN x GUEST ======================
+    // ====================== MODOS E TRATAMENTO DE ERRO ======================
     const urlParams = new URLSearchParams(window.location.search);
     const eventIdFromUrl = urlParams.get('event');
     const isAdminMode = urlParams.has('admin');
@@ -739,6 +718,17 @@
             if (resetBtn) resetBtn.classList.remove('hidden');
             if (guestBanner) guestBanner.classList.add('hidden');
         }
+    }
+
+    // Exibe erro de evento não encontrado e desabilita confirmação
+    function showEventNotFoundError() {
+        const container = document.getElementById('currentEventInfo');
+        container.innerHTML = '<div class="empty-state" style="color:#b91c1c;">❌ Evento não encontrado. Verifique o link ou contate o organizador.</div>';
+        document.getElementById('confirmationArea').style.display = 'none';
+        document.getElementById('statsArea').style.display = 'none';
+        document.getElementById('shareLinkArea') && (document.getElementById('shareLinkArea').style.display = 'none');
+        document.getElementById('guestListContainer').innerHTML = '<div class="empty-state">Evento inválido</div>';
+        currentEventId = null;
     }
 
     // ====================== UI RENDER ======================
@@ -827,7 +817,10 @@
     }
     
     function selectEvent(eventId) {
-        if (!events.has(eventId)) return;
+        if (!events.has(eventId)) {
+            showEventNotFoundError();
+            return;
+        }
         currentEventId = eventId;
         renderEventsList();
         renderCurrentEventDisplay();
@@ -922,7 +915,7 @@
         });
     }
     
-    // ====================== INICIALIZAÇÃO E EVENTOS ======================
+    // ====================== INICIALIZAÇÃO ======================
     function init() {
         loadEvents();
         applyModeUI();
@@ -943,8 +936,8 @@
         });
         
         document.getElementById('confirmYesBtn').addEventListener('click', () => {
-            if (!currentEventId) {
-                alert('Selecione um evento primeiro');
+            if (!currentEventId || !events.has(currentEventId)) {
+                alert('Evento inválido ou não selecionado. Recarregue a página ou contate o organizador.');
                 return;
             }
             const name = document.getElementById('guestName').value;
@@ -960,8 +953,8 @@
         });
         
         document.getElementById('confirmNoBtn').addEventListener('click', () => {
-            if (!currentEventId) {
-                alert('Selecione um evento primeiro');
+            if (!currentEventId || !events.has(currentEventId)) {
+                alert('Evento inválido ou não selecionado. Recarregue a página ou contate o organizador.');
                 return;
             }
             const name = document.getElementById('guestName').value;
@@ -979,8 +972,8 @@
         const resetBtn = document.getElementById('resetResponsesBtn');
         if (resetBtn) {
             resetBtn.addEventListener('click', () => {
-                if (!currentEventId) {
-                    alert('Selecione um evento');
+                if (!currentEventId || !events.has(currentEventId)) {
+                    alert('Nenhum evento válido selecionado.');
                     return;
                 }
                 const event = events.get(currentEventId);
@@ -993,23 +986,34 @@
             });
         }
         
-        // Tratamento modo convidado
-        if (isGuestMode && eventIdFromUrl) {
+        // Lógica principal de seleção com validação de existência do evento
+        if (eventIdFromUrl) {
             if (events.has(eventIdFromUrl)) {
                 selectEvent(eventIdFromUrl);
             } else {
-                document.getElementById('currentEventInfo').innerHTML = '<div class="empty-state" style="color:#b91c1c;">❌ Evento não encontrado. Contate o administrador.</div>';
-                document.getElementById('confirmationArea').style.display = 'none';
-                document.getElementById('statsArea').style.display = 'none';
-                document.getElementById('guestListContainer').innerHTML = '<div class="empty-state">Evento inválido</div>';
+                showEventNotFoundError();
+                // Se for admin, ainda mostra a lista de eventos, mas nenhum selecionado
+                if (!isGuestMode && events.size > 0) {
+                    // Apenas renderiza a lista, sem selecionar
+                    renderEventsList();
+                    renderCurrentEventDisplay(); // já exibe "nenhum evento selecionado"
+                    renderGuestList();
+                } else if (isGuestMode) {
+                    // Modo convidado com evento inválido: já mostramos erro, nada mais a fazer
+                }
             }
-        } else if (!isGuestMode && events.size > 0 && !eventIdFromUrl) {
+        } else if (!isGuestMode && events.size > 0) {
+            // Admin sem parâmetro: seleciona o primeiro evento
             const firstEventId = Array.from(events.keys())[0];
             selectEvent(firstEventId);
-        } else if (!isGuestMode && events.size > 0 && eventIdFromUrl && events.has(eventIdFromUrl)) {
-            selectEvent(eventIdFromUrl);
-        } else if (!isGuestMode && events.size > 0) {
-            selectEvent(Array.from(events.keys())[0]);
+        } else if (!isGuestMode && events.size === 0) {
+            // Admin sem eventos: mostra vazio
+            renderEventsList();
+            renderCurrentEventDisplay();
+            renderGuestList();
+        } else if (isGuestMode && !eventIdFromUrl) {
+            // Isso não deveria acontecer pois guestMode só ativa com event, mas segurança
+            showEventNotFoundError();
         }
         
         renderEventsList();
