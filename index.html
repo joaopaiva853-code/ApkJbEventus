@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Eventus - Confirmador de Presença</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f7fc;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            padding: 2rem 1.5rem;
+            color: #1a2c3e;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header-image {
+            margin-bottom: 1.2rem;
+            display: flex;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .header-image img {
+            width: auto;
+            height: auto;
+            max-width: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .header-image img:hover {
+            transform: scale(1.02);
+        }
+
+        .header p {
+            color: #2c5a7a;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.8);
+            display: inline-block;
+            padding: 0.3rem 1.8rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid #cbd5e1;
+            margin-top: 0.5rem;
+        }
+
+        /* Banner convidado */
+        .guest-banner {
+            background: #eef2ff;
+            border: 1px solid #cbd5e1;
+            border-radius: 1rem;
+            padding: 0.9rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .guest-banner span {
+            color: #1e4a76;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Grid cards */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
+        }
+
+        .card-header {
+            padding: 1.3rem 1.8rem 0.8rem 1.8rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #fafcff;
+        }
+
+        .card-header h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #0f3b5c;
+            letter-spacing: -0.3px;
+        }
+
+        .card-header .emoji {
+            font-size: 1.7rem;
+        }
+
+        .card-body {
+            padding: 1.6rem 1.8rem 1.8rem;
+        }
+
+        /* Formulários */
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c5a7a;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 1rem;
+            color: #1e2f3e;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.25s;
+            outline: none;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+        }
+
+        /* Botões modernos */
+        button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            justify-content: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        button:hover {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37,99,235,0.3);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .btn-secondary {
+            background: #64748b;
+        }
+        .btn-secondary:hover {
+            background: #475569;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+        }
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #3b82f6;
+            color: #3b82f6;
+            box-shadow: none;
+        }
+        .btn-outline:hover {
+            background: #eff6ff;
+            transform: translateY(-1px);
+        }
+
+        /* Lista de eventos */
+        .events-list {
+            max-height: 420px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .event-item {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 0.9rem 1.2rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .event-item:hover {
+            border-color: #94a3b8;
+            background: #f1f5f9;
+            transform: translateX(4px);
+        }
+
+        .event-item.active {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            box-shadow: 0 0 0 2px rgba(59,130,246,0.2);
+        }
+
+        .event-name {
+            font-weight: 700;
+            color: #0f3b5c;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .event-desc {
+            font-size: 0.75rem;
+            color: #4b5563;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            font-size: 0.7rem;
+            color: #6c757d;
+        }
+
+        /* Lista de convidados */
+        .guest-item {
+            background: #f8fafc;
+            padding: 0.7rem 1rem;
+            border-radius: 1rem;
+            margin-bottom: 0.7rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .guest-name {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .guest-status {
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: 700;
+        }
+
+        .status-confirm {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .status-decline {
+            background: #fee2e2;
+            color: #b91c1c;
+            border: 1px solid #fecaca;
+        }
+
+        /* Estatísticas */
+        .stats {
+            background: #f1f5f9;
+            border-radius: 1rem;
+            padding: 0.8rem;
+            border: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            text-align: center;
+        }
+        .stat-card {
+            flex: 1;
+            background: white;
+            padding: 0.6rem 0.2rem;
+            border-radius: 1rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+        }
+        .stat-number {
+            color: #0f3b5c;
+            font-weight: 800;
+            font-size: 1.8rem;
+        }
+        .stat-label {
+            color: #4b5563;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* Link compartilhamento */
+        .link-share {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 1rem;
+            padding: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+        .link-share code {
+            background: #fff;
+            color: #1e293b;
+            padding: 0.3rem 0.6rem;
+            border-radius: 1rem;
+            font-size: 0.75rem;
+            word-break: break-all;
+            flex: 1;
+            border: 1px solid #e2e8f0;
+        }
+        .link-share button {
+            width: auto;
+            padding: 0.4rem 1rem;
+            font-size: 0.75rem;
+        }
+
+        /* Botão WhatsApp fixo */
+        .whatsapp-float {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+        }
+        .whatsapp-float:hover {
+            transform: scale(1.05);
+            background-color: #128C7E;
+        }
+
+        .empty-state {
+            color: #6c757d;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Scroll */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <div class="header">
+        <div class="header-image">
+            <img 
+                src="https://i.im.ge/QMlfYby/jb.png"
+                alt="Jb"
+                width="140"
+                height="140"
+                loading="eager"
+                fetchpriority="high"
+                style="border-radius: 50%; object-fit: cover;"
+            >
+        </div>
+        <p>📅 ＥＶＥＮＴＵＳ  •  ｓｉｓｔｅｍａ ｄｅ ｃｏｎｆｉｒｍａçãｏ</p>
+    </div>
+
+    <!-- Banner de modo convidado -->
+    <div id="guestModeBanner" class="guest-banner hidden">
+        <span>🔗 Modo Convidado • Confirme sua presença</span>
+    </div>
+
+    <div class="dashboard-grid">
+        <!-- Painel ESQUERDO: Gestão de Eventos (organizador) -->
+        <div id="adminPanel" class="card">
+            <div class="card-header">
+                <span class="emoji">📋</span>
+                <h2>Admin Eventos</h2>
+            </div>
+            <div class="card-body">
+                <div class="form-group">
+                    <label>📌 Nome do evento</label>
+                    <input type="text" id="newEventName" placeholder="Ex: Festa de Confraternização">
+                </div>
+                <div class="form-group">
+                    <label>📍 Descrição (local/data)</label>
+                    <textarea id="newEventDesc" rows="2" placeholder="Salão de festas - 15/07 às 20h"></textarea>
+                </div>
+                <button id="createEventBtn" style="width: 100%;">➕ Criar Evento</button>
+                
+                <div style="margin-top: 1.8rem;">
+                    <label>📅 Eventos Ativos</label>
+                    <div id="eventsListContainer" class="events-list">
+                        <div class="empty-state">Nenhum evento criado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel CENTRAL: Confirmação de presença -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">✅</span>
+                <h2>Confirmar Presença</h2>
+            </div>
+            <div class="card-body">
+                <div id="currentEventInfo">
+                    <div class="empty-state">Selecione um evento na lista</div>
+                </div>
+                
+                <div id="confirmationArea" style="display: none;">
+                    <div class="form-group">
+                        <label>👤 Seu nome</label>
+                        <input type="text" id="guestName" placeholder="Digite seu nome completo">
+                    </div>
+                    <div style="display: flex; gap: 0.9rem; margin-top: 0.5rem;">
+                        <button id="confirmYesBtn" style="flex: 1;">✔️ Sim, confirmo presença</button>
+                        <button id="confirmNoBtn" class="btn-danger" style="flex: 1;">❌ Não poderei comparecer</button>
+                    </div>
+                </div>
+
+                <div id="statsArea" style="display: none; margin-top: 1.5rem;">
+                    <div class="stats">
+                        <div class="stat-card">
+                            <div class="stat-number" id="totalCount">0</div>
+                            <div class="stat-label">Total</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="confirmCount">0</div>
+                            <div class="stat-label">Confirmados</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="declineCount">0</div>
+                            <div class="stat-label">Ausentes</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="shareLinkArea" style="display: none;">
+                    <div class="link-share">
+                        <code id="shareLinkText">carregando...</code>
+                        <button id="copyLinkBtn" class="btn-outline">📋 Copiar link</button>
+                    </div>
+                    <small style="color: #5b6e8c; display: block; margin-top: 0.5rem;">🔗 Envie este link para os participantes confirmarem presença</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Painel DIREITO: Participantes -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">👥</span>
+                <h2>Participantes</h2>
+            </div>
+            <div class="card-body">
+                <div id="guestListContainer">
+                    <div class="empty-state">Nenhuma resposta ainda</div>
+                </div>
+                <button id="resetResponsesBtn" class="btn-secondary" style="width: 100%; margin-top: 1.2rem;">🔄 Limpar todas as respostas</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botão flutuante WhatsApp (link original) -->
+<a href="https://api.whatsapp.com/send/?phone=5596991287196&text=Ol%C3%A1%21+Tenho+uma+d%C3%BAvida+sobre+o+evento+Jb+Eventus.&type=phone_number&app_absent=0" id="whatsappButton" class="whatsapp-float" style="position: fixed; bottom: 25px; right: 25px; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.15); text-decoration: none; z-index: 1000;" target="_blank" rel="noopener noreferrer">💬</a>
+
+<script>
+    // =================== SISTEMA DE ARMAZENAMENTO (PERSISTÊNCIA TOTAL) ===================
+    let events = new Map();
+
+    function loadEvents() {
+        const saved = localStorage.getItem('eventmaster_pro');
+        if (saved) {
+            try {
+                const parsed = JSON.parse(saved);
+                events.clear();
+                for (const [id, ev] of Object.entries(parsed)) {
+                    events.set(id, ev);
+                }
+            } catch(e) { console.warn(e); }
+        }
+        if (events.size === 0) {
+            const demoId = generateId();
+            events.set(demoId, {
+                id: demoId,
+                name: "Confraternização Anual",
+                description: "Dia 20/12 às 20h - Buffet Jardins",
+                guests: {},
+                createdAt: new Date().toISOString()
+            });
+            saveEvents();
+        }
+    }
+
+    function saveEvents() {
+        const obj = Object.fromEntries(events);
+        localStorage.setItem('eventmaster_pro', JSON.stringify(obj));
+    }
+
+    function generateId() {
+        return 'evt_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    function createEvent(name, description) {
+        if (!name.trim()) {
+            alert("Por favor, informe o nome do evento");
+            return null;
+        }
+        const id = generateId();
+        const newEvent = {
+            id: id,
+            name: name.trim(),
+            description: description?.trim() || "",
+            guests: {},
+            createdAt: new Date().toISOString()
+        };
+        events.set(id, newEvent);
+        saveEvents();
+        return newEvent;
+    }
+
+    function editEvent(eventId, newName, newDescription) {
+        const event = events.get(eventId);
+        if (!event) return false;
+        if (newName?.trim()) event.name = newName.trim();
+        if (newDescription !== undefined) event.description = newDescription?.trim() || "";
+        saveEvents();
+        return true;
+    }
+
+    function deleteEvent(eventId) {
+        if (!events.has(eventId)) return false;
+        events.delete(eventId);
+        saveEvents();
+        return true;
+    }
+
+    function setGuestResponse(eventId, guestName, status) {
+        const event = events.get(eventId);
+        if (!event) return false;
+        if (!guestName.trim()) return false;
+        if (status !== 'confirmado' && status !== 'recusado') return false;
+        if (!event.guests) event.guests = {};
+        event.guests[guestName.trim()] = status;
+        saveEvents();
+        return true;
+    }
+
+    function clearResponses(eventId) {
+        const event = events.get(eventId);
+        if (!event) return false;
+        event.guests = {};
+        saveEvents();
+        return true;
+    }
+
+    function getStats(eventId) {
+        const event = events.get(eventId);
+        if (!event) return { total: 0, confirmed: 0, declined: 0 };
+        const guests = event.guests || {};
+        const total = Object.keys(guests).length;
+        const confirmed = Object.values(guests).filter(v => v === 'confirmado').length;
+        const declined = Object.values(guests).filter(v => v === 'recusado').length;
+        return { total, confirmed, declined };
+    }
+
+    // ====================== MODOS: ADMIN x GUEST ======================
+    const urlParams = new URLSearchParams(window.location.search);
+    const eventIdFromUrl = urlParams.get('event');
+    const isAdminMode = urlParams.has('admin');
+    const isGuestMode = !isAdminMode && eventIdFromUrl !== null;
+
+    let currentEventId = null;
+
+    function applyModeUI() {
+        const adminPanel = document.getElementById('adminPanel');
+        const resetBtn = document.getElementById('resetResponsesBtn');
+        const guestBanner = document.getElementById('guestModeBanner');
+        const shareArea = document.getElementById('shareLinkArea');
+
+        if (isGuestMode) {
+            if (adminPanel) adminPanel.classList.add('hidden');
+            if (resetBtn) resetBtn.classList.add('hidden');
+            if (guestBanner) guestBanner.classList.remove('hidden');
+            if (shareArea) shareArea.style.display = 'none';
+        } else {
+            if (adminPanel) adminPanel.classList.remove('hidden');
+            if (resetBtn) resetBtn.classList.remove('hidden');
+            if (guestBanner) guestBanner.classList.add('hidden');
+        }
+    }
+
+    // ====================== UI RENDER ======================
+    function renderEventsList() {
+        const container = document.getElementById('eventsListContainer');
+        if (!container) return;
+        if (events.size === 0) {
+            container.innerHTML = '<div class="empty-state">Nenhum evento criado ainda</div>';
+            return;
+        }
+        
+        let html = '';
+        for (const [id, event] of events) {
+            const isActive = (currentEventId === id);
+            const activeClass = isActive ? 'active' : '';
+            const confirmCount = Object.values(event.guests || {}).filter(v => v === 'confirmado').length;
+            html += `
+                <div class="event-item ${activeClass}" data-event-id="${id}">
+                    <div class="event-name">
+                        <span>📌 ${escapeHtml(event.name)}</span>
+                        <div class="event-actions">
+                            <button class="btn-sm edit-event-btn" data-id="${id}" style="background: transparent; border: 1px solid #cbd5e1; font-size: 0.7rem; padding: 0.2rem 0.6rem; color: #3b82f6;">✏️</button>
+                            <button class="btn-sm delete-event-btn" data-id="${id}" style="background: #fee2e2; border: 1px solid #fecaca; font-size: 0.7rem; padding: 0.2rem 0.6rem; color: #b91c1c;">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="event-desc">${event.description ? escapeHtml(event.description) : 'Sem descrição'}</div>
+                    <div class="event-meta">
+                        <span>✅ ${confirmCount} confirmados</span>
+                        <span>📅 ${new Date(event.createdAt).toLocaleDateString()}</span>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = html;
+        
+        document.querySelectorAll('.event-item').forEach(el => {
+            el.addEventListener('click', (e) => {
+                if (e.target.classList.contains('edit-event-btn') || e.target.classList.contains('delete-event-btn')) return;
+                const id = el.dataset.eventId;
+                if (id) selectEvent(id);
+            });
+        });
+        
+        document.querySelectorAll('.edit-event-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.dataset.id;
+                showEditModal(id);
+            });
+        });
+        
+        document.querySelectorAll('.delete-event-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const id = btn.dataset.id;
+                if (confirm('Tem certeza que deseja excluir este evento? Todas as confirmações serão perdidas.')) {
+                    if (currentEventId === id) {
+                        currentEventId = null;
+                    }
+                    deleteEvent(id);
+                    renderEventsList();
+                    if (currentEventId === null) {
+                        renderCurrentEventDisplay();
+                        renderGuestList();
+                        updateStatsAndShare();
+                    } else {
+                        selectEvent(currentEventId);
+                    }
+                }
+            });
+        });
+    }
+    
+    function showEditModal(eventId) {
+        const event = events.get(eventId);
+        if (!event) return;
+        const newName = prompt("Editar nome do evento:", event.name);
+        if (newName !== null && newName.trim()) {
+            const newDesc = prompt("Editar descrição:", event.description) || "";
+            editEvent(eventId, newName, newDesc);
+            renderEventsList();
+            if (currentEventId === eventId) {
+                selectEvent(eventId);
+            }
+        }
+    }
+    
+    function selectEvent(eventId) {
+        if (!events.has(eventId)) return;
+        currentEventId = eventId;
+        renderEventsList();
+        renderCurrentEventDisplay();
+        renderGuestList();
+        updateStatsAndShare();
+        
+        document.getElementById('confirmationArea').style.display = 'block';
+        document.getElementById('statsArea').style.display = 'block';
+        
+        if (!isGuestMode) {
+            document.getElementById('shareLinkArea').style.display = 'block';
+            const baseUrl = window.location.href.split('?')[0];
+            const shareUrl = `${baseUrl}?event=${currentEventId}`;
+            document.getElementById('shareLinkText').innerText = shareUrl;
+            const copyBtn = document.getElementById('copyLinkBtn');
+            const newCopy = copyBtn.cloneNode(true);
+            copyBtn.parentNode.replaceChild(newCopy, copyBtn);
+            newCopy.addEventListener('click', () => {
+                navigator.clipboard.writeText(shareUrl).then(() => alert('Link copiado!'));
+            });
+        } else {
+            document.getElementById('shareLinkArea').style.display = 'none';
+        }
+    }
+    
+    function renderCurrentEventDisplay() {
+        const container = document.getElementById('currentEventInfo');
+        if (!currentEventId || !events.has(currentEventId)) {
+            container.innerHTML = '<div class="empty-state">⚠️ Nenhum evento selecionado. Contate o organizador.</div>';
+            document.getElementById('confirmationArea').style.display = 'none';
+            document.getElementById('statsArea').style.display = 'none';
+            if (!isGuestMode) document.getElementById('shareLinkArea').style.display = 'none';
+            return;
+        }
+        const event = events.get(currentEventId);
+        container.innerHTML = `
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 1rem; padding: 1rem; margin-bottom: 1rem;">
+                <h3 style="color: #0f3b5c; margin-bottom: 0.5rem;">📌 ${escapeHtml(event.name)}</h3>
+                <p style="color: #334155;">${escapeHtml(event.description) || 'Sem descrição adicional'}</p>
+                <div style="font-size: 0.65rem; color: #5b6e8c; margin-top: 0.5rem;">ID: ${event.id.substring(0, 12)}...</div>
+            </div>
+        `;
+        document.getElementById('confirmationArea').style.display = 'block';
+        document.getElementById('statsArea').style.display = 'block';
+    }
+    
+    function renderGuestList() {
+        const container = document.getElementById('guestListContainer');
+        if (!currentEventId || !events.has(currentEventId)) {
+            container.innerHTML = '<div class="empty-state">Selecione um evento para ver os participantes</div>';
+            return;
+        }
+        const event = events.get(currentEventId);
+        const guests = event.guests || {};
+        const entries = Object.entries(guests);
+        
+        if (entries.length === 0) {
+            container.innerHTML = '<div class="empty-state">✨ Nenhuma resposta ainda. Compartilhe o link!</div>';
+            return;
+        }
+        
+        let html = '<div class="guest-list">';
+        entries.forEach(([name, status]) => {
+            const statusText = status === 'confirmado' ? '✅ Confirmado' : '❌ Não vem';
+            const statusClass = status === 'confirmado' ? 'status-confirm' : 'status-decline';
+            html += `
+                <div class="guest-item">
+                    <span class="guest-name">👤 ${escapeHtml(name)}</span>
+                    <span class="guest-status ${statusClass}">${statusText}</span>
+                </div>
+            `;
+        });
+        html += '</div>';
+        container.innerHTML = html;
+    }
+    
+    function updateStatsAndShare() {
+        if (!currentEventId || !events.has(currentEventId)) return;
+        const stats = getStats(currentEventId);
+        document.getElementById('totalCount').innerText = stats.total;
+        document.getElementById('confirmCount').innerText = stats.confirmed;
+        document.getElementById('declineCount').innerText = stats.declined;
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // ====================== INICIALIZAÇÃO E EVENTOS ======================
+    function init() {
+        loadEvents();
+        applyModeUI();
+        
+        document.getElementById('createEventBtn')?.addEventListener('click', () => {
+            const name = document.getElementById('newEventName').value;
+            const desc = document.getElementById('newEventDesc').value;
+            const newEv = createEvent(name, desc);
+            if (newEv) {
+                document.getElementById('newEventName').value = '';
+                document.getElementById('newEventDesc').value = '';
+                renderEventsList();
+                selectEvent(newEv.id);
+                alert(`Evento "${newEv.name}" criado com sucesso!`);
+            } else {
+                alert('Digite o nome do evento');
+            }
+        });
+        
+        document.getElementById('confirmYesBtn').addEventListener('click', () => {
+            if (!currentEventId) {
+                alert('Selecione um evento primeiro');
+                return;
+            }
+            const name = document.getElementById('guestName').value;
+            if (!name.trim()) {
+                alert('Digite seu nome');
+                return;
+            }
+            setGuestResponse(currentEventId, name, 'confirmado');
+            document.getElementById('guestName').value = '';
+            renderGuestList();
+            updateStatsAndShare();
+            alert(`✅ Presença confirmada, ${name}! Obrigado.`);
+        });
+        
+        document.getElementById('confirmNoBtn').addEventListener('click', () => {
+            if (!currentEventId) {
+                alert('Selecione um evento primeiro');
+                return;
+            }
+            const name = document.getElementById('guestName').value;
+            if (!name.trim()) {
+                alert('Digite seu nome');
+                return;
+            }
+            setGuestResponse(currentEventId, name, 'recusado');
+            document.getElementById('guestName').value = '';
+            renderGuestList();
+            updateStatsAndShare();
+            alert(`❌ Presença recusada, ${name}. Sentiremos sua falta.`);
+        });
+        
+        const resetBtn = document.getElementById('resetResponsesBtn');
+        if (resetBtn) {
+            resetBtn.addEventListener('click', () => {
+                if (!currentEventId) {
+                    alert('Selecione um evento');
+                    return;
+                }
+                const event = events.get(currentEventId);
+                if (confirm(`Limpar TODAS as respostas do evento "${event.name}"?`)) {
+                    clearResponses(currentEventId);
+                    renderGuestList();
+                    updateStatsAndShare();
+                    alert('Respostas removidas com sucesso');
+                }
+            });
+        }
+        
+        // Tratamento modo convidado
+        if (isGuestMode && eventIdFromUrl) {
+            if (events.has(eventIdFromUrl)) {
+                selectEvent(eventIdFromUrl);
+            } else {
+                document.getElementById('currentEventInfo').innerHTML = '<div class="empty-state" style="color:#b91c1c;">❌ Evento não encontrado. Contate o administrador.</div>';
+                document.getElementById('confirmationArea').style.display = 'none';
+                document.getElementById('statsArea').style.display = 'none';
+                document.getElementById('guestListContainer').innerHTML = '<div class="empty-state">Evento inválido</div>';
+            }
+        } else if (!isGuestMode && events.size > 0 && !eventIdFromUrl) {
+            const firstEventId = Array.from(events.keys())[0];
+            selectEvent(firstEventId);
+        } else if (!isGuestMode && events.size > 0 && eventIdFromUrl && events.has(eventIdFromUrl)) {
+            selectEvent(eventIdFromUrl);
+        } else if (!isGuestMode && events.size > 0) {
+            selectEvent(Array.from(events.keys())[0]);
+        }
+        
+        renderEventsList();
+    }
+    
+    init();
+</script>
+</body>
+</html>
