@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Gestão Completa · Edição Corrigida</title>
+  <title>Gestão Completa · Entrega com Produto e Cliente</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -239,7 +239,7 @@
   </main>
 </div>
 
-<!-- MODAIS FULLSCREEN (mantidos como antes, apenas com IDs corrigidos) -->
+<!-- MODAIS FULLSCREEN (VENDAS, PRODUTOS, COMPRAS, CLIENTES, FORNECEDORES, ENTREGADOR, DELIVERY, ANOTAÇÕES, CALCULADORA, RELATÓRIO) -->
 <div id="vendasFullModal" class="fullscreen-modal">
   <div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>📋 Vendas</h2></div>
   <div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex; gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTbodyFull"></tbody></table></div></div></div>
@@ -274,7 +274,19 @@
   <div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div>
   <div class="fullscreen-body">
     <div class="card" style="margin-bottom:1.5rem;"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><h2>📋 Bairros</h2><div class="table-wrapper"><table><thead><tr><th>Bairro</th><th>Taxa</th><th>Ações</th></tr></thead><tbody id="bairrosTbodyFull"></tbody></table></div></div>
-    <div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><h2>📋 Entregas Realizadas</h2><div class="table-wrapper"><table><thead><tr><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th><th>Ações</th></tr></thead><tbody id="entregasTbodyFull"></tbody></table></div></div>
+    <div class="card">
+      <h2>➕ Registrar Entrega</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div>
+        <div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div>
+        <div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div>
+        <div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div>
+        <div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div>
+        <button id="addEntregaBtnFull">📥 Registrar</button>
+      </div>
+      <h2>📋 Entregas Realizadas</h2>
+      <div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th><th>Ações</th></tr></thead><tbody id="entregasTbodyFull"></tbody></table></div>
+    </div>
   </div>
 </div>
 
@@ -294,7 +306,7 @@
     <div class="relatorio-resumo" id="relatorioResumo"></div>
     <div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div>
     <div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div>
-    <div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table><thead><tr><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div>
+    <div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div>
     <div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div>
   </div>
 </div>
@@ -333,10 +345,10 @@
         state.fornecedores.push({ id: 3001, nome: 'Fornecedor Alpha', cnpj: '12.345.678/0001-90', contato: '(11) 3456-7890' });
         state.vendas.push({ id: 4001, clienteId: 2001, clienteNome: 'Cliente Exemplo', produtoId: 1001, produtoNome: 'Notebook Ultra', quantidade: 1, precoUnit: 3450, dataStr: now() });
         state.compras.push({ id: 5001, fornecedorId: 3001, fornecedorNome: 'Fornecedor Alpha', produto: 'Placa-mãe', quantidade: 5, precoUnit: 320, dataStr: now() });
-        state.notas.push({ id: 6001, texto: 'App com Grid de Navegação!', data: now() });
+        state.notas.push({ id: 6001, texto: 'App Degradê com Relatório!', data: now() });
         state.entregadores.push({ id: 7001, nome: 'João Motoboy', telefone: '(11) 98888-7777', veiculo: 'Moto', placa: 'ABC-1234' });
         state.bairros.push({ id: 8001, nome: 'Centro', taxa: 5.00 }, { id: 8002, nome: 'Jardim das Flores', taxa: 8.00 });
-        state.entregas.push({ id: 9001, entregadorId: 7001, entregadorNome: 'João Motoboy', bairroId: 8001, bairroNome: 'Centro', valor: 5.00, dataStr: now() });
+        state.entregas.push({ id: 9001, clienteId: 2001, clienteNome: 'Cliente Exemplo', produtoId: 1001, produtoNome: 'Notebook Ultra', entregadorId: 7001, entregadorNome: 'João Motoboy', bairroId: 8001, bairroNome: 'Centro', valor: 5.00, dataStr: now() });
         save();
       }
     }
@@ -357,7 +369,6 @@
       document.getElementById('barCompras').style.height = (totalCompras / max * 120) + 'px';
     }
 
-    // Funções de refresh específicas para cada modal
     function refreshVendasModal() {
       const clienteSelect = $('#vendaClienteIdFull'); clienteSelect.innerHTML = '<option value="">Selecione cliente</option>';
       state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
@@ -377,12 +388,26 @@
     function refreshEntregadorModal() { renderTable('entregadoresTbodyFull', state.entregadores, 5, 'Nenhum entregador cadastrado'); refreshDeliveryModal(); }
     function refreshDeliveryModal() {
       renderTable('bairrosTbodyFull', state.bairros, 3, 'Nenhum bairro cadastrado');
-      const bairroSelect = $('#entregaBairroIdFull'); bairroSelect.innerHTML = '<option value="">Selecione</option>';
+      
+      // Atualiza selects de cliente, produto, entregador e bairro
+      const clienteSelect = $('#entregaClienteIdFull');
+      clienteSelect.innerHTML = '<option value="">Selecione</option>';
+      state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
+      
+      const produtoSelect = $('#entregaProdutoIdFull');
+      produtoSelect.innerHTML = '<option value="">Selecione</option>';
+      state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.nome; produtoSelect.appendChild(opt); });
+      
+      const entSelect = $('#entregaEntregadorIdFull');
+      entSelect.innerHTML = '<option value="">Selecione</option>';
+      state.entregadores.forEach(e => { const opt = document.createElement('option'); opt.value = e.id; opt.textContent = e.nome; entSelect.appendChild(opt); });
+      
+      const bairroSelect = $('#entregaBairroIdFull');
+      bairroSelect.innerHTML = '<option value="">Selecione</option>';
       state.bairros.forEach(b => { const opt = document.createElement('option'); opt.value = b.id; opt.textContent = `${b.nome} - ${formatMoney(b.taxa)}`; opt.dataset.taxa = b.taxa; bairroSelect.appendChild(opt); });
       bairroSelect.onchange = () => { const sel = bairroSelect.options[bairroSelect.selectedIndex]; $('#entregaValorFull').value = sel && sel.dataset.taxa ? parseFloat(sel.dataset.taxa).toFixed(2) : ''; };
-      renderTable('entregasTbodyFull', state.entregas, 5, 'Nenhuma entrega registrada');
-      const entSelect = $('#entregaEntregadorIdFull'); entSelect.innerHTML = '<option value="">Selecione</option>';
-      state.entregadores.forEach(e => { const opt = document.createElement('option'); opt.value = e.id; opt.textContent = e.nome; entSelect.appendChild(opt); });
+      
+      renderTable('entregasTbodyFull', state.entregas, 7, 'Nenhuma entrega registrada');
     }
     function refreshAnotacoesModal() {
       const cont = $('#notesContainerFull');
@@ -405,7 +430,7 @@
       const relComprasTbody = $('#relComprasTbody');
       relComprasTbody.innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${c.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
       const relEntregasTbody = $('#relEntregasTbody');
-      relEntregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${e.dataStr}</td></tr>`).join('') : '<tr><td colspan="4">Nenhuma entrega</td></tr>';
+      relEntregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${e.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
       const relNotas = $('#relNotasContainer');
       relNotas.innerHTML = state.notas.length ? state.notas.map(n => `<div class="note-card"><div>${escapeHtml(n.texto)}<br><small style="color:#a78bfa;">${n.data}</small></div></div>`).join('') : '<div style="color:#c4b5fd;">Sem anotações.</div>';
     }
@@ -421,14 +446,13 @@
         if (tbodyId.includes('fornecedoresTbody')) return `<tr><td>${escapeHtml(item.nome)}</td><td>${escapeHtml(item.cnpj||'')}</td><td>${escapeHtml(item.contato||'')}</td><td><button class="edit-btn" data-entity="fornecedor" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="fornecedor" data-id="${item.id}">Excluir</button></td></tr>`;
         if (tbodyId.includes('entregadoresTbody')) return `<tr><td>${escapeHtml(item.nome)}</td><td>${escapeHtml(item.telefone||'')}</td><td>${escapeHtml(item.veiculo||'')}</td><td>${escapeHtml(item.placa||'')}</td><td><button class="edit-btn" data-entity="entregador" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="entregador" data-id="${item.id}">Excluir</button></td></tr>`;
         if (tbodyId.includes('bairrosTbody')) return `<tr><td>${escapeHtml(item.nome)}</td><td>${formatMoney(item.taxa)}</td><td><button class="edit-btn" data-entity="bairro" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="bairro" data-id="${item.id}">Excluir</button></td></tr>`;
-        if (tbodyId.includes('entregasTbody')) return `<tr><td>${escapeHtml(item.entregadorNome)}</td><td>${escapeHtml(item.bairroNome)}</td><td>${formatMoney(item.valor)}</td><td>${item.dataStr}</td><td><button class="edit-btn" data-entity="entrega" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="entrega" data-id="${item.id}">Excluir</button></td></tr>`;
+        if (tbodyId.includes('entregasTbody')) return `<tr><td>${escapeHtml(item.clienteNome||'')}</td><td>${escapeHtml(item.produtoNome||'')}</td><td>${escapeHtml(item.entregadorNome)}</td><td>${escapeHtml(item.bairroNome)}</td><td>${formatMoney(item.valor)}</td><td>${item.dataStr}</td><td><button class="edit-btn" data-entity="entrega" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="entrega" data-id="${item.id}">Excluir</button></td></tr>`;
         return '';
       }).join('');
     }
 
     function renderAll() { updateTotals(); }
 
-    // Funções de adicionar
     function addProduto(nome, preco, selectAfter = false, fullMode = false) {
       if (!nome) return null; if (isNaN(preco)) preco = 0;
       const novo = { id: uid(), nome, preco }; state.produtos.push(novo); save(); renderAll(); refreshVendasModal(); refreshProdutosModal();
@@ -457,7 +481,7 @@
     function addCliente(fullMode = false) {
       const nome = $('#clienteNomeFull').value.trim(); if (!nome) return alert('Nome obrigatório!');
       state.clientes.push({ id: uid(), nome, email: $('#clienteEmailFull').value, whatsapp: $('#clienteWhatsappFull').value, endereco: $('#clienteEnderecoFull').value });
-      save(); renderAll(); refreshVendasModal(); refreshClientesModal();
+      save(); renderAll(); refreshVendasModal(); refreshClientesModal(); refreshDeliveryModal();
       ['clienteNomeFull','clienteEmailFull','clienteWhatsappFull','clienteEnderecoFull'].forEach(id => $('#'+id).value = '');
     }
     function addFornecedor(fullMode = false) {
@@ -477,11 +501,39 @@
       state.bairros.push({ id: uid(), nome, taxa }); save(); refreshDeliveryModal(); $('#bairroNomeFull').value = ''; $('#bairroTaxaFull').value = '';
     }
     function addEntrega() {
-      const entId = parseInt($('#entregaEntregadorIdFull').value); const ent = state.entregadores.find(e => e.id === entId); if (!ent) return alert('Selecione um entregador!');
-      const bairroId = parseInt($('#entregaBairroIdFull').value); const bairro = state.bairros.find(b => b.id === bairroId); if (!bairro) return alert('Selecione um bairro!');
-      let valor = parseFloat($('#entregaValorFull').value); if (isNaN(valor) || valor <= 0) valor = bairro.taxa;
-      state.entregas.push({ id: uid(), entregadorId: ent.id, entregadorNome: ent.nome, bairroId: bairro.id, bairroNome: bairro.nome, valor, dataStr: now() });
-      save(); refreshDeliveryModal(); $('#entregaEntregadorIdFull').value = ''; $('#entregaBairroIdFull').value = ''; $('#entregaValorFull').value = '';
+      const clienteId = parseInt($('#entregaClienteIdFull').value);
+      const cliente = state.clientes.find(c => c.id === clienteId);
+      if (!cliente) return alert('Selecione um cliente!');
+      const produtoId = parseInt($('#entregaProdutoIdFull').value);
+      const produto = state.produtos.find(p => p.id === produtoId);
+      if (!produto) return alert('Selecione um produto!');
+      const entId = parseInt($('#entregaEntregadorIdFull').value);
+      const ent = state.entregadores.find(e => e.id === entId);
+      if (!ent) return alert('Selecione um entregador!');
+      const bairroId = parseInt($('#entregaBairroIdFull').value);
+      const bairro = state.bairros.find(b => b.id === bairroId);
+      if (!bairro) return alert('Selecione um bairro!');
+      let valor = parseFloat($('#entregaValorFull').value);
+      if (isNaN(valor) || valor <= 0) valor = bairro.taxa;
+      state.entregas.push({
+        id: uid(),
+        clienteId: cliente.id,
+        clienteNome: cliente.nome,
+        produtoId: produto.id,
+        produtoNome: produto.nome,
+        entregadorId: ent.id,
+        entregadorNome: ent.nome,
+        bairroId: bairro.id,
+        bairroNome: bairro.nome,
+        valor,
+        dataStr: now()
+      });
+      save(); refreshDeliveryModal();
+      $('#entregaClienteIdFull').value = '';
+      $('#entregaProdutoIdFull').value = '';
+      $('#entregaEntregadorIdFull').value = '';
+      $('#entregaBairroIdFull').value = '';
+      $('#entregaValorFull').value = '';
     }
 
     // Calculadora
@@ -489,15 +541,7 @@
     function buildCalc() { const btns = ['C','(',')','/','7','8','9','*','4','5','6','-','1','2','3','+','0','.','⌫','=']; $('#calcButtons').innerHTML = btns.map(b => `<button data-calc="${b}">${b}</button>`).join(''); $$('#calcButtons button').forEach(btn => btn.addEventListener('click', () => calcAction(btn.dataset.calc))); $('#calcDisplay').textContent = calcExpr; }
     function calcAction(val) { const disp = $('#calcDisplay'); if (val === 'C') { calcExpr = '0'; disp.textContent = calcExpr; return; } if (val === '⌫') { calcExpr = (calcExpr.length === 1 || calcExpr === '0') ? '0' : calcExpr.slice(0, -1); disp.textContent = calcExpr; return; } if (val === '=') { try { const expr = calcExpr.replace(/×/g,'*').replace(/÷/g,'/'); const res = Function('"use strict";return ('+expr+')')(); if (isNaN(res) || !isFinite(res)) throw new Error(); calcExpr = String(parseFloat(res.toFixed(8))); disp.textContent = calcExpr; } catch (e) { disp.textContent = 'Erro'; setTimeout(() => { calcExpr = '0'; disp.textContent = '0'; }, 800); } return; } if (calcExpr === '0' && /[0-9]/.test(val) && val !== '.') calcExpr = val; else if (calcExpr === 'Erro') calcExpr = val; else calcExpr += val; disp.textContent = calcExpr; }
 
-    // MODAL DE EDIÇÃO (completo)
-    function openEditModal(title, fieldsHtml, onSave) {
-      const modal = $('#editModal');
-      $('#modalTitle').textContent = title;
-      $('#modalFields').innerHTML = fieldsHtml;
-      modal.classList.add('active');
-      $('#saveEditBtn').onclick = () => { onSave(); modal.classList.remove('active'); };
-      $('#closeEditModalBtn').onclick = () => modal.classList.remove('active');
-    }
+    function openEditModal(title, fieldsHtml, onSave) { const modal = $('#editModal'); $('#modalTitle').textContent = title; $('#modalFields').innerHTML = fieldsHtml; modal.classList.add('active'); $('#saveEditBtn').onclick = () => { onSave(); modal.classList.remove('active'); }; $('#closeEditModalBtn').onclick = () => modal.classList.remove('active'); }
 
     function handleEditDelete(e) {
       const btn = e.target.closest('button');
@@ -505,55 +549,18 @@
       const entity = btn.dataset.entity;
       const id = parseInt(btn.dataset.id);
       const isDelete = btn.classList.contains('delete-btn');
-
       const after = (fns) => { save(); renderAll(); fns.forEach(fn => fn()); };
 
       const actions = {
-        venda: () => {
-          const v = state.vendas.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir venda?')) { state.vendas = state.vendas.filter(x => x.id !== id); after([refreshVendasModal]); } }
-          else if (v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p) && q > 0) { v.clienteNome = $('#editCliente').value; v.produtoNome = $('#editProduto').value; v.quantidade = q; v.precoUnit = p; v.dataStr = now(); after([refreshVendasModal]); } });
-        },
-        produto: () => {
-          const p = state.produtos.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir produto?')) { state.produtos = state.produtos.filter(x => x.id !== id); after([refreshVendasModal, refreshProdutosModal]); } }
-          else if (p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div>`, () => { const nn = $('#editNome').value.trim(); const np = parseFloat($('#editPreco').value); if (nn && !isNaN(np)) { p.nome = nn; p.preco = np; after([refreshVendasModal, refreshProdutosModal]); } });
-        },
-        compra: () => {
-          const c = state.compras.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir compra?')) { state.compras = state.compras.filter(x => x.id !== id); after([refreshComprasModal]); } }
-          else if (c) openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p)) { c.fornecedorNome = $('#editForn').value; c.produto = $('#editProd').value; c.quantidade = q; c.precoUnit = p; c.dataStr = now(); after([refreshComprasModal]); } });
-        },
-        cliente: () => {
-          const c = state.clientes.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir cliente?')) { state.clientes = state.clientes.filter(x => x.id !== id); after([refreshVendasModal, refreshClientesModal]); } }
-          else if (c) openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { c.nome = nn; c.email = $('#editEmail').value; c.whatsapp = $('#editWhatsapp').value; c.endereco = $('#editEndereco').value; after([refreshVendasModal, refreshClientesModal]); } });
-        },
-        fornecedor: () => {
-          const f = state.fornecedores.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir fornecedor?')) { state.fornecedores = state.fornecedores.filter(x => x.id !== id); after([refreshComprasModal, refreshFornecedoresModal]); } }
-          else if (f) openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { f.nome = nn; f.cnpj = $('#editCnpj').value; f.contato = $('#editContato').value; after([refreshComprasModal, refreshFornecedoresModal]); } });
-        },
-        entregador: () => {
-          const e = state.entregadores.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir entregador?')) { state.entregadores = state.entregadores.filter(x => x.id !== id); after([refreshEntregadorModal, refreshDeliveryModal]); } }
-          else if (e) openEditModal('Editar Entregador', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(e.nome)}"></div><div class="input-group"><label>Telefone</label><input id="editTelefone" value="${escapeHtml(e.telefone||'')}"></div><div class="input-group"><label>Veículo</label><input id="editVeiculo" value="${escapeHtml(e.veiculo||'')}"></div><div class="input-group"><label>Placa</label><input id="editPlaca" value="${escapeHtml(e.placa||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { e.nome = nn; e.telefone = $('#editTelefone').value; e.veiculo = $('#editVeiculo').value; e.placa = $('#editPlaca').value; after([refreshEntregadorModal, refreshDeliveryModal]); } });
-        },
-        bairro: () => {
-          const b = state.bairros.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir bairro?')) { state.bairros = state.bairros.filter(x => x.id !== id); after([refreshDeliveryModal]); } }
-          else if (b) openEditModal('Editar Bairro', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(b.nome)}"></div><div class="input-group"><label>Taxa</label><input id="editTaxa" type="number" step="any" value="${b.taxa}"></div>`, () => { const nn = $('#editNome').value.trim(); const np = parseFloat($('#editTaxa').value); if (nn && !isNaN(np)) { b.nome = nn; b.taxa = np; after([refreshDeliveryModal]); } });
-        },
-        entrega: () => {
-          const e = state.entregas.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir entrega?')) { state.entregas = state.entregas.filter(x => x.id !== id); after([refreshDeliveryModal]); } }
-          else if (e) openEditModal('Editar Entrega', `<div class="input-group"><label>Entregador</label><input id="editEntregador" value="${escapeHtml(e.entregadorNome)}"></div><div class="input-group"><label>Bairro</label><input id="editBairro" value="${escapeHtml(e.bairroNome)}"></div><div class="input-group"><label>Valor</label><input id="editValor" type="number" step="any" value="${e.valor}"></div>`, () => { const nn = $('#editEntregador').value.trim(); const bn = $('#editBairro').value.trim(); const v = parseFloat($('#editValor').value); if (nn && bn && !isNaN(v)) { e.entregadorNome = nn; e.bairroNome = bn; e.valor = v; e.dataStr = now(); after([refreshDeliveryModal]); } });
-        },
-        nota: () => {
-          const n = state.notas.find(x => x.id === id);
-          if (isDelete) { if (confirm('Excluir anotação?')) { state.notas = state.notas.filter(x => x.id !== id); save(); refreshAnotacoesModal(); } }
-          else if (n) openEditModal('Editar Anotação', `<div class="input-group"><label>Texto</label><textarea id="editTexto" rows="3">${escapeHtml(n.texto)}</textarea></div>`, () => { const nt = $('#editTexto').value.trim(); if (nt) { n.texto = nt; n.data = now(); save(); refreshAnotacoesModal(); } });
-        }
+        venda: () => { const v = state.vendas.find(x => x.id === id); if (isDelete) { if (confirm('Excluir venda?')) { state.vendas = state.vendas.filter(x => x.id !== id); after([refreshVendasModal]); } } else if (v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p) && q > 0) { v.clienteNome = $('#editCliente').value; v.produtoNome = $('#editProduto').value; v.quantidade = q; v.precoUnit = p; v.dataStr = now(); after([refreshVendasModal]); } }); },
+        produto: () => { const p = state.produtos.find(x => x.id === id); if (isDelete) { if (confirm('Excluir produto?')) { state.produtos = state.produtos.filter(x => x.id !== id); after([refreshVendasModal, refreshProdutosModal, refreshDeliveryModal]); } } else if (p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div>`, () => { const nn = $('#editNome').value.trim(); const np = parseFloat($('#editPreco').value); if (nn && !isNaN(np)) { p.nome = nn; p.preco = np; after([refreshVendasModal, refreshProdutosModal, refreshDeliveryModal]); } }); },
+        compra: () => { const c = state.compras.find(x => x.id === id); if (isDelete) { if (confirm('Excluir compra?')) { state.compras = state.compras.filter(x => x.id !== id); after([refreshComprasModal]); } } else if (c) openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p)) { c.fornecedorNome = $('#editForn').value; c.produto = $('#editProd').value; c.quantidade = q; c.precoUnit = p; c.dataStr = now(); after([refreshComprasModal]); } }); },
+        cliente: () => { const c = state.clientes.find(x => x.id === id); if (isDelete) { if (confirm('Excluir cliente?')) { state.clientes = state.clientes.filter(x => x.id !== id); after([refreshVendasModal, refreshClientesModal, refreshDeliveryModal]); } } else if (c) openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { c.nome = nn; c.email = $('#editEmail').value; c.whatsapp = $('#editWhatsapp').value; c.endereco = $('#editEndereco').value; after([refreshVendasModal, refreshClientesModal, refreshDeliveryModal]); } }); },
+        fornecedor: () => { const f = state.fornecedores.find(x => x.id === id); if (isDelete) { if (confirm('Excluir fornecedor?')) { state.fornecedores = state.fornecedores.filter(x => x.id !== id); after([refreshComprasModal, refreshFornecedoresModal]); } } else if (f) openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { f.nome = nn; f.cnpj = $('#editCnpj').value; f.contato = $('#editContato').value; after([refreshComprasModal, refreshFornecedoresModal]); } }); },
+        entregador: () => { const e = state.entregadores.find(x => x.id === id); if (isDelete) { if (confirm('Excluir entregador?')) { state.entregadores = state.entregadores.filter(x => x.id !== id); after([refreshEntregadorModal, refreshDeliveryModal]); } } else if (e) openEditModal('Editar Entregador', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(e.nome)}"></div><div class="input-group"><label>Telefone</label><input id="editTelefone" value="${escapeHtml(e.telefone||'')}"></div><div class="input-group"><label>Veículo</label><input id="editVeiculo" value="${escapeHtml(e.veiculo||'')}"></div><div class="input-group"><label>Placa</label><input id="editPlaca" value="${escapeHtml(e.placa||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { e.nome = nn; e.telefone = $('#editTelefone').value; e.veiculo = $('#editVeiculo').value; e.placa = $('#editPlaca').value; after([refreshEntregadorModal, refreshDeliveryModal]); } }); },
+        bairro: () => { const b = state.bairros.find(x => x.id === id); if (isDelete) { if (confirm('Excluir bairro?')) { state.bairros = state.bairros.filter(x => x.id !== id); after([refreshDeliveryModal]); } } else if (b) openEditModal('Editar Bairro', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(b.nome)}"></div><div class="input-group"><label>Taxa</label><input id="editTaxa" type="number" step="any" value="${b.taxa}"></div>`, () => { const nn = $('#editNome').value.trim(); const np = parseFloat($('#editTaxa').value); if (nn && !isNaN(np)) { b.nome = nn; b.taxa = np; after([refreshDeliveryModal]); } }); },
+        entrega: () => { const e = state.entregas.find(x => x.id === id); if (isDelete) { if (confirm('Excluir entrega?')) { state.entregas = state.entregas.filter(x => x.id !== id); after([refreshDeliveryModal]); } } else if (e) openEditModal('Editar Entrega', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(e.clienteNome||'')}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(e.produtoNome||'')}"></div><div class="input-group"><label>Entregador</label><input id="editEntregador" value="${escapeHtml(e.entregadorNome)}"></div><div class="input-group"><label>Bairro</label><input id="editBairro" value="${escapeHtml(e.bairroNome)}"></div><div class="input-group"><label>Valor</label><input id="editValor" type="number" step="any" value="${e.valor}"></div>`, () => { const cn = $('#editCliente').value.trim(); const pn = $('#editProduto').value.trim(); const en = $('#editEntregador').value.trim(); const bn = $('#editBairro').value.trim(); const v = parseFloat($('#editValor').value); if (cn && pn && en && bn && !isNaN(v)) { e.clienteNome = cn; e.produtoNome = pn; e.entregadorNome = en; e.bairroNome = bn; e.valor = v; e.dataStr = now(); after([refreshDeliveryModal]); } }); },
+        nota: () => { const n = state.notas.find(x => x.id === id); if (isDelete) { if (confirm('Excluir anotação?')) { state.notas = state.notas.filter(x => x.id !== id); save(); refreshAnotacoesModal(); } } else if (n) openEditModal('Editar Anotação', `<div class="input-group"><label>Texto</label><textarea id="editTexto" rows="3">${escapeHtml(n.texto)}</textarea></div>`, () => { const nt = $('#editTexto').value.trim(); if (nt) { n.texto = nt; n.data = now(); save(); refreshAnotacoesModal(); } }); }
       };
       if (actions[entity]) actions[entity]();
     }
@@ -574,10 +581,26 @@
           else if (tab === 'anotacoes') { $('#anotacoesFullModal').classList.add('active'); refreshAnotacoesModal(); }
           else if (tab === 'calc') { $('#calcFullModal').classList.add('active'); }
           else if (tab === 'relatorio') { $('#relatorioFullModal').classList.add('active'); refreshRelatorioModal(); }
-          else { $$('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); $$('.tab-pane').forEach(p => p.classList.remove('active-pane')); const pane = document.getElementById(tab + 'Pane'); if (pane) pane.classList.add('active-pane'); }
+          else {
+            $$('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
+            const pane = document.getElementById(tab + 'Pane');
+            if (pane) pane.classList.add('active-pane');
+            $('.main-content').scrollTop = 0;
+          }
       });});
 
-      const returnToDashboard = () => { renderAll(); $$('.nav-btn').forEach(b => b.classList.remove('active')); const dashboardBtn = document.querySelector('[data-tab="dashboard"]'); if (dashboardBtn) dashboardBtn.classList.add('active'); $$('.tab-pane').forEach(p => p.classList.remove('active-pane')); const dashPane = document.getElementById('dashboardPane'); if (dashPane) dashPane.classList.add('active-pane'); };
+      const returnToDashboard = () => {
+        renderAll();
+        $$('.nav-btn').forEach(b => b.classList.remove('active'));
+        const dashboardBtn = document.querySelector('[data-tab="dashboard"]');
+        if (dashboardBtn) dashboardBtn.classList.add('active');
+        $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
+        const dashPane = document.getElementById('dashboardPane');
+        if (dashPane) dashPane.classList.add('active-pane');
+      };
+
       $('#closeVendasModalBtn').addEventListener('click', () => { $('#vendasFullModal').classList.remove('active'); returnToDashboard(); });
       $('#closeProdutosModalBtn').addEventListener('click', () => { $('#produtosFullModal').classList.remove('active'); returnToDashboard(); });
       $('#closeComprasModalBtn').addEventListener('click', () => { $('#comprasFullModal').classList.remove('active'); returnToDashboard(); });
