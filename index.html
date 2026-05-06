@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Gestão Degradê · Edição Corrigida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+      background: radial-gradient(circle at 20% 30%, #1e1b4b, #0f0a1a);
+      color: #e9d5ff;
+      height: 100vh;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .app-container {
+      display: flex;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ========== SIDEBAR VERTICAL ========== */
+    .sidebar {
+      width: 220px;
+      background: linear-gradient(180deg, rgba(30, 27, 75, 0.95) 0%, rgba(15, 13, 40, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 0.6rem;
+      border-right: 1px solid rgba(167, 139, 250, 0.3);
+      box-shadow: 4px 0 20px rgba(0,0,0,0.5);
+      z-index: 10;
+      transition: width 0.3s ease;
+    }
+
+    .sidebar-logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #c084fc, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 2rem;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .nav-menu {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      flex: 1;
+    }
+
+    .nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1rem;
+      border-radius: 1.2rem;
+      border: none;
+      background: transparent;
+      color: #c4b5fd;
+      font-weight: 500;
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      white-space: nowrap;
+      width: 100%;
+      text-align: left;
+      position: relative;
+    }
+
+    .nav-btn .icon {
+      font-size: 1.2rem;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .nav-btn:hover {
+      background: rgba(139, 92, 246, 0.25);
+      color: #ede9fe;
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.3);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      color: white;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(139, 92, 246, 0.6);
+    }
+
+    .nav-btn.active::before {
+      content: '';
+      position: absolute;
+      left: -0.4rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 4px;
+      height: 40%;
+      background: #a78bfa;
+      border-radius: 4px;
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      font-size: 0.7rem;
+      color: #a5b4fc;
+      opacity: 0.8;
+      text-align: center;
+    }
+
+    /* ========== ÁREA DE CONTEÚDO (principalmente Dashboard) ========== */
+    .main-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.2rem 1.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .tab-pane {
+      display: none;
+      width: 100%;
+    }
+
+    .tab-pane.active-pane {
+      display: block;
+      animation: fadeSlide 0.3s ease;
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(30, 27, 75, 0.8), rgba(17, 14, 46, 0.9));
+      backdrop-filter: blur(18px);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6), 0 0 0 1px rgba(139, 92, 246, 0.2);
+    }
+
+    .card h2 {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.3rem;
+      color: #c4b5fd;
+      margin-bottom: 1.2rem;
+      border-left: 4px solid #a78bfa;
+      padding-left: 0.8rem;
+      font-weight: 600;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      align-items: flex-end;
+    }
+
+    .input-group {
+      flex: 1;
+      min-width: 140px;
+    }
+
+    .input-group label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: #c4b5fd;
+      display: block;
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+      letter-spacing: 1px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border-radius: 1.2rem;
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      background: rgba(15, 13, 40, 0.8);
+      color: #e9d5ff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #a78bfa;
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
+      background: rgba(20, 17, 50, 0.9);
+    }
+
+    button {
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      border: none;
+      padding: 0.7rem 1.2rem;
+      border-radius: 2rem;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+      transition: all 0.2s;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #8b5cf6, #6366f1);
+      box-shadow: 0 0 18px rgba(139, 92, 246, 0.7);
+      transform: translateY(-1px);
+    }
+
+    button:active { transform: scale(0.97); }
+
+    .btn-small {
+      background: linear-gradient(135deg, #6d28d9, #4338ca);
+      padding: 0.5rem 0.9rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #be123c, #9f1239);
+      box-shadow: 0 0 10px rgba(190, 18, 60, 0.5);
+    }
+
+    .btn-danger:hover {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      box-shadow: 0 0 16px rgba(225, 29, 72, 0.7);
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin: 0 -0.5rem;
+      padding: 0 0.5rem;
+      border-radius: 1.2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      min-width: 550px;
+    }
+
+    th {
+      color: #c4b5fd;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-size: 0.7rem;
+      padding: 0.7rem 0.4rem;
+      border-bottom: 2px solid rgba(167, 139, 250, 0.4);
+    }
+
+    td {
+      padding: 0.7rem 0.4rem;
+      border-bottom: 1px solid rgba(167, 139, 250, 0.2);
+      color: #e9d5ff;
+    }
+
+    tr:hover td { background: rgba(139, 92, 246, 0.08); }
+
+    td:last-child {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .edit-btn, .delete-btn {
+      background: rgba(139, 92, 246, 0.2);
+      color: #c4b5fd;
+      padding: 0.35rem 0.7rem;
+      border-radius: 2rem;
+      font-size: 0.7rem;
+      margin: 0 2px;
+      display: inline-block;
+      border: 1px solid rgba(167, 139, 250, 0.5);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-weight: 500;
+    }
+
+    .delete-btn { color: #fca5a5; border-color: rgba(252, 165, 165, 0.6); }
+
+    .edit-btn:hover { background: rgba(139, 92, 246, 0.4); box-shadow: 0 0 8px #a78bfa; }
+
+    .delete-btn:hover { background: rgba(252, 165, 165, 0.3); box-shadow: 0 0 8px #fca5a5; }
+
+    /* ========== MODAIS ========== */
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000; /* acima dos fullscreen */
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.25s ease;
+      padding: 1rem;
+    }
+
+    .modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: linear-gradient(145deg, #1e1b4b, #0f0a1a);
+      width: 100%;
+      max-width: 480px;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      max-height: 85vh;
+      overflow-y: auto;
+      border: 1px solid #a78bfa;
+      box-shadow: 0 0 30px rgba(139, 92, 246, 0.5);
+      transform: scale(0.95);
+      transition: transform 0.25s ease;
+    }
+
+    .modal.active .modal-content { transform: scale(1); }
+
+    /* ========== MODAL FULLSCREEN (PÁGINAS SEPARADAS) ========== */
+    .fullscreen-modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at 20% 30%, #1e1b4b, #0f0a1a);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s ease;
+    }
+
+    .fullscreen-modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .fullscreen-header {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.5rem;
+      background: rgba(30, 27, 75, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(167, 139, 250, 0.3);
+      gap: 1rem;
+    }
+
+    .fullscreen-header h2 {
+      color: #c4b5fd;
+      font-size: 1.5rem;
+      margin: 0;
+    }
+
+    .fullscreen-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+    }
+
+    .back-btn {
+      background: rgba(139, 92, 246, 0.25);
+      border: 1px solid rgba(167, 139, 250, 0.5);
+      color: #c4b5fd;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .back-btn:hover {
+      background: rgba(139, 92, 246, 0.5);
+      box-shadow: 0 0 12px #a78bfa;
+      color: white;
+    }
+
+    .note-card {
+      background: linear-gradient(145deg, rgba(139, 92, 246, 0.15), rgba(59, 39, 119, 0.3));
+      border-radius: 1.5rem;
+      padding: 0.8rem;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(167, 139, 250, 0.3);
+    }
+
+    /* ========== CALCULADORA ========== */
+    .calc-panel {
+      background: linear-gradient(145deg, rgba(30, 27, 75, 0.9), rgba(15, 13, 40, 0.95));
+      border-radius: 2rem;
+      padding: 1rem;
+      border: 1px solid rgba(167, 139, 250, 0.5);
+    }
+
+    .calc-screen {
+      background: #0b0821;
+      border-radius: 1.5rem;
+      padding: 0.9rem 1rem;
+      text-align: right;
+      font-size: clamp(1.4rem, 7vw, 2rem);
+      font-weight: 600;
+      color: #c4b5fd;
+      font-family: 'Fira Code', monospace;
+      margin-bottom: 1rem;
+      min-height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      box-shadow: inset 0 0 12px rgba(139, 92, 246, 0.4);
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .calc-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .calc-buttons button {
+      background: rgba(139, 92, 246, 0.15);
+      padding: 0.9rem 0;
+      font-size: 1.2rem;
+      border-radius: 1.3rem;
+      border: 1px solid rgba(167, 139, 250, 0.4);
+      color: #e9d5ff;
+      font-weight: 600;
+      font-family: 'Fira Code', monospace;
+      transition: 0.15s;
+      box-shadow: none;
+    }
+
+    .calc-buttons button:hover {
+      background: rgba(139, 92, 246, 0.4);
+      border-color: #a78bfa;
+      box-shadow: 0 0 12px rgba(139, 92, 246, 0.5);
+    }
+
+    .calc-buttons button:active {
+      background: #8b5cf6;
+      color: white;
+    }
+
+    /* ========== DASHBOARD ========== */
+    .dashboard-widget {
+      background: linear-gradient(145deg, rgba(30, 27, 75, 0.8), rgba(17, 14, 46, 0.9));
+      backdrop-filter: blur(18px);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+    }
+
+    .big-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .big-card {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(79, 70, 229, 0.2));
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 1px solid rgba(167, 139, 250, 0.4);
+    }
+
+    .big-card .big-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .big-card h3 {
+      font-size: 1rem;
+      color: #d8b4fe;
+      margin-bottom: 0.3rem;
+    }
+    .big-valor-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .big-valor {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #e9d5ff;
+    }
+    .toggle-eye {
+      font-size: 1.4rem;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: 0.2s;
+      user-select: none;
+    }
+    .toggle-eye:hover {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    .chart-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      gap: 1.5rem;
+      height: 150px;
+      margin-top: 1rem;
+    }
+
+    .bar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .bar {
+      width: 50px;
+      background: linear-gradient(to top, #8b5cf6, #c084fc);
+      border-radius: 1rem 1rem 0 0;
+      transition: height 0.5s ease;
+    }
+
+    .bar-label {
+      font-size: 0.8rem;
+      color: #c4b5fd;
+    }
+
+    /* ========== RESPONSIVO ========== */
+    @media (max-width: 700px) {
+      .sidebar {
+        width: 65px;
+        padding: 1.2rem 0.2rem;
+      }
+      .sidebar-logo {
+        font-size: 1rem;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+        margin-bottom: 1.2rem;
+      }
+      .nav-menu { gap: 0.2rem; }
+      .nav-btn {
+        justify-content: center;
+        padding: 0.6rem 0;
+        gap: 0;
+        font-size: 0;
+      }
+      .nav-btn .icon { font-size: 1.4rem; margin: 0; }
+      .nav-btn span:not(.icon) { display: none; }
+      .nav-btn.active::before { left: -0.2rem; height: 30%; }
+      .main-content { padding: 1rem; }
+      .big-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <!-- SIDEBAR VERTICAL -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">⚡ Gestão</div>
+    <nav class="nav-menu">
+      <button class="nav-btn active" data-tab="dashboard" title="Página inicial com resumo geral e gráficos"><span class="icon">📊</span><span>Dashboard</span></button>
+      <button class="nav-btn" data-tab="vendas" title="Abrir página de vendas"><span class="icon">🏷️</span><span>Vendas</span></button>
+      <button class="nav-btn" data-tab="produtos" title="Abrir página de produtos"><span class="icon">📦</span><span>Produtos</span></button>
+      <button class="nav-btn" data-tab="compras" title="Abrir página de compras"><span class="icon">🛒</span><span>Compras</span></button>
+      <button class="nav-btn" data-tab="clientes" title="Abrir página de clientes"><span class="icon">👥</span><span>Clientes</span></button>
+      <button class="nav-btn" data-tab="fornecedores" title="Abrir página de fornecedores"><span class="icon">🏭</span><span>Fornecedores</span></button>
+      <button class="nav-btn" data-tab="anotacoes" title="Abrir página de anotações"><span class="icon">📝</span><span>Anotações</span></button>
+      <button class="nav-btn" data-tab="calc" title="Abrir calculadora"><span class="icon">🧮</span><span>Calc</span></button>
+    </nav>
+    <div class="sidebar-footer">⬇️</div>
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL (apenas Dashboard) -->
+  <main class="main-content">
+    <div id="dashboardPane" class="tab-pane active-pane">
+      <div class="dashboard-widget">
+        <h2 style="color:#c4b5fd; margin-bottom:1.5rem;">📊 Visão Geral</h2>
+        <div class="big-cards">
+          <div class="big-card">
+            <span class="big-icon">💰</span>
+            <h3>Vendas Totais</h3>
+            <div class="big-valor-container">
+              <span class="big-valor" id="dashVendas">R$ 0,00</span>
+              <span class="toggle-eye" id="toggleDashVendas">👁️</span>
+            </div>
+          </div>
+          <div class="big-card">
+            <span class="big-icon">📦</span>
+            <h3>Compras Totais</h3>
+            <div class="big-valor-container">
+              <span class="big-valor" id="dashCompras">R$ 0,00</span>
+              <span class="toggle-eye" id="toggleDashCompras">👁️</span>
+            </div>
+          </div>
+          <div class="big-card">
+            <span class="big-icon">📈</span>
+            <h3>Lucro Líquido</h3>
+            <div class="big-valor-container">
+              <span class="big-valor" id="dashLucro">R$ 0,00</span>
+              <span class="toggle-eye" id="toggleDashLucro">👁️</span>
+            </div>
+          </div>
+        </div>
+        <div style="margin-top:1.5rem;">
+          <h3 style="color:#c4b5fd; margin-bottom:1rem;">📈 Gráfico de Vendas vs Compras</h3>
+          <div class="chart-container">
+            <div class="bar-wrapper">
+              <div class="bar" id="barVendas" style="height: 0px;"></div>
+              <span class="bar-label">Vendas</span>
+            </div>
+            <div class="bar-wrapper">
+              <div class="bar" id="barCompras" style="height: 0px; background: linear-gradient(to top, #fca5a5, #be123c);"></div>
+              <span class="bar-label">Compras</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- MODAL FULLSCREEN DE VENDAS -->
+<div id="vendasFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header">
+    <button class="back-btn" id="closeVendasModalBtn">← Voltar</button>
+    <h2>📋 Vendas</h2>
+  </div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Nova Venda</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div>
+        <div class="input-group"><label>Produto</label><div style="display:flex; gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div>
+        <div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div>
+        <div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div>
+        <button id="addVendaBtnFull">➕ Registrar</button>
+      </div>
+      <h2>📋 Histórico de Vendas</h2>
+      <div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTbodyFull"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FULLSCREEN DE PRODUTOS -->
+<div id="produtosFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header">
+    <button class="back-btn" id="closeProdutosModalBtn">← Voltar</button>
+    <h2>📦 Produtos</h2>
+  </div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Cadastrar Produto</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div>
+        <div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div>
+        <button id="addProdutoBtnFull">➕ Salvar</button>
+      </div>
+      <div class="table-wrapper"><table><thead><tr><th>Produto</th><th>Preço</th><th>Ações</th></tr></thead><tbody id="produtosTbodyFull"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FULLSCREEN DE COMPRAS -->
+<div id="comprasFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header">
+    <button class="back-btn" id="closeComprasModalBtn">← Voltar</button>
+    <h2>🛒 Compras</h2>
+  </div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Nova Compra</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div>
+        <div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div>
+        <div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div>
+        <div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div>
+        <button id="addCompraBtnFull">📥 Registrar</button>
+      </div>
+      <h2>📋 Registro de Compras</h2>
+      <div class="table-wrapper"><table><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="purchasesTbodyFull"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FULLSCREEN DE CLIENTES -->
+<div id="clientesFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header">
+    <button class="back-btn" id="closeClientesModalBtn">← Voltar</button>
+    <h2>👥 Clientes</h2>
+  </div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Cadastrar Cliente</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div>
+        <div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div>
+        <div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div>
+        <div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div>
+        <button id="addClienteBtnFull">💾 Salvar</button>
+      </div>
+      <h2>📋 Lista de Clientes</h2>
+      <div class="table-wrapper"><table><thead><tr><th>Nome</th><th>Email</th><th>WhatsApp</th><th>Endereço</th><th>Ações</th></tr></thead><tbody id="clientesTbodyFull"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FULLSCREEN DE FORNECEDORES -->
+<div id="fornecedoresFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header">
+    <button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button>
+    <h2>🏭 Fornecedores</h2>
+  </div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Cadastrar Fornecedor</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div>
+        <div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div>
+        <div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div>
+        <button id="addFornecedorBtnFull">➕ Salvar</button>
+      </div>
+      <h2>📋 Lista de Fornecedores</h2>
+      <div class="table-wrapper"><table><thead><tr><th>Nome</th><th>CNPJ</th><th>Contato</th><th>Ações</th></tr></thead><tbody id="fornecedoresTbodyFull"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FULLSCREEN DE ANOTAÇÕES -->
+<div id="anotacoesFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header">
+    <button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button>
+    <h2>📝 Anotações</h2>
+  </div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Nova Anotação</h2>
+      <div class="form-row">
+        <textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea>
+        <button id="addNotaBtnFull">➕ Salvar</button>
+      </div>
+      <h2>📋 Minhas Anotações</h2>
+      <div id="notesContainerFull"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL FULLSCREEN DA CALCULADORA -->
+<div id="calcFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header">
+    <button class="back-btn" id="closeCalcModalBtn">← Voltar</button>
+    <h2>🧮 Calculadora</h2>
+  </div>
+  <div class="fullscreen-body">
+    <div class="calc-panel" style="max-width:500px; margin:0 auto;">
+      <div class="calc-screen" id="calcDisplay">0</div>
+      <div class="calc-buttons" id="calcButtons"></div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE EDIÇÃO (geral) -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle">Editar</h3>
+    <div id="modalFields"></div>
+    <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:1.8rem;">
+      <button id="saveEditBtn">Salvar</button>
+      <button id="closeEditModalBtn" class="btn-danger" style="background:linear-gradient(135deg, #be123c, #9f1239);">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL RÁPIDO PRODUTO (no modal de vendas) -->
+<div id="quickProdutoModalFull" class="modal">
+  <div class="modal-content">
+    <h3>➕ Novo Produto</h3>
+    <div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div>
+    <div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div>
+    <div style="display:flex; gap:12px; justify-content:flex-end; margin-top:1.5rem;">
+      <button id="quickSalvarProdutoBtnFull">Salvar e Usar</button>
+      <button id="closeQuickModalBtnFull" class="btn-danger" style="background:linear-gradient(135deg, #be123c, #9f1239);">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  (() => {
+    const state = {
+      produtos: [],
+      clientes: [],
+      fornecedores: [],
+      vendas: [],
+      compras: [],
+      notas: []
+    };
+    const STORAGE_MAP = {
+      produtos: 'neon_produtos',
+      clientes: 'neon_clientes',
+      fornecedores: 'neon_fornecedores',
+      vendas: 'neon_vendas',
+      compras: 'neon_compras',
+      notas: 'neon_notas'
+    };
+
+    const $ = (sel) => document.querySelector(sel);
+    const $$ = (sel) => document.querySelectorAll(sel);
+    const formatMoney = (v) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])) : '';
+    const now = () => new Date().toLocaleString();
+    const uid = () => Date.now() + Math.floor(Math.random() * 1000);
+
+    let dashVendasVisible = true;
+    let dashComprasVisible = true;
+    let dashLucroVisible = true;
+
+    function save() {
+      for (const [key, storageKey] of Object.entries(STORAGE_MAP)) {
+        localStorage.setItem(storageKey, JSON.stringify(state[key]));
+      }
+    }
+    function load() {
+      for (const [key, storageKey] of Object.entries(STORAGE_MAP)) {
+        const raw = localStorage.getItem(storageKey);
+        state[key] = raw ? JSON.parse(raw) : [];
+      }
+      if (!state.produtos.length && !state.clientes.length && !state.fornecedores.length &&
+          !state.vendas.length && !state.compras.length && !state.notas.length) {
+        state.produtos.push({ id: 1001, nome: 'Notebook Ultra', preco: 3450 }, { id: 1002, nome: 'Mouse Gamer', preco: 129.9 });
+        state.clientes.push({ id: 2001, nome: 'Cliente Exemplo', email: 'cli@email.com', whatsapp: '(11) 99999-8888', endereco: 'Rua das Flores, 123' });
+        state.fornecedores.push({ id: 3001, nome: 'Fornecedor Alpha', cnpj: '12.345.678/0001-90', contato: '(11) 3456-7890' });
+        state.vendas.push({ id: 4001, clienteId: 2001, clienteNome: 'Cliente Exemplo', produtoId: 1001, produtoNome: 'Notebook Ultra', quantidade: 1, precoUnit: 3450, dataStr: now() });
+        state.compras.push({ id: 5001, fornecedorId: 3001, fornecedorNome: 'Fornecedor Alpha', produto: 'Placa-mãe', quantidade: 5, precoUnit: 320, dataStr: now() });
+        state.notas.push({ id: 6001, texto: 'App Degradê com Páginas!', data: now() });
+        save();
+      }
+    }
+
+    function updateTotals() {
+      const totalVendas = state.vendas.reduce((s, v) => s + v.quantidade * v.precoUnit, 0);
+      const totalCompras = state.compras.reduce((s, c) => s + c.quantidade * c.precoUnit, 0);
+      const lucro = totalVendas - totalCompras;
+
+      const vendasEl = $('#dashVendas');
+      const comprasEl = $('#dashCompras');
+      const lucroEl = $('#dashLucro');
+
+      vendasEl.textContent = dashVendasVisible ? formatMoney(totalVendas) : 'R$ ••••••';
+      comprasEl.textContent = dashComprasVisible ? formatMoney(totalCompras) : 'R$ ••••••';
+      lucroEl.textContent = dashLucroVisible ? formatMoney(lucro) : 'R$ ••••••';
+
+      $('#toggleDashVendas').textContent = dashVendasVisible ? '👁️' : '🔒';
+      $('#toggleDashCompras').textContent = dashComprasVisible ? '👁️' : '🔒';
+      $('#toggleDashLucro').textContent = dashLucroVisible ? '👁️' : '🔒';
+
+      lucroEl.style.color = dashLucroVisible ? (lucro >= 0 ? '#6ee7b7' : '#fca5a5') : '#e9d5ff';
+
+      const max = Math.max(totalVendas, totalCompras, 1);
+      document.getElementById('barVendas').style.height = (totalVendas / max * 120) + 'px';
+      document.getElementById('barCompras').style.height = (totalCompras / max * 120) + 'px';
+    }
+
+    function refreshVendasModal() {
+      const clienteSelect = $('#vendaClienteIdFull');
+      clienteSelect.innerHTML = '<option value="">Selecione cliente</option>';
+      state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
+
+      const produtoSelect = $('#vendaProdutoIdFull');
+      produtoSelect.innerHTML = '<option value="">Selecione produto</option>';
+      state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); });
+      produtoSelect.onchange = () => {
+        const sel = produtoSelect.options[produtoSelect.selectedIndex];
+        $('#vendaPrecoFull').value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : '';
+      };
+
+      renderTable('salesTbodyFull', state.vendas, 7, 'Nenhuma venda registrada');
+    }
+
+    function refreshProdutosModal() {
+      renderTable('produtosTbodyFull', state.produtos, 3, 'Nenhum produto cadastrado');
+      refreshVendasModal(); // mantém selects sincronizados
+    }
+
+    function refreshComprasModal() {
+      const fornSelect = $('#compraFornecedorIdFull');
+      fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>';
+      state.fornecedores.forEach(f => { const opt = document.createElement('option'); opt.value = f.id; opt.textContent = f.nome; fornSelect.appendChild(opt); });
+      renderTable('purchasesTbodyFull', state.compras, 7, 'Nenhuma compra registrada');
+    }
+
+    function refreshClientesModal() {
+      renderTable('clientesTbodyFull', state.clientes, 5, 'Nenhum cliente cadastrado');
+      // atualiza também o select de clientes no modal de vendas
+      const clienteSelect = $('#vendaClienteIdFull');
+      clienteSelect.innerHTML = '<option value="">Selecione cliente</option>';
+      state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
+    }
+
+    function refreshFornecedoresModal() {
+      renderTable('fornecedoresTbodyFull', state.fornecedores, 4, 'Nenhum fornecedor cadastrado');
+      // atualiza também o select de fornecedores no modal de compras
+      const fornSelect = $('#compraFornecedorIdFull');
+      fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>';
+      state.fornecedores.forEach(f => { const opt = document.createElement('option'); opt.value = f.id; opt.textContent = f.nome; fornSelect.appendChild(opt); });
+    }
+
+    function refreshAnotacoesModal() {
+      const cont = $('#notesContainerFull');
+      if (!state.notas.length) { cont.innerHTML = '<div style="color:#c4b5fd;">Sem anotações.</div>'; return; }
+      cont.innerHTML = state.notas.map(n => `
+        <div class="note-card">
+          <div>${escapeHtml(n.texto)}<br><small style="color:#a78bfa;">${n.data}</small></div>
+          <div>
+            <button class="edit-btn" data-entity="nota" data-id="${n.id}">✏️ Editar</button>
+            <button class="delete-btn" data-entity="nota" data-id="${n.id}">🗑️</button>
+          </div>
+        </div>`).join('');
+    }
+
+    function renderTable(tbodyId, items, cols, emptyMsg) {
+      const tbody = document.getElementById(tbodyId);
+      if (!tbody) return;
+      if (!items.length) { tbody.innerHTML = `<tr><td colspan="${cols}">${emptyMsg}</td></tr>`; return; }
+      tbody.innerHTML = items.map(item => {
+        if (tbodyId.includes('salesTbody')) return `<tr><td>${escapeHtml(item.clienteNome)}</td><td>${escapeHtml(item.produtoNome)}</td><td>${item.quantidade}</td><td>${formatMoney(item.precoUnit)}</td><td>${formatMoney(item.quantidade*item.precoUnit)}</td><td>${item.dataStr}</td><td><button class="edit-btn" data-entity="venda" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="venda" data-id="${item.id}">Excluir</button></td></tr>`;
+        if (tbodyId.includes('purchasesTbody')) return `<tr><td>${escapeHtml(item.fornecedorNome)}</td><td>${escapeHtml(item.produto)}</td><td>${item.quantidade}</td><td>${formatMoney(item.precoUnit)}</td><td>${formatMoney(item.quantidade*item.precoUnit)}</td><td>${item.dataStr}</td><td><button class="edit-btn" data-entity="compra" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="compra" data-id="${item.id}">Excluir</button></td></tr>`;
+        if (tbodyId.includes('produtosTbody')) return `<tr><td>${escapeHtml(item.nome)}</td><td>${formatMoney(item.preco)}</td><td><button class="edit-btn" data-entity="produto" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="produto" data-id="${item.id}">Excluir</button></td></tr>`;
+        if (tbodyId.includes('clientesTbody')) return `<tr><td>${escapeHtml(item.nome)}</td><td>${escapeHtml(item.email||'')}</td><td>${escapeHtml(item.whatsapp||'')}</td><td>${escapeHtml(item.endereco||'')}</td><td><button class="edit-btn" data-entity="cliente" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="cliente" data-id="${item.id}">Excluir</button></td></tr>`;
+        if (tbodyId.includes('fornecedoresTbody')) return `<tr><td>${escapeHtml(item.nome)}</td><td>${escapeHtml(item.cnpj||'')}</td><td>${escapeHtml(item.contato||'')}</td><td><button class="edit-btn" data-entity="fornecedor" data-id="${item.id}">Editar</button> <button class="delete-btn" data-entity="fornecedor" data-id="${item.id}">Excluir</button></td></tr>`;
+        return '';
+      }).join('');
+    }
+
+    function renderAll() {
+      updateTotals();
+    }
+
+    function addProduto(nome, preco, selectAfter = false, fullMode = false) {
+      if (!nome) return null;
+      if (isNaN(preco)) preco = 0;
+      const novo = { id: uid(), nome, preco };
+      state.produtos.push(novo);
+      save();
+      renderAll();
+      refreshVendasModal();
+      refreshProdutosModal();
+      if (selectAfter && fullMode) {
+        const sel = $('#vendaProdutoIdFull');
+        for (let i = 0; i < sel.options.length; i++) {
+          if (parseInt(sel.options[i].value) === novo.id) { sel.selectedIndex = i; sel.dispatchEvent(new Event('change')); break; }
+        }
+      }
+      return novo;
+    }
+
+    function addVenda(fullMode = false) {
+      const clienteId = parseInt(fullMode ? $('#vendaClienteIdFull').value : null);
+      const cliente = state.clientes.find(c => c.id === clienteId);
+      if (!cliente) return alert('Selecione um cliente!');
+      const produtoId = parseInt(fullMode ? $('#vendaProdutoIdFull').value : null);
+      const produto = state.produtos.find(p => p.id === produtoId);
+      if (!produto) return alert('Selecione um produto!');
+      const qtd = parseFloat(fullMode ? $('#vendaQtdFull').value : null);
+      let preco = parseFloat(fullMode ? $('#vendaPrecoFull').value : null);
+      if (isNaN(qtd) || qtd <= 0) return alert('Quantidade inválida!');
+      if (isNaN(preco) || preco < 0) preco = produto.preco;
+      state.vendas.push({ id: uid(), clienteId: cliente.id, clienteNome: cliente.nome, produtoId: produto.id, produtoNome: produto.nome, quantidade: qtd, precoUnit: preco, dataStr: now() });
+      save(); renderAll(); refreshVendasModal();
+      if (fullMode) {
+        $('#vendaProdutoIdFull').value = ''; $('#vendaQtdFull').value = '1'; $('#vendaPrecoFull').value = '';
+      }
+    }
+
+    function addCompra(fullMode = false) {
+      const fornId = parseInt(fullMode ? $('#compraFornecedorIdFull').value : null);
+      const forn = state.fornecedores.find(f => f.id === fornId);
+      if (!forn) return alert('Selecione um fornecedor!');
+      let produto = fullMode ? $('#compraProdutoFull').value.trim() || 'Produto' : null;
+      const qtd = parseFloat(fullMode ? $('#compraQtdFull').value : null);
+      let preco = parseFloat(fullMode ? $('#compraPrecoFull').value : null);
+      if (isNaN(qtd) || qtd <= 0) return alert('Quantidade inválida!');
+      if (isNaN(preco)) preco = 0;
+      state.compras.push({ id: uid(), fornecedorId: forn.id, fornecedorNome: forn.nome, produto, quantidade: qtd, precoUnit: preco, dataStr: now() });
+      save(); renderAll();
+      if (fullMode) {
+        $('#compraProdutoFull').value = ''; $('#compraQtdFull').value = '1'; $('#compraPrecoFull').value = '';
+        refreshComprasModal();
+      }
+    }
+
+    function addCliente(fullMode = false) {
+      const nome = fullMode ? $('#clienteNomeFull').value.trim() : null;
+      if (!nome) return alert('Nome obrigatório!');
+      const cliente = {
+        id: uid(),
+        nome,
+        email: fullMode ? $('#clienteEmailFull').value : '',
+        whatsapp: fullMode ? $('#clienteWhatsappFull').value : '',
+        endereco: fullMode ? $('#clienteEnderecoFull').value : ''
+      };
+      state.clientes.push(cliente);
+      save(); renderAll(); refreshVendasModal(); refreshClientesModal();
+      if (fullMode) {
+        ['clienteNomeFull','clienteEmailFull','clienteWhatsappFull','clienteEnderecoFull'].forEach(id => $('#'+id).value = '');
+      }
+    }
+
+    function addFornecedor(fullMode = false) {
+      const nome = fullMode ? $('#fornecedorNomeFull').value.trim() : null;
+      if (!nome) return alert('Nome obrigatório!');
+      const fornecedor = {
+        id: uid(),
+        nome,
+        cnpj: fullMode ? $('#fornecedorCnpjFull').value : '',
+        contato: fullMode ? $('#fornecedorContatoFull').value : ''
+      };
+      state.fornecedores.push(fornecedor);
+      save(); renderAll(); refreshComprasModal(); refreshFornecedoresModal();
+      if (fullMode) {
+        ['fornecedorNomeFull','fornecedorCnpjFull','fornecedorContatoFull'].forEach(id => $('#'+id).value = '');
+      }
+    }
+
+    function addNota(fullMode = false) {
+      const texto = fullMode ? $('#textoNotaFull').value.trim() : null;
+      if (!texto) return;
+      state.notas.push({ id: uid(), texto, data: now() });
+      save();
+      if (fullMode) {
+        $('#textoNotaFull').value = '';
+        refreshAnotacoesModal();
+      }
+    }
+
+    // ===== CALCULADORA =====
+    let calcExpr = '0';
+    function buildCalc() {
+      const btns = ['C','(',')','/','7','8','9','*','4','5','6','-','1','2','3','+','0','.','⌫','='];
+      $('#calcButtons').innerHTML = btns.map(b => `<button data-calc="${b}">${b}</button>`).join('');
+      $$('#calcButtons button').forEach(btn => btn.addEventListener('click', () => calcAction(btn.dataset.calc)));
+      $('#calcDisplay').textContent = calcExpr;
+    }
+
+    function calcAction(val) {
+      const disp = $('#calcDisplay');
+      if (val === 'C') { calcExpr = '0'; disp.textContent = calcExpr; return; }
+      if (val === '⌫') { calcExpr = (calcExpr.length === 1 || calcExpr === '0') ? '0' : calcExpr.slice(0, -1); disp.textContent = calcExpr; return; }
+      if (val === '=') {
+        try {
+          const expr = calcExpr.replace(/×/g,'*').replace(/÷/g,'/');
+          const res = Function('"use strict";return ('+expr+')')();
+          if (isNaN(res) || !isFinite(res)) throw new Error();
+          calcExpr = String(parseFloat(res.toFixed(8)));
+          disp.textContent = calcExpr;
+        } catch (e) { disp.textContent = 'Erro'; setTimeout(() => { calcExpr = '0'; disp.textContent = '0'; }, 800); }
+        return;
+      }
+      if (calcExpr === '0' && /[0-9]/.test(val) && val !== '.') calcExpr = val;
+      else if (calcExpr === 'Erro') calcExpr = val;
+      else calcExpr += val;
+      disp.textContent = calcExpr;
+    }
+
+    // ===== MODAL DE EDIÇÃO (CORRIGIDO) =====
+    function openEditModal(title, fieldsHtml, onSave) {
+      const modal = $('#editModal');
+      $('#modalTitle').textContent = title;
+      $('#modalFields').innerHTML = fieldsHtml;
+      modal.classList.add('active');
+      $('#saveEditBtn').onclick = () => { onSave(); modal.classList.remove('active'); };
+      $('#closeEditModalBtn').onclick = () => modal.classList.remove('active');
+    }
+
+    function handleEditDelete(e) {
+      const btn = e.target.closest('button');
+      if (!btn || !btn.dataset.entity) return;
+      const entity = btn.dataset.entity;
+      const id = parseInt(btn.dataset.id);
+      const isDelete = btn.classList.contains('delete-btn');
+
+      const afterSave = (refreshFns) => { save(); renderAll(); refreshFns.forEach(fn => fn()); };
+
+      const actions = {
+        produto: () => {
+          const p = state.produtos.find(x => x.id === id);
+          if (isDelete) { if (confirm('Excluir produto?')) { state.produtos = state.produtos.filter(x => x.id !== id); afterSave([refreshVendasModal, refreshProdutosModal]); } }
+          else if (p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div>`, () => { const nn = $('#editNome').value.trim(); const np = parseFloat($('#editPreco').value); if (nn && !isNaN(np)) { p.nome = nn; p.preco = np; afterSave([refreshVendasModal, refreshProdutosModal]); } });
+        },
+        venda: () => {
+          const v = state.vendas.find(x => x.id === id);
+          if (isDelete) { if (confirm('Excluir venda?')) { state.vendas = state.vendas.filter(x => x.id !== id); afterSave([refreshVendasModal]); } }
+          else if (v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p) && q > 0) { v.clienteNome = $('#editCliente').value; v.produtoNome = $('#editProduto').value; v.quantidade = q; v.precoUnit = p; v.dataStr = now(); afterSave([refreshVendasModal]); } });
+        },
+        cliente: () => {
+          const c = state.clientes.find(x => x.id === id);
+          if (isDelete) { if (confirm('Excluir cliente?')) { state.clientes = state.clientes.filter(x => x.id !== id); afterSave([refreshVendasModal, refreshClientesModal]); } }
+          else if (c) openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { c.nome = nn; c.email = $('#editEmail').value; c.whatsapp = $('#editWhatsapp').value; c.endereco = $('#editEndereco').value; afterSave([refreshVendasModal, refreshClientesModal]); } });
+        },
+        fornecedor: () => {
+          const f = state.fornecedores.find(x => x.id === id);
+          if (isDelete) { if (confirm('Excluir fornecedor?')) { state.fornecedores = state.fornecedores.filter(x => x.id !== id); afterSave([refreshComprasModal, refreshFornecedoresModal]); } }
+          else if (f) openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { f.nome = nn; f.cnpj = $('#editCnpj').value; f.contato = $('#editContato').value; afterSave([refreshComprasModal, refreshFornecedoresModal]); } });
+        },
+        compra: () => {
+          const c = state.compras.find(x => x.id === id);
+          if (isDelete) { if (confirm('Excluir compra?')) { state.compras = state.compras.filter(x => x.id !== id); afterSave([refreshComprasModal]); } }
+          else if (c) openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p)) { c.fornecedorNome = $('#editForn').value; c.produto = $('#editProd').value; c.quantidade = q; c.precoUnit = p; c.dataStr = now(); afterSave([refreshComprasModal]); } });
+        },
+        nota: () => {
+          const n = state.notas.find(x => x.id === id);
+          if (isDelete) { if (confirm('Excluir anotação?')) { state.notas = state.notas.filter(x => x.id !== id); save(); refreshAnotacoesModal(); } }
+          else if (n) openEditModal('Editar Anotação', `<div class="input-group"><label>Texto</label><textarea id="editTexto" rows="3">${escapeHtml(n.texto)}</textarea></div>`, () => { const nt = $('#editTexto').value.trim(); if (nt) { n.texto = nt; n.data = now(); save(); refreshAnotacoesModal(); } });
+        }
+      };
+      if (actions[entity]) actions[entity]();
+    }
+
+    // ===== INICIALIZAÇÃO =====
+    function init() {
+      load();
+      refreshVendasModal();
+      refreshComprasModal();
+      renderAll();
+      buildCalc();
+
+      $$('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tab = btn.dataset.tab;
+          if (tab === 'vendas') { $('#vendasFullModal').classList.add('active'); refreshVendasModal(); }
+          else if (tab === 'produtos') { $('#produtosFullModal').classList.add('active'); refreshProdutosModal(); }
+          else if (tab === 'compras') { $('#comprasFullModal').classList.add('active'); refreshComprasModal(); }
+          else if (tab === 'clientes') { $('#clientesFullModal').classList.add('active'); refreshClientesModal(); }
+          else if (tab === 'fornecedores') { $('#fornecedoresFullModal').classList.add('active'); refreshFornecedoresModal(); }
+          else if (tab === 'anotacoes') { $('#anotacoesFullModal').classList.add('active'); refreshAnotacoesModal(); }
+          else if (tab === 'calc') { $('#calcFullModal').classList.add('active'); }
+          else {
+            $$('.nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
+            const pane = document.getElementById(tab + 'Pane');
+            if (pane) pane.classList.add('active-pane');
+            $('.main-content').scrollTop = 0;
+          }
+        });
+      });
+
+      const returnToDashboard = () => {
+        renderAll();
+        $$('.nav-btn').forEach(b => b.classList.remove('active'));
+        const dashboardBtn = document.querySelector('[data-tab="dashboard"]');
+        if (dashboardBtn) dashboardBtn.classList.add('active');
+        $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
+        const dashPane = document.getElementById('dashboardPane');
+        if (dashPane) dashPane.classList.add('active-pane');
+      };
+
+      $('#closeVendasModalBtn').addEventListener('click', () => { $('#vendasFullModal').classList.remove('active'); returnToDashboard(); });
+      $('#closeProdutosModalBtn').addEventListener('click', () => { $('#produtosFullModal').classList.remove('active'); returnToDashboard(); });
+      $('#closeComprasModalBtn').addEventListener('click', () => { $('#comprasFullModal').classList.remove('active'); returnToDashboard(); });
+      $('#closeClientesModalBtn').addEventListener('click', () => { $('#clientesFullModal').classList.remove('active'); returnToDashboard(); });
+      $('#closeFornecedoresModalBtn').addEventListener('click', () => { $('#fornecedoresFullModal').classList.remove('active'); returnToDashboard(); });
+      $('#closeAnotacoesModalBtn').addEventListener('click', () => { $('#anotacoesFullModal').classList.remove('active'); returnToDashboard(); });
+      $('#closeCalcModalBtn').addEventListener('click', () => { $('#calcFullModal').classList.remove('active'); returnToDashboard(); });
+
+      $('#addVendaBtnFull').addEventListener('click', () => addVenda(true));
+      $('#quickAddProdutoBtnFull').addEventListener('click', () => {
+        $('#quickProdutoNomeFull').value = '';
+        $('#quickProdutoPrecoFull').value = '';
+        $('#quickProdutoModalFull').classList.add('active');
+      });
+      $('#closeQuickModalBtnFull').addEventListener('click', () => $('#quickProdutoModalFull').classList.remove('active'));
+      $('#quickSalvarProdutoBtnFull').addEventListener('click', () => {
+        const nome = $('#quickProdutoNomeFull').value.trim();
+        const preco = parseFloat($('#quickProdutoPrecoFull').value);
+        if (!nome) return alert('Nome obrigatório');
+        const novo = addProduto(nome, isNaN(preco) ? 0 : preco, true, true);
+        if (novo) { $('#quickProdutoModalFull').classList.remove('active'); alert(`Produto "${novo.nome}" cadastrado com sucesso!`); }
+      });
+
+      $('#addProdutoBtnFull').addEventListener('click', () => {
+        const nome = $('#produtoNomeFull').value.trim();
+        const preco = parseFloat($('#produtoPrecoFull').value);
+        if (!nome) return alert('Nome do produto obrigatório');
+        addProduto(nome, isNaN(preco) ? 0 : preco, false, false);
+        $('#produtoNomeFull').value = ''; $('#produtoPrecoFull').value = '';
+        refreshProdutosModal();
+      });
+
+      $('#addCompraBtnFull').addEventListener('click', () => addCompra(true));
+      $('#addClienteBtnFull').addEventListener('click', () => addCliente(true));
+      $('#addFornecedorBtnFull').addEventListener('click', () => addFornecedor(true));
+      $('#addNotaBtnFull').addEventListener('click', () => addNota(true));
+
+      // Olhos mágicos do dashboard
+      $('#toggleDashVendas').addEventListener('click', () => { dashVendasVisible = !dashVendasVisible; updateTotals(); });
+      $('#toggleDashCompras').addEventListener('click', () => { dashComprasVisible = !dashComprasVisible; updateTotals(); });
+      $('#toggleDashLucro').addEventListener('click', () => { dashLucroVisible = !dashLucroVisible; updateTotals(); });
+
+      document.body.addEventListener('click', handleEditDelete);
+    }
+
+    init();
+  })();
+</script>
+</body>
+</html>
