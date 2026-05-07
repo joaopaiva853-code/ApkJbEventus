@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>DBZ Gestão · Cards em Todas as Listas</title>
+  <title>RUMO GESTÃO · Cards em Todas as Listas</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -11,43 +11,26 @@
     * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
     body {
       font-family: 'Inter','Poppins',system-ui,sans-serif;
-      /* Gradiente roxo/branco */
-      background: radial-gradient(circle at 30% 10%, #4c1d95, #2e1065, #1a0b2e);
+      background: radial-gradient(circle at 30% 30%, #001a2b 0%, #0a0f1a 90%);
       background-attachment: fixed;
-      color:#f5f5f5; min-height:100vh; display:flex; flex-direction:column; align-items:center;
-      position: relative;
-    }
-    /* Overlay sutil */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(ellipse at 50% 30%, rgba(168,85,247,0.15), transparent 70%);
-      pointer-events: none;
-      z-index: 0;
+      color:#f0f4fa; min-height:100vh; display:flex; flex-direction:column; align-items:center;
     }
     .app-container {
       width:100%; max-width:1200px; display:flex; flex-direction:column; padding:1rem 1.5rem 2rem; gap:1.5rem;
       margin:0 auto;
-      position: relative;
-      z-index: 1;
     }
     .app-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:0.5rem; }
     .app-logo {
       font-size:2rem; font-weight:700;
-      background: linear-gradient(135deg, #c084fc, #e9d5ff, #a855f7);
+      background: linear-gradient(135deg, #3b82f6, #60a5fa, #1e3a8a);
       -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:1px;
-      text-shadow: 0 0 20px rgba(168,85,247,0.4);
     }
     .clock-container { display:flex; flex-direction:column; align-items:flex-end; gap:0.2rem; }
     .digital-clock {
-      font-size:2rem; font-weight:700; color:#e9d5ff; font-family:'Fira Code','Courier New',monospace;
-      letter-spacing:2px; text-shadow:0 0 12px rgba(168,85,247,0.8);
+      font-size:2rem; font-weight:700; color:#60a5fa; font-family:'Fira Code','Courier New',monospace;
+      letter-spacing:2px; text-shadow:0 0 12px rgba(96,165,250,0.8);
     }
-    .digital-date { font-size:0.85rem; font-weight:600; color:#d8b4fe; text-shadow:0 0 6px rgba(168,85,247,0.6); }
+    .digital-date { font-size:0.85rem; font-weight:600; color:#93c5fd; text-shadow:0 0 6px rgba(147,197,253,0.6); }
     
     /* Grade de botões responsiva e centralizada */
     .nav-grid {
@@ -61,165 +44,141 @@
     
     .nav-btn {
       display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem; padding:0.9rem 0.5rem;
-      border-radius:1.5rem; border:none; 
-      background: linear-gradient(145deg, rgba(76,29,149,0.9), rgba(46,16,101,0.95));
-      backdrop-filter: blur(4px);
-      color:#d8b4fe;
+      border-radius:1.5rem; border:none; background:rgba(15,30,50,0.8); backdrop-filter:blur(8px); color:#93c5fd;
       font-weight:500; font-size:0.8rem; font-family:inherit; cursor:pointer; transition:all 0.25s ease; text-align:center;
-      border:1px solid rgba(168,85,247,0.5); box-shadow:0 4px 12px rgba(0,0,0,0.4);
+      border:1px solid rgba(59,130,246,0.4); box-shadow:0 4px 12px rgba(0,0,0,0.4);
       width: 100%;
     }
     .nav-btn .icon { font-size:1.6rem; }
-    .nav-btn:hover { 
-      background: linear-gradient(145deg, rgba(168,85,247,0.4), rgba(76,29,149,0.6));
-      color:#f3e8ff; 
-      box-shadow:0 0 20px rgba(168,85,247,0.6); 
-      transform:translateY(-2px);
-      border-color: #c084fc;
-    }
-    .nav-btn.active { 
-      background: linear-gradient(135deg, #a855f7, #7c3aed); 
-      color:#ffffff; font-weight:700; 
-      border-color:#e9d5ff; 
-      box-shadow:0 0 22px rgba(192,132,252,0.8); 
-    }
+    .nav-btn:hover { background:rgba(59,130,246,0.25); color:#60a5fa; box-shadow:0 0 20px rgba(59,130,246,0.5); transform:translateY(-2px); }
+    .nav-btn.active { background:linear-gradient(135deg,#1e40af,#3b82f6); color:#ffffff; font-weight:700; border-color:#60a5fa; box-shadow:0 0 22px rgba(96,165,250,0.7); }
     
     .main-content { flex:1; display:flex; flex-direction:column; gap:1.5rem; width:100%; }
     .tab-pane { display:none; width:100%; }
     .tab-pane.active-pane { display:block; animation:fadeSlide 0.3s ease; }
     @keyframes fadeSlide { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
     .card {
-      background: linear-gradient(145deg, rgba(55,25,110,0.95), rgba(30,15,70,0.98));
-      backdrop-filter: blur(12px);
-      border-radius:2rem; padding:1.5rem; 
-      border:1px solid rgba(168,85,247,0.6);
-      box-shadow:0 12px 30px rgba(0,0,0,0.7), 0 0 0 1px rgba(168,85,247,0.3), inset 0 1px 0 rgba(216,180,254,0.1);
-      margin-bottom:1.5rem;
+      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); backdrop-filter:blur(18px);
+      border-radius:2rem; padding:1.5rem; border:1px solid rgba(59,130,246,0.4);
+      box-shadow:0 12px 30px rgba(0,0,0,0.7),0 0 0 1px rgba(59,130,246,0.2); margin-bottom:1.5rem;
     }
-    .card h2 { display:flex; align-items:center; gap:10px; font-size:1.3rem; color:#e9d5ff; margin-bottom:1.2rem; border-left:4px solid #a855f7; padding-left:0.8rem; font-weight:600; }
+    .card h2 { display:flex; align-items:center; gap:10px; font-size:1.3rem; color:#60a5fa; margin-bottom:1.2rem; border-left:4px solid #3b82f6; padding-left:0.8rem; font-weight:600; }
     .form-row { display:flex; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; align-items:flex-end; }
     .input-group { flex:1; min-width:140px; }
-    .input-group label { font-size:0.7rem; font-weight:600; color:#d8b4fe; display:block; text-transform:uppercase; margin-bottom:0.2rem; letter-spacing:1px; }
+    .input-group label { font-size:0.7rem; font-weight:600; color:#93c5fd; display:block; text-transform:uppercase; margin-bottom:0.2rem; letter-spacing:1px; }
     input,select,textarea {
-      width:100%; padding:0.7rem 0.9rem; border-radius:1.2rem; border:1px solid rgba(168,85,247,0.6);
-      background:rgba(20,12,40,0.9); color:#f5f5f5; font-size:0.95rem; font-family:inherit; transition:all 0.2s; outline:none;
+      width:100%; padding:0.7rem 0.9rem; border-radius:1.2rem; border:1px solid rgba(59,130,246,0.4);
+      background:rgba(10,20,35,0.9); color:#f0f4fa; font-size:0.95rem; font-family:inherit; transition:all 0.2s; outline:none;
     }
-    input:focus,select:focus,textarea:focus { border-color:#a855f7; box-shadow:0 0 12px rgba(168,85,247,0.6); background:rgba(30,18,55,0.95); }
+    input:focus,select:focus,textarea:focus { border-color:#3b82f6; box-shadow:0 0 12px rgba(59,130,246,0.6); background:rgba(15,30,50,0.9); }
     button {
-      background: linear-gradient(135deg, #a855f7, #7c3aed); border:none; padding:0.7rem 1.2rem; border-radius:2rem;
+      background:linear-gradient(135deg,#1e40af,#2563eb); border:none; padding:0.7rem 1.2rem; border-radius:2rem;
       color:#ffffff; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
-      gap:0.4rem; font-size:0.9rem; box-shadow:0 0 12px rgba(168,85,247,0.6); transition:all 0.2s; font-family:inherit; letter-spacing:0.3px;
+      gap:0.4rem; font-size:0.9rem; box-shadow:0 0 12px rgba(37,99,235,0.6); transition:all 0.2s; font-family:inherit; letter-spacing:0.3px;
     }
-    button:hover { background: linear-gradient(135deg, #c084fc, #a855f7); box-shadow:0 0 20px rgba(192,132,252,0.8); transform:translateY(-1px); }
+    button:hover { background:linear-gradient(135deg,#2563eb,#3b82f6); box-shadow:0 0 20px rgba(59,130,246,0.8); transform:translateY(-1px); }
     button:active { transform:scale(0.97); }
-    .btn-small { background: linear-gradient(135deg, #9333ea, #7c3aed); padding:0.5rem 0.9rem; font-size:0.8rem; }
-    .btn-outline { background:transparent; border:1px solid rgba(168,85,247,0.7); color:#d8b4fe; box-shadow:none; }
-    .btn-outline:hover { background:rgba(168,85,247,0.2); box-shadow:0 0 10px rgba(168,85,247,0.5); }
-    .btn-danger { background: linear-gradient(135deg,#dc2626,#b91c1c); box-shadow:0 0 10px rgba(220,38,38,0.5); }
-    .btn-danger:hover { background: linear-gradient(135deg,#ef4444,#dc2626); box-shadow:0 0 16px rgba(239,68,68,0.7); }
+    .btn-small { background:linear-gradient(135deg,#1e3a8a,#1e40af); padding:0.5rem 0.9rem; font-size:0.8rem; }
+    .btn-outline { background:transparent; border:1px solid rgba(59,130,246,0.6); color:#93c5fd; box-shadow:none; }
+    .btn-outline:hover { background:rgba(59,130,246,0.2); box-shadow:0 0 10px rgba(59,130,246,0.5); }
+    .btn-danger { background:linear-gradient(135deg,#991b1b,#dc2626); box-shadow:0 0 10px rgba(220,38,38,0.5); }
+    .btn-danger:hover { background:linear-gradient(135deg,#b91c1c,#ef4444); box-shadow:0 0 16px rgba(239,68,68,0.7); }
     .toggle-section { display:none; margin-top:1.5rem; }
     .toggle-section.visible { display:block; }
     .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; margin-top:1rem; }
     .item-card {
-      background: linear-gradient(145deg, rgba(65,35,125,0.95), rgba(40,20,85,0.98));
-      border-radius:1.5rem; padding:1rem;
-      border:1px solid rgba(168,85,247,0.6); box-shadow:0 8px 20px rgba(0,0,0,0.5); transition:all 0.25s ease;
+      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); border-radius:1.5rem; padding:1rem;
+      border:1px solid rgba(59,130,246,0.4); box-shadow:0 8px 20px rgba(0,0,0,0.5); transition:all 0.25s ease;
       display:flex; flex-direction:column; gap:0.6rem;
-      backdrop-filter: blur(4px);
     }
-    .item-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(168,85,247,0.4); border-color:#c084fc; background: linear-gradient(145deg, rgba(85,45,145,0.95), rgba(50,25,100,0.98)); }
+    .item-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(59,130,246,0.3); border-color:#3b82f6; }
     .item-card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; }
-    .item-card-title { font-weight:700; color:#e9d5ff; font-size:1.1rem; word-break:break-word; }
-    .item-card-subtitle { font-size:0.75rem; color:#d8b4fe; white-space:nowrap; }
-    .item-card-body { font-size:0.9rem; color:#f5f5f5; }
-    .item-card-value { font-size:1.3rem; font-weight:700; color:#e9d5ff; text-align:right; }
+    .item-card-title { font-weight:700; color:#60a5fa; font-size:1.1rem; word-break:break-word; }
+    .item-card-subtitle { font-size:0.75rem; color:#93c5fd; white-space:nowrap; }
+    .item-card-body { font-size:0.9rem; color:#f0f4fa; }
+    .item-card-value { font-size:1.3rem; font-weight:700; color:#60a5fa; text-align:right; }
     .item-card-actions { display:flex; gap:0.4rem; justify-content:flex-end; flex-wrap:wrap; }
     .item-card-actions .edit-btn,
     .item-card-actions .delete-btn {
-      background:rgba(168,85,247,0.2); color:#e9d5ff; padding:0.35rem 0.8rem; border-radius:2rem;
-      font-size:0.7rem; border:1px solid rgba(168,85,247,0.6); cursor:pointer; transition:all 0.2s; font-weight:500;
+      background:rgba(59,130,246,0.15); color:#60a5fa; padding:0.35rem 0.8rem; border-radius:2rem;
+      font-size:0.7rem; border:1px solid rgba(59,130,246,0.5); cursor:pointer; transition:all 0.2s; font-weight:500;
     }
-    .item-card-actions .delete-btn { color:#ffc2c2; border-color:rgba(255,100,100,0.6); }
-    .item-card-actions .edit-btn:hover { background:rgba(168,85,247,0.5); box-shadow:0 0 8px #a855f7; }
-    .item-card-actions .delete-btn:hover { background:rgba(220,38,38,0.4); box-shadow:0 0 8px #ef4444; }
+    .item-card-actions .delete-btn { color:#f87171; border-color:rgba(248,113,113,0.6); }
+    .item-card-actions .edit-btn:hover { background:rgba(59,130,246,0.4); box-shadow:0 0 8px #3b82f6; }
+    .item-card-actions .delete-btn:hover { background:rgba(220,38,38,0.3); box-shadow:0 0 8px #ef4444; }
     .modal {
       position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px);
       display:flex; align-items:center; justify-content:center; z-index:3000; visibility:hidden; opacity:0; transition:0.25s ease; padding:1rem;
     }
     .modal.active { visibility:visible; opacity:1; }
     .modal-content {
-      background: linear-gradient(145deg,#2d1a4a,#1b0f33); width:100%; max-width:480px; border-radius:2rem; padding:1.5rem;
-      max-height:85vh; overflow-y:auto; border:1px solid #a855f7; box-shadow:0 0 30px rgba(168,85,247,0.5);
+      background:linear-gradient(145deg,#0a1428,#050d1a); width:100%; max-width:480px; border-radius:2rem; padding:1.5rem;
+      max-height:85vh; overflow-y:auto; border:1px solid #3b82f6; box-shadow:0 0 30px rgba(59,130,246,0.5);
       transform:scale(0.95); transition:transform 0.25s ease;
     }
     .modal.active .modal-content { transform:scale(1); }
     .fullscreen-modal {
       position:fixed; top:0; left:0; width:100%; height:100%;
-      background: radial-gradient(circle at 20% 30%, #4c1d95, #1a0b2e);
+      background:radial-gradient(circle at 20% 30%, #001a2b, #0a0f1a);
       z-index:2000; display:flex; flex-direction:column; visibility:hidden; opacity:0; transition:0.3s ease;
     }
     .fullscreen-modal.active { visibility:visible; opacity:1; }
     .fullscreen-header {
-      display:flex; align-items:center; padding:1rem 1.5rem; background: linear-gradient(135deg, rgba(76,29,149,0.95), rgba(46,16,101,0.98));
-      backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(168,85,247,0.6); gap:1rem;
+      display:flex; align-items:center; padding:1rem 1.5rem; background:rgba(15,30,50,0.95); backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(59,130,246,0.4); gap:1rem;
     }
-    .fullscreen-header h2 { color:#e9d5ff; font-size:1.5rem; margin:0; }
-    .fullscreen-body { flex:1; overflow-y:auto; padding:1.5rem; }
+    .fullscreen-header h2 { color:#60a5fa; font-size:1.5rem; margin:0; }
     .back-btn {
-      background:rgba(168,85,247,0.2); border:1px solid rgba(168,85,247,0.7); color:#d8b4fe;
+      background:rgba(59,130,246,0.2); border:1px solid rgba(59,130,246,0.5); color:#93c5fd;
       padding:0.6rem 1.2rem; border-radius:2rem; font-size:0.95rem; font-weight:600; cursor:pointer; transition:0.2s;
       display:inline-flex; align-items:center; gap:0.5rem;
     }
-    .back-btn:hover { background:rgba(168,85,247,0.5); box-shadow:0 0 12px #a855f7; color:#ffffff; }
+    .back-btn:hover { background:rgba(59,130,246,0.5); box-shadow:0 0 12px #3b82f6; color:#ffffff; }
     .calc-panel {
-      background: linear-gradient(145deg, rgba(55,25,110,0.95), rgba(30,15,70,0.98)); border-radius:2rem; padding:1rem;
-      border:1px solid rgba(168,85,247,0.7);
+      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); border-radius:2rem; padding:1rem;
+      border:1px solid rgba(59,130,246,0.5);
     }
     .calc-screen {
-      background:#0b0616; border-radius:1.5rem; padding:0.9rem 1rem; text-align:right; font-size:clamp(1.4rem,7vw,2rem);
-      font-weight:600; color:#e9d5ff; font-family:'Fira Code',monospace; margin-bottom:1rem; min-height:70px;
-      display:flex; align-items:center; justify-content:flex-end; box-shadow:inset 0 0 12px rgba(168,85,247,0.4);
+      background:#0a0f1a; border-radius:1.5rem; padding:0.9rem 1rem; text-align:right; font-size:clamp(1.4rem,7vw,2rem);
+      font-weight:600; color:#60a5fa; font-family:'Fira Code',monospace; margin-bottom:1rem; min-height:70px;
+      display:flex; align-items:center; justify-content:flex-end; box-shadow:inset 0 0 12px rgba(59,130,246,0.4);
       overflow:hidden; white-space:nowrap;
     }
     .calc-buttons { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
     .calc-buttons button {
-      background: rgba(168,85,247,0.2); padding:0.9rem 0; font-size:1.2rem; border-radius:1.3rem;
-      border:1px solid rgba(168,85,247,0.6); color:#e9d5ff; font-weight:600; font-family:'Fira Code',monospace;
+      background:rgba(59,130,246,0.1); padding:0.9rem 0; font-size:1.2rem; border-radius:1.3rem;
+      border:1px solid rgba(59,130,246,0.4); color:#60a5fa; font-weight:600; font-family:'Fira Code',monospace;
       transition:0.15s; box-shadow:none;
     }
-    .calc-buttons button:hover { background: rgba(168,85,247,0.5); border-color:#c084fc; box-shadow:0 0 12px rgba(168,85,247,0.6); }
-    .calc-buttons button:active { background: #a855f7; color:#ffffff; }
+    .calc-buttons button:hover { background:rgba(59,130,246,0.4); border-color:#3b82f6; box-shadow:0 0 12px rgba(59,130,246,0.6); }
+    .calc-buttons button:active { background:#2563eb; color:#ffffff; }
     .dashboard-widget {
-      background: linear-gradient(145deg, rgba(55,25,110,0.95), rgba(30,15,70,0.98)); backdrop-filter:blur(12px);
-      border-radius:2rem; padding:1.5rem; border:1px solid rgba(168,85,247,0.6); box-shadow:0 12px 30px rgba(0,0,0,0.7);
+      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); backdrop-filter:blur(18px);
+      border-radius:2rem; padding:1.5rem; border:1px solid rgba(59,130,246,0.4); box-shadow:0 12px 30px rgba(0,0,0,0.7);
     }
     .big-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:1.5rem; }
     .big-card {
-      background: linear-gradient(135deg, rgba(168,85,247,0.25), rgba(76,29,149,0.3)); border-radius:1.8rem;
-      padding:1.5rem; display:flex; flex-direction:column; align-items:center; text-align:center; border:1px solid rgba(168,85,247,0.7);
-      backdrop-filter: blur(4px);
+      background:linear-gradient(135deg,rgba(59,130,246,0.25),rgba(37,99,235,0.2)); border-radius:1.8rem;
+      padding:1.5rem; display:flex; flex-direction:column; align-items:center; text-align:center; border:1px solid rgba(59,130,246,0.5);
     }
     .big-card .big-icon { font-size:2.5rem; margin-bottom:0.5rem; }
-    .big-card h3 { font-size:1rem; color:#d8b4fe; margin-bottom:0.3rem; }
+    .big-card h3 { font-size:1rem; color:#93c5fd; margin-bottom:0.3rem; }
     .big-valor-container { display:flex; align-items:center; justify-content:center; gap:0.4rem; }
-    .big-valor { font-size:1.8rem; font-weight:700; color:#e9d5ff; }
+    .big-valor { font-size:1.8rem; font-weight:700; color:#60a5fa; }
     .toggle-eye { font-size:1.4rem; cursor:pointer; opacity:0.8; transition:0.2s; user-select:none; }
     .toggle-eye:hover { opacity:1; transform:scale(1.1); }
     .chart-container { display:flex; align-items:flex-end; justify-content:center; gap:1.5rem; height:150px; margin-top:1rem; }
-    .bar-wrapper { display:flex; flex-direction:column; align-items:center; gap:0.3rem; }
-    .bar { width:50px; background:linear-gradient(to top,#a855f7,#c084fc); border-radius:1rem 1rem 0 0; transition:height 0.5s ease; }
-    .bar-label { font-size:0.8rem; color:#d8b4fe; }
+    .bar { width:50px; background:linear-gradient(to top,#2563eb,#60a5fa); border-radius:1rem 1rem 0 0; transition:height 0.5s ease; }
+    .bar-label { font-size:0.8rem; color:#93c5fd; }
     .relatorio-resumo { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:1.5rem; }
     .relatorio-card {
-      background: linear-gradient(145deg, rgba(168,85,247,0.2), rgba(76,29,149,0.35));
-      border-radius:1.5rem;
-      padding:1rem; text-align:center; border:1px solid rgba(168,85,247,0.5);
+      background:linear-gradient(145deg,rgba(59,130,246,0.15),rgba(37,99,235,0.25)); border-radius:1.5rem;
+      padding:1rem; text-align:center; border:1px solid rgba(59,130,246,0.3);
     }
-    .relatorio-card h3 { font-size:0.75rem; color:#d8b4fe; margin-bottom:0.3rem; }
-    .relatorio-card .r-valor { font-size:1.4rem; font-weight:700; color:#e9d5ff; }
+    .relatorio-card h3 { font-size:0.75rem; color:#93c5fd; margin-bottom:0.3rem; }
+    .relatorio-card .r-valor { font-size:1.4rem; font-weight:700; color:#60a5fa; }
     .relatorio-secao { margin-bottom:1.5rem; }
-    .relatorio-secao h3 { color:#c084fc; font-size:1.1rem; margin-bottom:0.8rem; padding-left:0.5rem; border-left:4px solid #a855f7; }
+    .relatorio-secao h3 { color:#3b82f6; font-size:1.1rem; margin-bottom:0.8rem; padding-left:0.5rem; border-left:4px solid #3b82f6; }
     
     /* Tabela de vendas com rolagem horizontal e linhas individuais */
     .sales-table-container {
@@ -233,36 +192,36 @@
       width: 100%;
       min-width: 700px;
       border-collapse: collapse;
-      background: rgba(30,15,70,0.7);
+      background: rgba(10,20,35,0.7);
       border-radius: 1.5rem;
     }
     .sales-table th,
     .sales-table td {
       padding: 0.9rem 0.8rem;
       text-align: center;
-      border-bottom: 1px solid rgba(168,85,247,0.4);
-      color: #f5f5f5;
+      border-bottom: 1px solid rgba(59,130,246,0.3);
+      color: #f0f4fa;
       white-space: nowrap;
     }
     .sales-table th {
-      background: rgba(168,85,247,0.3);
-      color: #e9d5ff;
+      background: rgba(59,130,246,0.2);
+      color: #60a5fa;
       font-weight: 600;
       font-size: 0.85rem;
     }
     .sales-table tr:hover {
-      background: rgba(168,85,247,0.15);
+      background: rgba(59,130,246,0.1);
     }
     .sales-table .actions-cell {
       white-space: nowrap;
     }
     .sales-table .edit-btn-table,
     .sales-table .delete-btn-table {
-      background: rgba(168,85,247,0.3);
+      background: rgba(59,130,246,0.2);
       border: none;
       padding: 0.3rem 0.9rem;
       border-radius: 2rem;
-      color: #e9d5ff;
+      color: #60a5fa;
       font-size: 0.7rem;
       font-weight: 600;
       margin: 0 0.2rem;
@@ -271,15 +230,15 @@
       display: inline-block;
     }
     .sales-table .delete-btn-table {
-      color: #ffc2c2;
-      background: rgba(220,38,38,0.3);
+      color: #f87171;
+      background: rgba(220,38,38,0.2);
     }
     .sales-table .edit-btn-table:hover {
-      background: rgba(168,85,247,0.6);
-      box-shadow: 0 0 6px #a855f7;
+      background: rgba(59,130,246,0.5);
+      box-shadow: 0 0 6px #3b82f6;
     }
     .sales-table .delete-btn-table:hover {
-      background: rgba(220,38,38,0.6);
+      background: rgba(220,38,38,0.5);
       box-shadow: 0 0 6px #ef4444;
     }
     
@@ -287,7 +246,7 @@
     .relatorio-secao table {
       width: 100%;
       border-collapse: collapse;
-      background: rgba(30,15,70,0.6);
+      background: rgba(10,20,35,0.5);
       border-radius: 1rem;
       overflow: hidden;
     }
@@ -295,12 +254,12 @@
     .relatorio-secao td {
       padding: 0.8rem 0.6rem;
       text-align: center;
-      border-bottom: 1px solid rgba(168,85,247,0.3);
-      color: #f5f5f5;
+      border-bottom: 1px solid rgba(59,130,246,0.2);
+      color: #f0f4fa;
     }
     .relatorio-secao th {
-      background: rgba(168,85,247,0.3);
-      color: #e9d5ff;
+      background: rgba(59,130,246,0.25);
+      color: #60a5fa;
       font-weight: 600;
     }
     .relatorio-secao .table-wrapper {
@@ -353,7 +312,7 @@
 
   <main class="main-content">
     <div class="app-header" style="margin-bottom:0;">
-      <span class="app-logo">🐉 DBZ GESTÃO</span>
+      <span class="app-logo">🚀 RUMO GESTÃO</span>
       <div class="clock-container">
         <span class="digital-clock" id="liveClock">00:00:00</span>
         <span class="digital-date" id="liveDate">Carregando...</span>
@@ -361,17 +320,17 @@
     </div>
     <div id="dashboardPane" class="tab-pane active-pane">
       <div class="dashboard-widget">
-        <h2 style="color:#e9d5ff;margin-bottom:1.5rem;">📊 Visão Geral</h2>
+        <h2 style="color:#60a5fa;margin-bottom:1.5rem;">📊 Visão Geral</h2>
         <div class="big-cards">
           <div class="big-card"><span class="big-icon">💰</span><h3>Vendas Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashVendas">R$ 0,00</span><span class="toggle-eye" id="toggleDashVendas">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📦</span><h3>Compras Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashCompras">R$ 0,00</span><span class="toggle-eye" id="toggleDashCompras">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📈</span><h3>Lucro Líquido</h3><div class="big-valor-container"><span class="big-valor" id="dashLucro">R$ 0,00</span><span class="toggle-eye" id="toggleDashLucro">👁️</span></div></div>
         </div>
         <div style="margin-top:1.5rem;">
-          <h3 style="color:#d8b4fe;margin-bottom:1rem;">📈 Gráfico de Vendas vs Compras</h3>
+          <h3 style="color:#93c5fd;margin-bottom:1rem;">📈 Gráfico de Vendas vs Compras</h3>
           <div class="chart-container">
             <div class="bar-wrapper"><div class="bar" id="barVendas" style="height:0;"></div><span class="bar-label">Vendas</span></div>
-            <div class="bar-wrapper"><div class="bar" id="barCompras" style="height:0; background:linear-gradient(to top,#dc2626,#ef4444);"></div><span class="bar-label">Compras</span></div>
+            <div class="bar-wrapper"><div class="bar" id="barCompras" style="height:0; background:linear-gradient(to top,#2563eb,#1e3a8a);"></div><span class="bar-label">Compras</span></div>
           </div>
         </div>
       </div>
@@ -379,7 +338,7 @@
   </main>
 </div>
 
-<!-- MODAIS FULLSCREEN (CONTEÚDO INTERNO) - MESMA ESTRUTURA ANTERIOR -->
+<!-- MODAIS FULLSCREEN (CONTEÚDO INTERNO) -->
 <div id="vendasFullModal" class="fullscreen-modal">
   <div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div>
   <div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div>
@@ -452,19 +411,18 @@
   <div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div>
   <div class="fullscreen-body">
     <div class="relatorio-resumo" id="relatorioResumo"></div>
-    <div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div>
-    <div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div>
-    <div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></td></thead><tbody id="relEntregasTbody"></tbody></table></div></div>
+    <div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div>
+    <div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div>
+    <div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div>
     <div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div>
   </div>
 </div>
 
 <!-- MODAL DE EDIÇÃO (geral) -->
-<div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger" style="background:linear-gradient(135deg,#dc2626,#b91c1c);">Cancelar</button></div></div></div>
-<div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger" style="background:linear-gradient(135deg,#dc2626,#b91c1c);">Cancelar</button></div></div></div>
+<div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger" style="background:linear-gradient(135deg,#991b1b,#dc2626);">Cancelar</button></div></div></div>
+<div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger" style="background:linear-gradient(135deg,#991b1b,#dc2626);">Cancelar</button></div></div></div>
 
 <script>
-  // ==================== JAVASCRIPT COMPLETO (IDÊNTICO AO ORIGINAL) ====================
   (() => {
     function updateClock() {
       const now = new Date();
@@ -484,9 +442,9 @@
       entregadores:[], bairros:[], entregas:[]
     };
     const STORAGE_MAP = {
-      produtos:'neon_produtos', clientes:'neon_clientes', fornecedores:'neon_fornecedores',
-      vendas:'neon_vendas', compras:'neon_compras', notas:'neon_notas',
-      entregadores:'neon_entregadores', bairros:'neon_bairros', entregas:'neon_entregas'
+      produtos:'rumo_produtos', clientes:'rumo_clientes', fornecedores:'rumo_fornecedores',
+      vendas:'rumo_vendas', compras:'rumo_compras', notas:'rumo_notas',
+      entregadores:'rumo_entregadores', bairros:'rumo_bairros', entregas:'rumo_entregas'
     };
 
     const $ = (sel) => document.querySelector(sel);
@@ -508,7 +466,7 @@
         state.fornecedores.push({ id:3001, nome:'Fornecedor Alpha', cnpj:'12.345.678/0001-90', contato:'(11) 3456-7890' });
         state.vendas.push({ id:4001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Notebook Ultra', quantidade:1, precoUnit:3450, dataStr:now() });
         state.compras.push({ id:5001, fornecedorId:3001, fornecedorNome:'Fornecedor Alpha', produto:'Placa-mãe', quantidade:5, precoUnit:320, dataStr:now() });
-        state.notas.push({ id:6001, texto:'App DBZ com Cards!', data:now() });
+        state.notas.push({ id:6001, texto:'App Rumo Gestão!', data:now() });
         state.entregadores.push({ id:7001, nome:'João Motoboy', telefone:'(11) 98888-7777', veiculo:'Moto', placa:'ABC-1234' });
         state.bairros.push({ id:8001, nome:'Centro', taxa:5.00 }, { id:8002, nome:'Jardim das Flores', taxa:8.00 });
         state.entregas.push({ id:9001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Notebook Ultra', entregadorId:7001, entregadorNome:'João Motoboy', bairroId:8001, bairroNome:'Centro', valor:5.00, dataStr:now() });
@@ -526,7 +484,7 @@
       $('#toggleDashVendas').textContent = dashVendasVisible ? '👁️' : '🔒';
       $('#toggleDashCompras').textContent = dashComprasVisible ? '👁️' : '🔒';
       $('#toggleDashLucro').textContent = dashLucroVisible ? '👁️' : '🔒';
-      lucroEl.style.color = dashLucroVisible ? (lucro >= 0 ? '#a7f3d0' : '#fecaca') : '#f5f5f5';
+      lucroEl.style.color = dashLucroVisible ? (lucro >= 0 ? '#6ee7b7' : '#f87171') : '#f0f4fa';
       const max = Math.max(totalVendas, totalCompras, 1);
       document.getElementById('barVendas').style.height = (totalVendas / max * 120) + 'px';
       document.getElementById('barCompras').style.height = (totalCompras / max * 120) + 'px';
@@ -535,7 +493,7 @@
     function renderCards(containerId, items, cardFn, emptyMsg) {
       const container = document.getElementById(containerId);
       if (!container) return;
-      if (!items.length) { container.innerHTML = `<div style="color:#d8b4fe;text-align:center;grid-column:1/-1;padding:2rem;">${emptyMsg}</div>`; return; }
+      if (!items.length) { container.innerHTML = `<div style="color:#93c5fd;text-align:center;grid-column:1/-1;padding:2rem;">${emptyMsg}</div>`; return; }
       container.innerHTML = items.map(cardFn).join('');
     }
 
@@ -553,7 +511,7 @@
         <div class="item-card">
           <div class="item-card-header"><span class="item-card-title">${escapeHtml(c.fornecedorNome)}</span><span class="item-card-subtitle">${c.dataStr}</span></div>
           <div class="item-card-body">📦 ${escapeHtml(c.produto)}</div>
-          <div class="item-card-body" style="font-size:0.8rem;color:#d8b4fe;">Qtd: ${c.quantidade} × ${formatMoney(c.precoUnit)}</div>
+          <div class="item-card-body" style="font-size:0.8rem;color:#93c5fd;">Qtd: ${c.quantidade} × ${formatMoney(c.precoUnit)}</div>
           <div class="item-card-value">${formatMoney(c.quantidade * c.precoUnit)}</div>
           <div class="item-card-actions">
             <button class="edit-btn" data-entity="compra" data-id="${c.id}">✏️ Editar</button>
@@ -699,23 +657,22 @@
       const totalCompras = state.compras.reduce((s,c) => s + c.quantidade * c.precoUnit, 0);
       const totalEntregas = state.entregas.reduce((s,e) => s + e.valor, 0);
       const lucro = totalVendas - totalCompras - totalEntregas;
-      $('#relatorioResumo').innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#a7f3d0':'#fecaca'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
+      $('#relatorioResumo').innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#f87171'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
       $('#relVendasTbody').innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${v.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
       $('#relComprasTbody').innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${c.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
       $('#relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${e.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
-      $('#relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div class="item-card-body">${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div style="color:#d8b4fe;">Sem anotações.</div>';
+      $('#relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div class="item-card-body">${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div style="color:#93c5fd;">Sem anotações.</div>';
     }
 
     function renderAll() { updateTotals(); }
 
-    // Adicionar funções (idênticas às originais)
     function addProduto(nome, preco, selectAfter=false, fullMode=false) {
       if (!nome) return null; if (isNaN(preco)) preco = 0;
       const novo = { id:uid(), nome, preco }; state.produtos.push(novo); save(); renderAll(); refreshProdutosModal(); refreshVendasModal();
       if (selectAfter && fullMode) { const sel = $('#vendaProdutoIdFull'); for (let i = 0; i < sel.options.length; i++) { if (parseInt(sel.options[i].value) === novo.id) { sel.selectedIndex = i; sel.dispatchEvent(new Event('change')); break; } } }
       return novo;
     }
-    function addVenda(fullMode=false) {
+    function addVenda() {
       const clienteId = parseInt($('#vendaClienteIdFull').value); const cliente = state.clientes.find(c => c.id === clienteId);
       if (!cliente) return alert('Selecione um cliente!');
       const produtoId = parseInt($('#vendaProdutoIdFull').value); const produto = state.produtos.find(p => p.id === produtoId);
@@ -726,7 +683,7 @@
       save(); renderAll(); refreshVendasModal();
       $('#vendaProdutoIdFull').value = ''; $('#vendaQtdFull').value = '1'; $('#vendaPrecoFull').value = '';
     }
-    function addCompra(fullMode=false) {
+    function addCompra() {
       const fornId = parseInt($('#compraFornecedorIdFull').value); const forn = state.fornecedores.find(f => f.id === fornId);
       if (!forn) return alert('Selecione um fornecedor!');
       let produto = $('#compraProdutoFull').value.trim() || 'Produto'; const qtd = parseFloat($('#compraQtdFull').value); let preco = parseFloat($('#compraPrecoFull').value);
@@ -734,19 +691,19 @@
       state.compras.push({ id:uid(), fornecedorId:forn.id, fornecedorNome:forn.nome, produto, quantidade:qtd, precoUnit:preco, dataStr:now() });
       save(); renderAll(); $('#compraProdutoFull').value = ''; $('#compraQtdFull').value = '1'; $('#compraPrecoFull').value = ''; refreshComprasModal();
     }
-    function addCliente(fullMode=false) {
+    function addCliente() {
       const nome = $('#clienteNomeFull').value.trim(); if (!nome) return alert('Nome obrigatório!');
       state.clientes.push({ id:uid(), nome, email:$('#clienteEmailFull').value, whatsapp:$('#clienteWhatsappFull').value, endereco:$('#clienteEnderecoFull').value });
       save(); renderAll(); refreshVendasModal(); refreshClientesModal(); refreshDeliveryModal();
       ['clienteNomeFull','clienteEmailFull','clienteWhatsappFull','clienteEnderecoFull'].forEach(id => $('#'+id).value = '');
     }
-    function addFornecedor(fullMode=false) {
+    function addFornecedor() {
       const nome = $('#fornecedorNomeFull').value.trim(); if (!nome) return alert('Nome obrigatório!');
       state.fornecedores.push({ id:uid(), nome, cnpj:$('#fornecedorCnpjFull').value, contato:$('#fornecedorContatoFull').value });
       save(); renderAll(); refreshComprasModal(); refreshFornecedoresModal();
       ['fornecedorNomeFull','fornecedorCnpjFull','fornecedorContatoFull'].forEach(id => $('#'+id).value = '');
     }
-    function addNota(fullMode=false) { const texto = $('#textoNotaFull').value.trim(); if (!texto) return; state.notas.push({ id:uid(), texto, data:now() }); save(); $('#textoNotaFull').value = ''; refreshAnotacoesModal(); }
+    function addNota() { const texto = $('#textoNotaFull').value.trim(); if (!texto) return; state.notas.push({ id:uid(), texto, data:now() }); save(); $('#textoNotaFull').value = ''; refreshAnotacoesModal(); }
     function addEntregador() {
       const nome = $('#entregadorNomeFull').value.trim(); if (!nome) return alert('Nome obrigatório!');
       state.entregadores.push({ id:uid(), nome, telefone:$('#entregadorTelefoneFull').value, veiculo:$('#entregadorVeiculoFull').value, placa:$('#entregadorPlacaFull').value });
@@ -862,18 +819,18 @@
       $('#closeCalcModalBtn').addEventListener('click', () => { $('#calcFullModal').classList.remove('active'); returnToDashboard(); });
       $('#closeRelatorioModalBtn').addEventListener('click', () => { $('#relatorioFullModal').classList.remove('active'); returnToDashboard(); });
 
-      $('#addVendaBtnFull').addEventListener('click', () => addVenda(true));
+      $('#addVendaBtnFull').addEventListener('click', addVenda);
       $('#quickAddProdutoBtnFull').addEventListener('click', () => { $('#quickProdutoNomeFull').value = ''; $('#quickProdutoPrecoFull').value = ''; $('#quickProdutoModalFull').classList.add('active'); });
       $('#closeQuickModalBtnFull').addEventListener('click', () => $('#quickProdutoModalFull').classList.remove('active'));
       $('#quickSalvarProdutoBtnFull').addEventListener('click', () => { const nome = $('#quickProdutoNomeFull').value.trim(); const preco = parseFloat($('#quickProdutoPrecoFull').value); if (!nome) return alert('Nome obrigatório'); const novo = addProduto(nome, isNaN(preco) ? 0 : preco, true, true); if (novo) { $('#quickProdutoModalFull').classList.remove('active'); alert(`Produto "${novo.nome}" cadastrado com sucesso!`); } });
       $('#addProdutoBtnFull').addEventListener('click', () => { const nome = $('#produtoNomeFull').value.trim(); const preco = parseFloat($('#produtoPrecoFull').value); if (!nome) return alert('Nome do produto obrigatório'); addProduto(nome, isNaN(preco) ? 0 : preco, false, false); $('#produtoNomeFull').value = ''; $('#produtoPrecoFull').value = ''; });
-      $('#addCompraBtnFull').addEventListener('click', () => addCompra(true));
-      $('#addClienteBtnFull').addEventListener('click', () => addCliente(true));
-      $('#addFornecedorBtnFull').addEventListener('click', () => addFornecedor(true));
+      $('#addCompraBtnFull').addEventListener('click', addCompra);
+      $('#addClienteBtnFull').addEventListener('click', addCliente);
+      $('#addFornecedorBtnFull').addEventListener('click', addFornecedor);
       $('#addEntregadorBtnFull').addEventListener('click', addEntregador);
       $('#addBairroBtnFull').addEventListener('click', addBairro);
       $('#addEntregaBtnFull').addEventListener('click', addEntrega);
-      $('#addNotaBtnFull').addEventListener('click', () => addNota(true));
+      $('#addNotaBtnFull').addEventListener('click', addNota);
 
       $('#toggleDashVendas').addEventListener('click', () => { dashVendasVisible = !dashVendasVisible; updateTotals(); });
       $('#toggleDashCompras').addEventListener('click', () => { dashComprasVisible = !dashComprasVisible; updateTotals(); });
