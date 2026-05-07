@@ -3,294 +3,399 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>RUMO GESTÃO · Cards em Todas as Listas</title>
+  <title>DBZ Gestão · Tema Sombrio Supremo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     body {
-      font-family: 'Inter','Poppins',system-ui,sans-serif;
-      background: radial-gradient(circle at 30% 30%, #001a2b 0%, #0a0f1a 90%);
+      font-family: 'Inter', 'Poppins', system-ui, sans-serif;
+      background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105);
       background-attachment: fixed;
-      color:#f0f4fa; min-height:100vh; display:flex; flex-direction:column; align-items:center;
+      color: #eef5ff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+      overflow-x: hidden;
     }
+
+    /* Efeito de estrelas */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)),
+                        radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0));
+      background-repeat: repeat;
+      background-size: 200px 200px, 120px 120px;
+      opacity: 0.25;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 70% 20%, rgba(255, 180, 40, 0.12), transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .app-container {
-      width:100%; max-width:1200px; display:flex; flex-direction:column; padding:1rem 1.5rem 2rem; gap:1.5rem;
-      margin:0 auto;
+      width: 100%;
+      max-width: 1300px;
+      display: flex;
+      flex-direction: column;
+      padding: 1.2rem 1.8rem 2rem;
+      gap: 1.8rem;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
     }
-    .app-header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; margin-bottom:0.5rem; }
+
+    .app-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      background: rgba(5, 5, 10, 0.4);
+      backdrop-filter: blur(12px);
+      border-radius: 3rem;
+      padding: 0.6rem 1.8rem;
+      border: 1px solid rgba(255, 200, 70, 0.3);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 180, 0, 0.2);
+    }
+
     .app-logo {
-      font-size:2rem; font-weight:700;
-      background: linear-gradient(135deg, #3b82f6, #60a5fa, #1e3a8a);
-      -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; letter-spacing:1px;
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFB347, #FFD966, #FF8C00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 18px rgba(255, 140, 0, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .clock-container { display:flex; flex-direction:column; align-items:flex-end; gap:0.2rem; }
+    .app-logo::before { content: "🐉"; font-size: 2rem; background: none; -webkit-text-fill-color: initial; text-shadow: 0 0 5px #ff9900; }
+
+    .clock-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.2rem;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 0.3rem 1rem;
+      border-radius: 2rem;
+      backdrop-filter: blur(4px);
+    }
     .digital-clock {
-      font-size:2rem; font-weight:700; color:#60a5fa; font-family:'Fira Code','Courier New',monospace;
-      letter-spacing:2px; text-shadow:0 0 12px rgba(96,165,250,0.8);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #FFE484;
+      font-family: 'Fira Code', monospace;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px #ffaa33, 0 0 20px #ff7700;
     }
-    .digital-date { font-size:0.85rem; font-weight:600; color:#93c5fd; text-shadow:0 0 6px rgba(147,197,253,0.6); }
-    
-    /* Grade de botões responsiva e centralizada */
+    .digital-date { font-size: 0.8rem; font-weight: 500; color: #FFCD94; }
+
+    /* Navegação */
     .nav-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-      gap: 0.8rem;
+      grid-template-columns: repeat(auto-fill, minmax(115px, 1fr));
+      gap: 0.9rem;
       justify-items: center;
       align-items: center;
       margin-bottom: 0.5rem;
     }
-    
     .nav-btn {
-      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.3rem; padding:0.9rem 0.5rem;
-      border-radius:1.5rem; border:none; background:rgba(15,30,50,0.8); backdrop-filter:blur(8px); color:#93c5fd;
-      font-weight:500; font-size:0.8rem; font-family:inherit; cursor:pointer; transition:all 0.25s ease; text-align:center;
-      border:1px solid rgba(59,130,246,0.4); box-shadow:0 4px 12px rgba(0,0,0,0.4);
-      width: 100%;
-    }
-    .nav-btn .icon { font-size:1.6rem; }
-    .nav-btn:hover { background:rgba(59,130,246,0.25); color:#60a5fa; box-shadow:0 0 20px rgba(59,130,246,0.5); transform:translateY(-2px); }
-    .nav-btn.active { background:linear-gradient(135deg,#1e40af,#3b82f6); color:#ffffff; font-weight:700; border-color:#60a5fa; box-shadow:0 0 22px rgba(96,165,250,0.7); }
-    
-    .main-content { flex:1; display:flex; flex-direction:column; gap:1.5rem; width:100%; }
-    .tab-pane { display:none; width:100%; }
-    .tab-pane.active-pane { display:block; animation:fadeSlide 0.3s ease; }
-    @keyframes fadeSlide { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
-    .card {
-      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); backdrop-filter:blur(18px);
-      border-radius:2rem; padding:1.5rem; border:1px solid rgba(59,130,246,0.4);
-      box-shadow:0 12px 30px rgba(0,0,0,0.7),0 0 0 1px rgba(59,130,246,0.2); margin-bottom:1.5rem;
-    }
-    .card h2 { display:flex; align-items:center; gap:10px; font-size:1.3rem; color:#60a5fa; margin-bottom:1.2rem; border-left:4px solid #3b82f6; padding-left:0.8rem; font-weight:600; }
-    .form-row { display:flex; flex-wrap:wrap; gap:1rem; margin-bottom:1.5rem; align-items:flex-end; }
-    .input-group { flex:1; min-width:140px; }
-    .input-group label { font-size:0.7rem; font-weight:600; color:#93c5fd; display:block; text-transform:uppercase; margin-bottom:0.2rem; letter-spacing:1px; }
-    input,select,textarea {
-      width:100%; padding:0.7rem 0.9rem; border-radius:1.2rem; border:1px solid rgba(59,130,246,0.4);
-      background:rgba(10,20,35,0.9); color:#f0f4fa; font-size:0.95rem; font-family:inherit; transition:all 0.2s; outline:none;
-    }
-    input:focus,select:focus,textarea:focus { border-color:#3b82f6; box-shadow:0 0 12px rgba(59,130,246,0.6); background:rgba(15,30,50,0.9); }
-    button {
-      background:linear-gradient(135deg,#1e40af,#2563eb); border:none; padding:0.7rem 1.2rem; border-radius:2rem;
-      color:#ffffff; font-weight:600; cursor:pointer; display:inline-flex; align-items:center; justify-content:center;
-      gap:0.4rem; font-size:0.9rem; box-shadow:0 0 12px rgba(37,99,235,0.6); transition:all 0.2s; font-family:inherit; letter-spacing:0.3px;
-    }
-    button:hover { background:linear-gradient(135deg,#2563eb,#3b82f6); box-shadow:0 0 20px rgba(59,130,246,0.8); transform:translateY(-1px); }
-    button:active { transform:scale(0.97); }
-    .btn-small { background:linear-gradient(135deg,#1e3a8a,#1e40af); padding:0.5rem 0.9rem; font-size:0.8rem; }
-    .btn-outline { background:transparent; border:1px solid rgba(59,130,246,0.6); color:#93c5fd; box-shadow:none; }
-    .btn-outline:hover { background:rgba(59,130,246,0.2); box-shadow:0 0 10px rgba(59,130,246,0.5); }
-    .btn-danger { background:linear-gradient(135deg,#991b1b,#dc2626); box-shadow:0 0 10px rgba(220,38,38,0.5); }
-    .btn-danger:hover { background:linear-gradient(135deg,#b91c1c,#ef4444); box-shadow:0 0 16px rgba(239,68,68,0.7); }
-    .toggle-section { display:none; margin-top:1.5rem; }
-    .toggle-section.visible { display:block; }
-    .cards-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; margin-top:1rem; }
-    .item-card {
-      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); border-radius:1.5rem; padding:1rem;
-      border:1px solid rgba(59,130,246,0.4); box-shadow:0 8px 20px rgba(0,0,0,0.5); transition:all 0.25s ease;
-      display:flex; flex-direction:column; gap:0.6rem;
-    }
-    .item-card:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(59,130,246,0.3); border-color:#3b82f6; }
-    .item-card-header { display:flex; justify-content:space-between; align-items:flex-start; gap:0.5rem; }
-    .item-card-title { font-weight:700; color:#60a5fa; font-size:1.1rem; word-break:break-word; }
-    .item-card-subtitle { font-size:0.75rem; color:#93c5fd; white-space:nowrap; }
-    .item-card-body { font-size:0.9rem; color:#f0f4fa; }
-    .item-card-value { font-size:1.3rem; font-weight:700; color:#60a5fa; text-align:right; }
-    .item-card-actions { display:flex; gap:0.4rem; justify-content:flex-end; flex-wrap:wrap; }
-    .item-card-actions .edit-btn,
-    .item-card-actions .delete-btn {
-      background:rgba(59,130,246,0.15); color:#60a5fa; padding:0.35rem 0.8rem; border-radius:2rem;
-      font-size:0.7rem; border:1px solid rgba(59,130,246,0.5); cursor:pointer; transition:all 0.2s; font-weight:500;
-    }
-    .item-card-actions .delete-btn { color:#f87171; border-color:rgba(248,113,113,0.6); }
-    .item-card-actions .edit-btn:hover { background:rgba(59,130,246,0.4); box-shadow:0 0 8px #3b82f6; }
-    .item-card-actions .delete-btn:hover { background:rgba(220,38,38,0.3); box-shadow:0 0 8px #ef4444; }
-    .modal {
-      position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px);
-      display:flex; align-items:center; justify-content:center; z-index:3000; visibility:hidden; opacity:0; transition:0.25s ease; padding:1rem;
-    }
-    .modal.active { visibility:visible; opacity:1; }
-    .modal-content {
-      background:linear-gradient(145deg,#0a1428,#050d1a); width:100%; max-width:480px; border-radius:2rem; padding:1.5rem;
-      max-height:85vh; overflow-y:auto; border:1px solid #3b82f6; box-shadow:0 0 30px rgba(59,130,246,0.5);
-      transform:scale(0.95); transition:transform 0.25s ease;
-    }
-    .modal.active .modal-content { transform:scale(1); }
-    .fullscreen-modal {
-      position:fixed; top:0; left:0; width:100%; height:100%;
-      background:radial-gradient(circle at 20% 30%, #001a2b, #0a0f1a);
-      z-index:2000; display:flex; flex-direction:column; visibility:hidden; opacity:0; transition:0.3s ease;
-    }
-    .fullscreen-modal.active { visibility:visible; opacity:1; }
-    .fullscreen-header {
-      display:flex; align-items:center; padding:1rem 1.5rem; background:rgba(15,30,50,0.95); backdrop-filter:blur(10px);
-      border-bottom:1px solid rgba(59,130,246,0.4); gap:1rem;
-    }
-    .fullscreen-header h2 { color:#60a5fa; font-size:1.5rem; margin:0; }
-    .back-btn {
-      background:rgba(59,130,246,0.2); border:1px solid rgba(59,130,246,0.5); color:#93c5fd;
-      padding:0.6rem 1.2rem; border-radius:2rem; font-size:0.95rem; font-weight:600; cursor:pointer; transition:0.2s;
-      display:inline-flex; align-items:center; gap:0.5rem;
-    }
-    .back-btn:hover { background:rgba(59,130,246,0.5); box-shadow:0 0 12px #3b82f6; color:#ffffff; }
-    .calc-panel {
-      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); border-radius:2rem; padding:1rem;
-      border:1px solid rgba(59,130,246,0.5);
-    }
-    .calc-screen {
-      background:#0a0f1a; border-radius:1.5rem; padding:0.9rem 1rem; text-align:right; font-size:clamp(1.4rem,7vw,2rem);
-      font-weight:600; color:#60a5fa; font-family:'Fira Code',monospace; margin-bottom:1rem; min-height:70px;
-      display:flex; align-items:center; justify-content:flex-end; box-shadow:inset 0 0 12px rgba(59,130,246,0.4);
-      overflow:hidden; white-space:nowrap;
-    }
-    .calc-buttons { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; }
-    .calc-buttons button {
-      background:rgba(59,130,246,0.1); padding:0.9rem 0; font-size:1.2rem; border-radius:1.3rem;
-      border:1px solid rgba(59,130,246,0.4); color:#60a5fa; font-weight:600; font-family:'Fira Code',monospace;
-      transition:0.15s; box-shadow:none;
-    }
-    .calc-buttons button:hover { background:rgba(59,130,246,0.4); border-color:#3b82f6; box-shadow:0 0 12px rgba(59,130,246,0.6); }
-    .calc-buttons button:active { background:#2563eb; color:#ffffff; }
-    .dashboard-widget {
-      background:linear-gradient(145deg,rgba(15,30,50,0.9),rgba(5,15,30,0.95)); backdrop-filter:blur(18px);
-      border-radius:2rem; padding:1.5rem; border:1px solid rgba(59,130,246,0.4); box-shadow:0 12px 30px rgba(0,0,0,0.7);
-    }
-    .big-cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem; margin-bottom:1.5rem; }
-    .big-card {
-      background:linear-gradient(135deg,rgba(59,130,246,0.25),rgba(37,99,235,0.2)); border-radius:1.8rem;
-      padding:1.5rem; display:flex; flex-direction:column; align-items:center; text-align:center; border:1px solid rgba(59,130,246,0.5);
-    }
-    .big-card .big-icon { font-size:2.5rem; margin-bottom:0.5rem; }
-    .big-card h3 { font-size:1rem; color:#93c5fd; margin-bottom:0.3rem; }
-    .big-valor-container { display:flex; align-items:center; justify-content:center; gap:0.4rem; }
-    .big-valor { font-size:1.8rem; font-weight:700; color:#60a5fa; }
-    .toggle-eye { font-size:1.4rem; cursor:pointer; opacity:0.8; transition:0.2s; user-select:none; }
-    .toggle-eye:hover { opacity:1; transform:scale(1.1); }
-    .chart-container { display:flex; align-items:flex-end; justify-content:center; gap:1.5rem; height:150px; margin-top:1rem; }
-    .bar { width:50px; background:linear-gradient(to top,#2563eb,#60a5fa); border-radius:1rem 1rem 0 0; transition:height 0.5s ease; }
-    .bar-label { font-size:0.8rem; color:#93c5fd; }
-    .relatorio-resumo { display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-bottom:1.5rem; }
-    .relatorio-card {
-      background:linear-gradient(145deg,rgba(59,130,246,0.15),rgba(37,99,235,0.25)); border-radius:1.5rem;
-      padding:1rem; text-align:center; border:1px solid rgba(59,130,246,0.3);
-    }
-    .relatorio-card h3 { font-size:0.75rem; color:#93c5fd; margin-bottom:0.3rem; }
-    .relatorio-card .r-valor { font-size:1.4rem; font-weight:700; color:#60a5fa; }
-    .relatorio-secao { margin-bottom:1.5rem; }
-    .relatorio-secao h3 { color:#3b82f6; font-size:1.1rem; margin-bottom:0.8rem; padding-left:0.5rem; border-left:4px solid #3b82f6; }
-    
-    /* Tabela de vendas com rolagem horizontal e linhas individuais */
-    .sales-table-container {
-      overflow-x: auto;
-      width: 100%;
-      margin-top: 1rem;
-      border-radius: 1.5rem;
-      -webkit-overflow-scrolling: touch;
-    }
-    .sales-table {
-      width: 100%;
-      min-width: 700px;
-      border-collapse: collapse;
-      background: rgba(10,20,35,0.7);
-      border-radius: 1.5rem;
-    }
-    .sales-table th,
-    .sales-table td {
-      padding: 0.9rem 0.8rem;
-      text-align: center;
-      border-bottom: 1px solid rgba(59,130,246,0.3);
-      color: #f0f4fa;
-      white-space: nowrap;
-    }
-    .sales-table th {
-      background: rgba(59,130,246,0.2);
-      color: #60a5fa;
-      font-weight: 600;
-      font-size: 0.85rem;
-    }
-    .sales-table tr:hover {
-      background: rgba(59,130,246,0.1);
-    }
-    .sales-table .actions-cell {
-      white-space: nowrap;
-    }
-    .sales-table .edit-btn-table,
-    .sales-table .delete-btn-table {
-      background: rgba(59,130,246,0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.8rem 0.4rem;
+      border-radius: 1.8rem;
       border: none;
-      padding: 0.3rem 0.9rem;
-      border-radius: 2rem;
-      color: #60a5fa;
-      font-size: 0.7rem;
+      background: rgba(12, 10, 18, 0.85);
+      backdrop-filter: blur(12px);
+      color: #FFCF9A;
       font-weight: 600;
-      margin: 0 0.2rem;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: 0.2s;
-      display: inline-block;
-    }
-    .sales-table .delete-btn-table {
-      color: #f87171;
-      background: rgba(220,38,38,0.2);
-    }
-    .sales-table .edit-btn-table:hover {
-      background: rgba(59,130,246,0.5);
-      box-shadow: 0 0 6px #3b82f6;
-    }
-    .sales-table .delete-btn-table:hover {
-      background: rgba(220,38,38,0.5);
-      box-shadow: 0 0 6px #ef4444;
-    }
-    
-    /* Centralização das tabelas do relatório */
-    .relatorio-secao table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(10,20,35,0.5);
-      border-radius: 1rem;
-      overflow: hidden;
-    }
-    .relatorio-secao th,
-    .relatorio-secao td {
-      padding: 0.8rem 0.6rem;
+      transition: all 0.25s ease;
       text-align: center;
-      border-bottom: 1px solid rgba(59,130,246,0.2);
-      color: #f0f4fa;
-    }
-    .relatorio-secao th {
-      background: rgba(59,130,246,0.25);
-      color: #60a5fa;
-      font-weight: 600;
-    }
-    .relatorio-secao .table-wrapper {
-      overflow-x: auto;
+      border: 1px solid rgba(255, 170, 60, 0.5);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
       width: 100%;
     }
-    
-    @media (max-width:600px) {
-      .app-container { padding:0.8rem; }
-      .app-header { flex-direction:column; align-items:center; gap:0.5rem; }
-      .clock-container { align-items:center; }
-      .digital-clock { font-size:1.5rem; }
-      .cards-grid { grid-template-columns:1fr; gap:0.7rem; }
-      .big-cards { grid-template-columns:1fr; }
-      .relatorio-resumo { grid-template-columns:repeat(3,1fr); gap:0.5rem; }
-      .relatorio-card { padding:0.6rem; }
-      .relatorio-card .r-valor { font-size:1rem; }
-      .sales-table th, .sales-table td { padding: 0.5rem 0.3rem; font-size: 0.7rem; }
-      .sales-table { min-width: 600px; }
-      .nav-grid {
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-        gap: 0.5rem;
-      }
-      .nav-btn .icon { font-size: 1.3rem; }
-      .nav-btn { padding: 0.7rem 0.3rem; font-size: 0.7rem; }
-      .relatorio-secao th, .relatorio-secao td { padding: 0.5rem 0.3rem; font-size: 0.7rem; }
+    .nav-btn .icon { font-size: 1.7rem; filter: drop-shadow(0 0 4px #ffaa44); }
+    .nav-btn:hover {
+      background: linear-gradient(145deg, rgba(255, 140, 0, 0.35), rgba(255, 80, 0, 0.45));
+      border-color: #FFD966;
+      box-shadow: 0 0 20px rgba(255, 150, 0, 0.7);
+      transform: translateY(-3px);
     }
-    @media (min-width: 768px) {
-      .nav-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-      }
+    .nav-btn.active {
+      background: linear-gradient(135deg, #FF8C00, #FFB347);
+      color: #0c0c10;
+      font-weight: 800;
+      border-color: #FFE484;
+      box-shadow: 0 0 28px rgba(255, 200, 70, 0.9);
+    }
+
+    .main-content { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
+    .tab-pane { display: none; width: 100%; animation: fadeSlideUp 0.4s ease; }
+    .tab-pane.active-pane { display: block; }
+    @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Cards gerais */
+    .card {
+      background: rgba(8, 6, 12, 0.75);
+      backdrop-filter: blur(16px);
+      border-radius: 2rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(255, 160, 50, 0.5);
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 215, 120, 0.1);
+    }
+    .card h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.35rem;
+      color: #FFDD99;
+      margin-bottom: 1.2rem;
+      border-left: 5px solid #FF9F40;
+      padding-left: 1rem;
+      font-weight: 700;
+    }
+
+    /* Formulários */
+    .form-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-end; }
+    .input-group { flex: 1; min-width: 140px; }
+    .input-group label { font-size: 0.7rem; font-weight: 700; color: #FFCC88; display: block; text-transform: uppercase; margin-bottom: 0.3rem; letter-spacing: 1px; }
+    input, select, textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border-radius: 1.3rem;
+      border: 1px solid rgba(255, 170, 60, 0.6);
+      background: rgba(0, 0, 0, 0.65);
+      color: #f0f0f0;
+      font-size: 0.9rem;
+      transition: all 0.25s;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #FFB347;
+      box-shadow: 0 0 18px rgba(255, 160, 0, 0.7);
+      background: rgba(15, 12, 20, 0.85);
+    }
+    button {
+      background: linear-gradient(95deg, #FF7A1F, #F05A00);
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 2rem;
+      color: #0A0A0E;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 14px rgba(255, 80, 0, 0.5);
+      transition: all 0.2s;
+    }
+    button:hover { background: linear-gradient(95deg, #FF9922, #FF6A00); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 120, 0, 0.8); }
+    .btn-small { background: linear-gradient(135deg, #E55B00, #C54A00); padding: 0.5rem 0.9rem; font-size: 0.75rem; }
+    .btn-outline { background: transparent; border: 1px solid rgba(255, 160, 60, 0.7); color: #FFD28F; box-shadow: none; }
+    .btn-outline:hover { background: rgba(255, 140, 0, 0.3); box-shadow: 0 0 14px #ffaa44; }
+    .btn-danger { background: linear-gradient(135deg, #D42, #A00); box-shadow: 0 4px 12px rgba(200, 0, 0, 0.6); }
+
+    /* Cards de itens */
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; margin-top: 1rem; }
+    .item-card {
+      background: linear-gradient(145deg, rgba(18, 15, 24, 0.9), rgba(5, 3, 10, 0.95));
+      border-radius: 1.6rem;
+      padding: 1.1rem;
+      border: 1px solid rgba(255, 150, 40, 0.55);
+      transition: all 0.25s ease;
+      backdrop-filter: blur(8px);
+    }
+    .item-card:hover { transform: translateY(-5px); border-color: #FFB85E; box-shadow: 0 18px 30px -8px rgba(255, 120, 0, 0.4); }
+    .item-card-title { font-weight: 800; color: #FFD48A; font-size: 1.1rem; }
+    .item-card-value { font-size: 1.3rem; font-weight: 800; color: #FFC107; text-align: right; margin-top: 6px; }
+    .item-card-actions { display: flex; gap: 0.5rem; justify-content: flex-end; margin-top: 0.6rem; }
+
+    /* Tabelas centralizadas */
+    .sales-table-container, .table-wrapper { overflow-x: auto; width: 100%; margin-top: 1rem; border-radius: 1.5rem; }
+    .sales-table, .relatorio-secao table {
+      width: 100%;
+      min-width: 600px;
+      border-collapse: collapse;
+      background: rgba(0, 0, 0, 0.6);
+      border-radius: 1.5rem;
+    }
+    .sales-table th, .sales-table td,
+    .relatorio-secao th, .relatorio-secao td {
+      padding: 0.9rem 0.6rem;
+      text-align: center;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(255, 180, 60, 0.3);
+      color: #f3f3f3;
+    }
+    .sales-table th, .relatorio-secao th {
+      background: rgba(255, 130, 20, 0.3);
+      color: #FFE3A3;
+      font-weight: 700;
+    }
+    .sales-table tr:hover, .relatorio-secao tr:hover { background: rgba(255, 150, 20, 0.15); }
+
+    /* Dashboard e cards grandes */
+    .dashboard-widget {
+      background: rgba(5, 5, 12, 0.7);
+      backdrop-filter: blur(18px);
+      border-radius: 2.2rem;
+      border: 1px solid rgba(255, 170, 60, 0.5);
+      padding: 1.6rem;
+    }
+    .big-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+    .big-card {
+      background: linear-gradient(135deg, rgba(255, 140, 20, 0.2), rgba(80, 40, 0, 0.4));
+      border-radius: 2rem;
+      backdrop-filter: blur(8px);
+      padding: 1.3rem;
+      text-align: center;
+      border: 1px solid rgba(255, 190, 70, 0.5);
+    }
+    .big-valor { font-size: 1.9rem; font-weight: 800; color: #FFDA88; }
+    .toggle-eye { cursor: pointer; filter: drop-shadow(0 0 4px #ffaa55); margin-left: 8px; }
+
+    /* Relatório específico */
+    .relatorio-resumo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .relatorio-card {
+      background: rgba(20, 15, 25, 0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 1.5rem;
+      border: 1px solid #FFB347;
+      padding: 1rem;
+      text-align: center;
+    }
+    .relatorio-card .r-valor { font-size: 1.4rem; font-weight: 700; color: #FFD966; }
+    .relatorio-secao { margin-bottom: 1.8rem; }
+    .relatorio-secao h3 { color: #FFB347; margin-bottom: 1rem; border-left: 4px solid #FF9F40; padding-left: 0.8rem; }
+
+    /* Calculadora */
+    .calc-panel { max-width: 500px; margin: 0 auto; }
+    .calc-screen {
+      background: #0a0700;
+      border-radius: 1.5rem;
+      padding: 0.9rem 1rem;
+      text-align: right;
+      font-size: 2rem;
+      font-weight: 600;
+      color: #FFD700;
+      font-family: 'Fira Code', monospace;
+      margin-bottom: 1rem;
+      min-height: 70px;
+    }
+    .calc-buttons { display: grid; grid-template-columns: repeat(4,1fr); gap: 8px; }
+    .calc-buttons button {
+      background: rgba(255,159,0,0.15);
+      padding: 0.9rem 0;
+      font-size: 1.2rem;
+      border-radius: 1.3rem;
+      border: 1px solid rgba(255,159,0,0.5);
+      color: #FFD700;
+    }
+
+    /* Modal */
+    .fullscreen-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 30% 10%, #030105, #000000);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.25s ease;
+    }
+    .fullscreen-modal.active { visibility: visible; opacity: 1; }
+    .fullscreen-header {
+      display: flex;
+      align-items: center;
+      padding: 1rem 1.8rem;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 180, 70, 0.6);
+      gap: 1rem;
+    }
+    .back-btn {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #FFA647;
+      color: #FFCF8A;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2rem;
+      cursor: pointer;
+    }
+    .fullscreen-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+
+    .modal {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(12px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.25s;
+    }
+    .modal.active { visibility: visible; opacity: 1; }
+    .modal-content {
+      background: #1a160c;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      border: 1px solid #FF9F00;
+    }
+
+    .toggle-section { display: none; margin-top: 1rem; }
+    .toggle-section.visible { display: block; }
+    @media (max-width: 600px) {
+      .app-container { padding: 0.8rem; }
+      .nav-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 0.6rem; }
+      .big-valor { font-size: 1.4rem; }
     }
   </style>
 </head>
@@ -309,10 +414,9 @@
     <button class="nav-btn" data-tab="calc"><span class="icon">🧮</span><span>Calc</span></button>
     <button class="nav-btn" data-tab="relatorio"><span class="icon">📄</span><span>Relatório</span></button>
   </nav>
-
   <main class="main-content">
-    <div class="app-header" style="margin-bottom:0;">
-      <span class="app-logo">🚀 RUMO GESTÃO</span>
+    <div class="app-header">
+      <span class="app-logo">DBZ GESTÃO</span>
       <div class="clock-container">
         <span class="digital-clock" id="liveClock">00:00:00</span>
         <span class="digital-date" id="liveDate">Carregando...</span>
@@ -320,17 +424,17 @@
     </div>
     <div id="dashboardPane" class="tab-pane active-pane">
       <div class="dashboard-widget">
-        <h2 style="color:#60a5fa;margin-bottom:1.5rem;">📊 Visão Geral</h2>
+        <h2 style="color:#FFD966;">⚡ Visão Geral do Guerreiro</h2>
         <div class="big-cards">
           <div class="big-card"><span class="big-icon">💰</span><h3>Vendas Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashVendas">R$ 0,00</span><span class="toggle-eye" id="toggleDashVendas">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📦</span><h3>Compras Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashCompras">R$ 0,00</span><span class="toggle-eye" id="toggleDashCompras">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📈</span><h3>Lucro Líquido</h3><div class="big-valor-container"><span class="big-valor" id="dashLucro">R$ 0,00</span><span class="toggle-eye" id="toggleDashLucro">👁️</span></div></div>
         </div>
-        <div style="margin-top:1.5rem;">
-          <h3 style="color:#93c5fd;margin-bottom:1rem;">📈 Gráfico de Vendas vs Compras</h3>
-          <div class="chart-container">
-            <div class="bar-wrapper"><div class="bar" id="barVendas" style="height:0;"></div><span class="bar-label">Vendas</span></div>
-            <div class="bar-wrapper"><div class="bar" id="barCompras" style="height:0; background:linear-gradient(to top,#2563eb,#1e3a8a);"></div><span class="bar-label">Compras</span></div>
+        <div style="margin-top:1.8rem;">
+          <h3 style="color:#FFCD94;">📊 Ki das Vendas vs Compras</h3>
+          <div class="chart-container" style="display: flex; gap: 2rem; justify-content: center; align-items: flex-end; height: 150px; background: rgba(0,0,0,0.5); border-radius: 2rem; padding: 1rem;">
+            <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barVendas" style="width: 50px; background: linear-gradient(to top,#FFAA33,#FFE484); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Vendas</span></div>
+            <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barCompras" style="width: 50px; background: linear-gradient(to top,#DD4422,#FF8866); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Compras</span></div>
           </div>
         </div>
       </div>
@@ -338,509 +442,772 @@
   </main>
 </div>
 
-<!-- MODAIS FULLSCREEN (CONTEÚDO INTERNO) -->
-<div id="vendasFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div>
-  <div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div>
-    <h2>📋 Histórico de Vendas</h2>
-    <div class="sales-table-container">
-      <table class="sales-table" id="salesTable">
-        <thead>
-          <tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr>
-        </thead>
-        <tbody id="salesTableBody">
-          <tr><td colspan="7" style="text-align:center;">Carregando...</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div></div>
-</div>
+<!-- MODAIS FULLSCREEN (MESMA ESTRUTURA FUNCIONAL) -->
+<div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
+<div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><h2>📋 Produtos Cadastrados</h2><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
+<div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
+<div id="clientesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><h2>📋 Lista de Clientes</h2><div id="clientesCardsContainer" class="cards-grid"></div></div></div></div>
+<div id="fornecedoresFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button><h2>🏭 Fornecedores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Fornecedor</h2><div class="form-row"><div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div><div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div><div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div><button id="addFornecedorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Fornecedores</h2><div id="fornecedoresCardsContainer" class="cards-grid"></div></div></div></div>
+<div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
+<div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><button id="toggleEntregasBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
+<div id="anotacoesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Anotação</h2><div class="form-row"><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button></div><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div></div></div>
+<div id="calcFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div><div class="fullscreen-body"><div class="calc-panel"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div></div>
+<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
 
-<div id="produtosFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div>
-  <div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><h2>📋 Produtos Cadastrados</h2><div id="produtosCardsContainer" class="cards-grid"></div></div></div>
-</div>
-
-<div id="comprasFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div>
-  <div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div>
-</div>
-
-<div id="clientesFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div>
-  <div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><h2>📋 Lista de Clientes</h2><div id="clientesCardsContainer" class="cards-grid"></div></div></div>
-</div>
-
-<div id="fornecedoresFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button><h2>🏭 Fornecedores</h2></div>
-  <div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Fornecedor</h2><div class="form-row"><div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div><div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div><div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div><button id="addFornecedorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Fornecedores</h2><div id="fornecedoresCardsContainer" class="cards-grid"></div></div></div>
-</div>
-
-<div id="entregadorFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div>
-  <div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div>
-</div>
-
-<div id="deliveryFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div>
-  <div class="fullscreen-body">
-    <div class="card">
-      <h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div>
-      <button id="toggleBairrosBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Bairros Cadastrados</button>
-      <div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div>
-    </div>
-    <div class="card">
-      <h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div>
-      <button id="toggleEntregasBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Entregas Realizadas</button>
-      <div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div>
-    </div>
-  </div>
-</div>
-
-<div id="anotacoesFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações</h2></div>
-  <div class="fullscreen-body"><div class="card"><h2>➕ Nova Anotação</h2><div class="form-row"><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button></div><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div></div>
-</div>
-
-<div id="calcFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div>
-  <div class="fullscreen-body"><div class="calc-panel" style="max-width:500px;margin:0 auto;"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div>
-</div>
-
-<div id="relatorioFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div>
-  <div class="fullscreen-body">
-    <div class="relatorio-resumo" id="relatorioResumo"></div>
-    <div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div>
-    <div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div>
-    <div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div>
-    <div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div>
-  </div>
-</div>
-
-<!-- MODAL DE EDIÇÃO (geral) -->
-<div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger" style="background:linear-gradient(135deg,#991b1b,#dc2626);">Cancelar</button></div></div></div>
-<div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger" style="background:linear-gradient(135deg,#991b1b,#dc2626);">Cancelar</button></div></div></div>
+<div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
+<div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
 
 <script>
-  (() => {
-    function updateClock() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      const seconds = String(now.getSeconds()).padStart(2, '0');
-      const diasSemana = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-      const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-      document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
-      document.getElementById('liveDate').textContent = `${diasSemana[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
-    }
-    updateClock();
-    setInterval(updateClock, 1000);
+(function() {
+  // ===================== FUNÇÕES AUXILIARES =====================
+  function updateClock() {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2,'0');
+    const minutes = String(now.getMinutes()).padStart(2,'0');
+    const seconds = String(now.getSeconds()).padStart(2,'0');
+    const dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+    const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+    document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
+    document.getElementById('liveDate').textContent = `${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
 
-    const state = {
-      produtos:[], clientes:[], fornecedores:[], vendas:[], compras:[], notas:[],
-      entregadores:[], bairros:[], entregas:[]
+  const state = {
+    produtos: [], clientes: [], fornecedores: [], vendas: [], compras: [], notas: [],
+    entregadores: [], bairros: [], entregas: []
+  };
+  const STORAGE_MAP = {
+    produtos:'neon_produtos', clientes:'neon_clientes', fornecedores:'neon_fornecedores',
+    vendas:'neon_vendas', compras:'neon_compras', notas:'neon_notas',
+    entregadores:'neon_entregadores', bairros:'neon_bairros', entregas:'neon_entregas'
+  };
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => document.querySelectorAll(sel);
+  const formatMoney = (v) => v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+  const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
+  const nowStr = () => new Date().toLocaleString();
+  const uid = () => Date.now() + Math.floor(Math.random() * 10000);
+
+  let dashVendasVisible = true, dashComprasVisible = true, dashLucroVisible = true;
+  let bairrosVisible = false, entregasVisible = false;
+
+  function save() {
+    for (const [key, storageKey] of Object.entries(STORAGE_MAP))
+      localStorage.setItem(storageKey, JSON.stringify(state[key]));
+  }
+
+  function load() {
+    for (const [key, storageKey] of Object.entries(STORAGE_MAP)) {
+      const raw = localStorage.getItem(storageKey);
+      state[key] = raw ? JSON.parse(raw) : [];
+    }
+    // Dados iniciais consistentes
+    if (!state.produtos.length && !state.clientes.length && !state.fornecedores.length) {
+      state.produtos = [
+        { id: 1001, nome: 'Notebook Ultra', preco: 3450 },
+        { id: 1002, nome: 'Mouse Gamer', preco: 129.9 }
+      ];
+      state.clientes = [{ id: 2001, nome: 'Cliente Exemplo', email: 'cli@email.com', whatsapp: '(11) 99999-8888', endereco: 'Rua das Flores, 123' }];
+      state.fornecedores = [{ id: 3001, nome: 'Fornecedor Alpha', cnpj: '12.345.678/0001-90', contato: '(11) 3456-7890' }];
+      state.vendas = [
+        { id: 4001, clienteId: 2001, clienteNome: 'Cliente Exemplo', produtoId: 1001, produtoNome: 'Notebook Ultra', quantidade: 1, precoUnit: 3450, dataStr: nowStr() },
+        { id: 4002, clienteId: 2001, clienteNome: 'Cliente Exemplo', produtoId: 1002, produtoNome: 'Mouse Gamer', quantidade: 1, precoUnit: 129.9, dataStr: nowStr() }
+      ];
+      state.compras = [];
+      state.notas = [{ id: 6001, texto: 'Sistema DBZ Gestão funcionando perfeitamente!', data: nowStr() }];
+      state.entregadores = [{ id: 7001, nome: 'João Motoboy', telefone: '(11) 98888-7777', veiculo: 'Moto', placa: 'ABC-1234' }];
+      state.bairros = [
+        { id: 8001, nome: 'Centro', taxa: 5 },
+        { id: 8002, nome: 'Jardim das Flores', taxa: 8 }
+      ];
+      state.entregas = [
+        { id: 9001, clienteId: 2001, clienteNome: 'Cliente Exemplo', produtoId: 1001, produtoNome: 'Notebook Ultra', entregadorId: 7001, entregadorNome: 'João Motoboy', bairroId: 8001, bairroNome: 'Centro', valor: 5, dataStr: nowStr() }
+      ];
+      save();
+    }
+  }
+
+  function updateTotals() {
+    const totalVendas = state.vendas.reduce((s, v) => s + v.quantidade * v.precoUnit, 0);
+    const totalCompras = state.compras.reduce((s, c) => s + c.quantidade * c.precoUnit, 0);
+    const lucro = totalVendas - totalCompras;
+    document.getElementById('dashVendas').textContent = dashVendasVisible ? formatMoney(totalVendas) : 'R$ ••••••';
+    document.getElementById('dashCompras').textContent = dashComprasVisible ? formatMoney(totalCompras) : 'R$ ••••••';
+    const lucroEl = document.getElementById('dashLucro');
+    lucroEl.textContent = dashLucroVisible ? formatMoney(lucro) : 'R$ ••••••';
+    document.getElementById('toggleDashVendas').textContent = dashVendasVisible ? '👁️' : '🔒';
+    document.getElementById('toggleDashCompras').textContent = dashComprasVisible ? '👁️' : '🔒';
+    document.getElementById('toggleDashLucro').textContent = dashLucroVisible ? '👁️' : '🔒';
+    lucroEl.style.color = dashLucroVisible ? (lucro >= 0 ? '#6ee7b7' : '#FF9999') : '#f5f5f5';
+    const maxVal = Math.max(totalVendas, totalCompras, 1);
+    const barV = document.getElementById('barVendas');
+    const barC = document.getElementById('barCompras');
+    if (barV) barV.style.height = (totalVendas / maxVal * 120) + 'px';
+    if (barC) barC.style.height = (totalCompras / maxVal * 120) + 'px';
+  }
+
+  function renderCards(containerId, items, cardFn, emptyMsg) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    if (!items.length) {
+      container.innerHTML = `<div style="color:#FFB347;text-align:center;grid-column:1/-1;padding:2rem;">${emptyMsg}</div>`;
+      return;
+    }
+    container.innerHTML = items.map(cardFn).join('');
+  }
+
+  const cardFns = {
+    produto: (p) => `<div class="item-card"><div class="item-card-header"><span class="item-card-title">${escapeHtml(p.nome)}</span></div><div class="item-card-value">${formatMoney(p.preco)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="produto" data-id="${p.id}">✏️ Editar</button><button class="delete-btn" data-entity="produto" data-id="${p.id}">🗑️ Excluir</button></div></div>`,
+    compra: (c) => `<div class="item-card"><div><strong>${escapeHtml(c.fornecedorNome)}</strong></div><div>📦 ${escapeHtml(c.produto)}</div><div>Qtd: ${c.quantidade} × ${formatMoney(c.precoUnit)}</div><div class="item-card-value">${formatMoney(c.quantidade * c.precoUnit)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="compra" data-id="${c.id}">✏️ Editar</button><button class="delete-btn" data-entity="compra" data-id="${c.id}">🗑️ Excluir</button></div></div>`,
+    cliente: (c) => `<div class="item-card"><div class="item-card-title">${escapeHtml(c.nome)}</div><div>📧 ${escapeHtml(c.email||'N/A')}</div><div>📱 ${escapeHtml(c.whatsapp||'N/A')}</div><div>📍 ${escapeHtml(c.endereco||'N/A')}</div><div class="item-card-actions"><button class="edit-btn" data-entity="cliente" data-id="${c.id}">✏️ Editar</button><button class="delete-btn" data-entity="cliente" data-id="${c.id}">🗑️ Excluir</button></div></div>`,
+    fornecedor: (f) => `<div class="item-card"><div class="item-card-title">${escapeHtml(f.nome)}</div><div>CNPJ: ${escapeHtml(f.cnpj||'N/A')}</div><div>📞 ${escapeHtml(f.contato||'N/A')}</div><div class="item-card-actions"><button class="edit-btn" data-entity="fornecedor" data-id="${f.id}">✏️ Editar</button><button class="delete-btn" data-entity="fornecedor" data-id="${f.id}">🗑️ Excluir</button></div></div>`,
+    entregador: (e) => `<div class="item-card"><div class="item-card-title">${escapeHtml(e.nome)}</div><div>📱 ${escapeHtml(e.telefone||'N/A')}</div><div>🚘 ${escapeHtml(e.veiculo||'N/A')}</div><div>🔢 ${escapeHtml(e.placa||'N/A')}</div><div class="item-card-actions"><button class="edit-btn" data-entity="entregador" data-id="${e.id}">✏️ Editar</button><button class="delete-btn" data-entity="entregador" data-id="${e.id}">🗑️ Excluir</button></div></div>`,
+    bairro: (b) => `<div class="item-card"><div class="item-card-title">${escapeHtml(b.nome)}</div><div class="item-card-value">${formatMoney(b.taxa)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="bairro" data-id="${b.id}">✏️ Editar</button><button class="delete-btn" data-entity="bairro" data-id="${b.id}">🗑️ Excluir</button></div></div>`,
+    entrega: (e) => `<div class="item-card"><div class="item-card-title">${escapeHtml(e.entregadorNome)}</div><div>👤 ${escapeHtml(e.clienteNome||'N/A')}</div><div>📦 ${escapeHtml(e.produtoNome||'N/A')}</div><div>📍 ${escapeHtml(e.bairroNome)}</div><div class="item-card-value">${formatMoney(e.valor)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="entrega" data-id="${e.id}">✏️ Editar</button><button class="delete-btn" data-entity="entrega" data-id="${e.id}">🗑️ Excluir</button></div></div>`,
+    nota: (n) => `<div class="item-card"><div style="white-space:pre-wrap;">${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div><div class="item-card-actions"><button class="edit-btn" data-entity="nota" data-id="${n.id}">✏️ Editar</button><button class="delete-btn" data-entity="nota" data-id="${n.id}">🗑️ Excluir</button></div></div>`
+  };
+
+  function renderSalesTable() {
+    const tbody = document.getElementById('salesTableBody');
+    if (!tbody) return;
+    if (!state.vendas.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Nenhuma venda registrada</td></tr>';
+      return;
+    }
+    tbody.innerHTML = state.vendas.map(v => `
+      <tr>
+        <td>${escapeHtml(v.clienteNome)}</td>
+        <td>${escapeHtml(v.produtoNome)}</td>
+        <td>${v.quantidade}</td>
+        <td>${formatMoney(v.precoUnit)}</td>
+        <td>${formatMoney(v.quantidade * v.precoUnit)}</td>
+        <td>${escapeHtml(v.dataStr)}</td>
+        <td class="actions-cell">
+          <button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button>
+          <button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function refreshVendasModal() {
+    const clienteSelect = $('#vendaClienteIdFull');
+    clienteSelect.innerHTML = '<option value="">Selecione cliente</option>';
+    state.clientes.forEach(c => {
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.nome;
+      clienteSelect.appendChild(opt);
+    });
+    const produtoSelect = $('#vendaProdutoIdFull');
+    produtoSelect.innerHTML = '<option value="">Selecione produto</option>';
+    state.produtos.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`;
+      opt.dataset.preco = p.preco;
+      produtoSelect.appendChild(opt);
+    });
+    produtoSelect.onchange = () => {
+      const sel = produtoSelect.options[produtoSelect.selectedIndex];
+      $('#vendaPrecoFull').value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : '';
     };
-    const STORAGE_MAP = {
-      produtos:'rumo_produtos', clientes:'rumo_clientes', fornecedores:'rumo_fornecedores',
-      vendas:'rumo_vendas', compras:'rumo_compras', notas:'rumo_notas',
-      entregadores:'rumo_entregadores', bairros:'rumo_bairros', entregas:'rumo_entregas'
+    renderSalesTable();
+  }
+
+  function refreshProdutosModal() {
+    renderCards('produtosCardsContainer', state.produtos, cardFns.produto, 'Nenhum produto cadastrado');
+    refreshVendasModal();
+  }
+  function refreshComprasModal() {
+    const fornSelect = $('#compraFornecedorIdFull');
+    fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>';
+    state.fornecedores.forEach(f => {
+      const opt = document.createElement('option');
+      opt.value = f.id;
+      opt.textContent = f.nome;
+      fornSelect.appendChild(opt);
+    });
+    renderCards('comprasCardsContainer', state.compras, cardFns.compra, 'Nenhuma compra registrada');
+  }
+  function refreshClientesModal() {
+    renderCards('clientesCardsContainer', state.clientes, cardFns.cliente, 'Nenhum cliente cadastrado');
+    refreshVendasModal();
+  }
+  function refreshFornecedoresModal() {
+    renderCards('fornecedoresCardsContainer', state.fornecedores, cardFns.fornecedor, 'Nenhum fornecedor cadastrado');
+    refreshComprasModal();
+  }
+  function refreshEntregadorModal() {
+    renderCards('entregadoresCardsContainer', state.entregadores, cardFns.entregador, 'Nenhum entregador cadastrado');
+    refreshDeliveryModal();
+  }
+  function refreshDeliveryModal() {
+    if (bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado');
+    const clienteSelect = $('#entregaClienteIdFull');
+    clienteSelect.innerHTML = '<option value="">Selecione</option>';
+    state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
+    const produtoSelect = $('#entregaProdutoIdFull');
+    produtoSelect.innerHTML = '<option value="">Selecione</option>';
+    state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.nome; produtoSelect.appendChild(opt); });
+    const entSelect = $('#entregaEntregadorIdFull');
+    entSelect.innerHTML = '<option value="">Selecione</option>';
+    state.entregadores.forEach(e => { const opt = document.createElement('option'); opt.value = e.id; opt.textContent = e.nome; entSelect.appendChild(opt); });
+    const bairroSelect = $('#entregaBairroIdFull');
+    bairroSelect.innerHTML = '<option value="">Selecione</option>';
+    state.bairros.forEach(b => { const opt = document.createElement('option'); opt.value = b.id; opt.textContent = `${b.nome} - ${formatMoney(b.taxa)}`; opt.dataset.taxa = b.taxa; bairroSelect.appendChild(opt); });
+    bairroSelect.onchange = () => {
+      const sel = bairroSelect.options[bairroSelect.selectedIndex];
+      $('#entregaValorFull').value = sel && sel.dataset.taxa ? parseFloat(sel.dataset.taxa).toFixed(2) : '';
     };
+    if (entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada');
+  }
+  function refreshAnotacoesModal() {
+    renderCards('notasCardsContainer', state.notas, cardFns.nota, 'Sem anotações');
+  }
 
-    const $ = (sel) => document.querySelector(sel);
-    const $$ = (sel) => document.querySelectorAll(sel);
-    const formatMoney = (v) => v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
-    const escapeHtml = (s) => s ? String(s).replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])) : '';
-    const now = () => new Date().toLocaleString();
-    const uid = () => Date.now() + Math.floor(Math.random() * 1000);
-
-    let dashVendasVisible=true, dashComprasVisible=true, dashLucroVisible=true;
-    let bairrosVisible=false, entregasVisible=false;
-
-    function save() { for (const [key, storageKey] of Object.entries(STORAGE_MAP)) { localStorage.setItem(storageKey, JSON.stringify(state[key])); } }
-    function load() {
-      for (const [key, storageKey] of Object.entries(STORAGE_MAP)) { const raw = localStorage.getItem(storageKey); state[key] = raw ? JSON.parse(raw) : []; }
-      if (!state.produtos.length && !state.clientes.length && !state.fornecedores.length && !state.vendas.length && !state.compras.length && !state.notas.length) {
-        state.produtos.push({ id:1001, nome:'Notebook Ultra', preco:3450 }, { id:1002, nome:'Mouse Gamer', preco:129.9 });
-        state.clientes.push({ id:2001, nome:'Cliente Exemplo', email:'cli@email.com', whatsapp:'(11) 99999-8888', endereco:'Rua das Flores, 123' });
-        state.fornecedores.push({ id:3001, nome:'Fornecedor Alpha', cnpj:'12.345.678/0001-90', contato:'(11) 3456-7890' });
-        state.vendas.push({ id:4001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Notebook Ultra', quantidade:1, precoUnit:3450, dataStr:now() });
-        state.compras.push({ id:5001, fornecedorId:3001, fornecedorNome:'Fornecedor Alpha', produto:'Placa-mãe', quantidade:5, precoUnit:320, dataStr:now() });
-        state.notas.push({ id:6001, texto:'App Rumo Gestão!', data:now() });
-        state.entregadores.push({ id:7001, nome:'João Motoboy', telefone:'(11) 98888-7777', veiculo:'Moto', placa:'ABC-1234' });
-        state.bairros.push({ id:8001, nome:'Centro', taxa:5.00 }, { id:8002, nome:'Jardim das Flores', taxa:8.00 });
-        state.entregas.push({ id:9001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Notebook Ultra', entregadorId:7001, entregadorNome:'João Motoboy', bairroId:8001, bairroNome:'Centro', valor:5.00, dataStr:now() });
-        save();
-      }
+  function refreshRelatorioModal() {
+    const totalVendas = state.vendas.reduce((s, v) => s + v.quantidade * v.precoUnit, 0);
+    const totalCompras = state.compras.reduce((s, c) => s + c.quantidade * c.precoUnit, 0);
+    const totalEntregas = state.entregas.reduce((s, e) => s + e.valor, 0);
+    const lucro = totalVendas - totalCompras - totalEntregas;
+    const resumoDiv = document.getElementById('relatorioResumo');
+    if (resumoDiv) {
+      resumoDiv.innerHTML = `
+        <div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div>
+        <div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div>
+        <div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div>
+        <div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div>
+        <div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>
+      `;
     }
-
-    function updateTotals() {
-      const totalVendas = state.vendas.reduce((s,v) => s + v.quantidade * v.precoUnit, 0);
-      const totalCompras = state.compras.reduce((s,c) => s + c.quantidade * c.precoUnit, 0);
-      const lucro = totalVendas - totalCompras;
-      $('#dashVendas').textContent = dashVendasVisible ? formatMoney(totalVendas) : 'R$ ••••••';
-      $('#dashCompras').textContent = dashComprasVisible ? formatMoney(totalCompras) : 'R$ ••••••';
-      const lucroEl = $('#dashLucro'); lucroEl.textContent = dashLucroVisible ? formatMoney(lucro) : 'R$ ••••••';
-      $('#toggleDashVendas').textContent = dashVendasVisible ? '👁️' : '🔒';
-      $('#toggleDashCompras').textContent = dashComprasVisible ? '👁️' : '🔒';
-      $('#toggleDashLucro').textContent = dashLucroVisible ? '👁️' : '🔒';
-      lucroEl.style.color = dashLucroVisible ? (lucro >= 0 ? '#6ee7b7' : '#f87171') : '#f0f4fa';
-      const max = Math.max(totalVendas, totalCompras, 1);
-      document.getElementById('barVendas').style.height = (totalVendas / max * 120) + 'px';
-      document.getElementById('barCompras').style.height = (totalCompras / max * 120) + 'px';
-    }
-
-    function renderCards(containerId, items, cardFn, emptyMsg) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      if (!items.length) { container.innerHTML = `<div style="color:#93c5fd;text-align:center;grid-column:1/-1;padding:2rem;">${emptyMsg}</div>`; return; }
-      container.innerHTML = items.map(cardFn).join('');
-    }
-
-    const cardFns = {
-      produto: (p) => `
-        <div class="item-card">
-          <div class="item-card-header"><span class="item-card-title">${escapeHtml(p.nome)}</span></div>
-          <div class="item-card-value">${formatMoney(p.preco)}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="produto" data-id="${p.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="produto" data-id="${p.id}">🗑️ Excluir</button>
-          </div>
-        </div>`,
-      compra: (c) => `
-        <div class="item-card">
-          <div class="item-card-header"><span class="item-card-title">${escapeHtml(c.fornecedorNome)}</span><span class="item-card-subtitle">${c.dataStr}</span></div>
-          <div class="item-card-body">📦 ${escapeHtml(c.produto)}</div>
-          <div class="item-card-body" style="font-size:0.8rem;color:#93c5fd;">Qtd: ${c.quantidade} × ${formatMoney(c.precoUnit)}</div>
-          <div class="item-card-value">${formatMoney(c.quantidade * c.precoUnit)}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="compra" data-id="${c.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="compra" data-id="${c.id}">🗑️ Excluir</button>
-          </div>
-        </div>`,
-      cliente: (c) => `
-        <div class="item-card">
-          <div class="item-card-header"><span class="item-card-title">${escapeHtml(c.nome)}</span></div>
-          <div class="item-card-body">📧 ${escapeHtml(c.email||'N/A')}</div>
-          <div class="item-card-body">📱 ${escapeHtml(c.whatsapp||'N/A')}</div>
-          <div class="item-card-body">📍 ${escapeHtml(c.endereco||'N/A')}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="cliente" data-id="${c.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="cliente" data-id="${c.id}">🗑️ Excluir</button>
-          </div>
-        </div>`,
-      fornecedor: (f) => `
-        <div class="item-card">
-          <div class="item-card-header"><span class="item-card-title">${escapeHtml(f.nome)}</span></div>
-          <div class="item-card-body">CNPJ: ${escapeHtml(f.cnpj||'N/A')}</div>
-          <div class="item-card-body">📞 ${escapeHtml(f.contato||'N/A')}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="fornecedor" data-id="${f.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="fornecedor" data-id="${f.id}">🗑️ Excluir</button>
-          </div>
-        </div>`,
-      entregador: (e) => `
-        <div class="item-card">
-          <div class="item-card-header"><span class="item-card-title">${escapeHtml(e.nome)}</span></div>
-          <div class="item-card-body">📱 ${escapeHtml(e.telefone||'N/A')}</div>
-          <div class="item-card-body">🚘 ${escapeHtml(e.veiculo||'N/A')}</div>
-          <div class="item-card-body">🔢 ${escapeHtml(e.placa||'N/A')}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="entregador" data-id="${e.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="entregador" data-id="${e.id}">🗑️ Excluir</button>
-          </div>
-        </div>`,
-      bairro: (b) => `
-        <div class="item-card">
-          <div class="item-card-header"><span class="item-card-title">${escapeHtml(b.nome)}</span></div>
-          <div class="item-card-value">${formatMoney(b.taxa)}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="bairro" data-id="${b.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="bairro" data-id="${b.id}">🗑️ Excluir</button>
-          </div>
-        </div>`,
-      entrega: (e) => `
-        <div class="item-card">
-          <div class="item-card-header"><span class="item-card-title">${escapeHtml(e.entregadorNome)}</span><span class="item-card-subtitle">${e.dataStr}</span></div>
-          <div class="item-card-body">👤 ${escapeHtml(e.clienteNome||'N/A')}</div>
-          <div class="item-card-body">📦 ${escapeHtml(e.produtoNome||'N/A')}</div>
-          <div class="item-card-body">📍 ${escapeHtml(e.bairroNome)}</div>
-          <div class="item-card-value">${formatMoney(e.valor)}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="entrega" data-id="${e.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="entrega" data-id="${e.id}">🗑️ Excluir</button>
-          </div>
-        </div>`,
-      nota: (n) => `
-        <div class="item-card">
-          <div class="item-card-body" style="white-space:pre-wrap;">${escapeHtml(n.texto)}</div>
-          <div class="item-card-subtitle">${n.data}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn" data-entity="nota" data-id="${n.id}">✏️ Editar</button>
-            <button class="delete-btn" data-entity="nota" data-id="${n.id}">🗑️ Excluir</button>
-          </div>
-        </div>`
-    };
-
-    function renderSalesTable() {
-      const tbody = document.getElementById('salesTableBody');
-      if (!tbody) return;
-      if (!state.vendas.length) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Nenhuma venda registrada</td></tr>';
-        return;
-      }
-      const rows = state.vendas.map(v => {
-        const total = v.quantidade * v.precoUnit;
-        return `<tr>
+    const vendasTbody = $('#relVendasTbody');
+    if (vendasTbody) {
+      vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => `
+        <tr>
           <td>${escapeHtml(v.clienteNome)}</td>
           <td>${escapeHtml(v.produtoNome)}</td>
           <td>${v.quantidade}</td>
           <td>${formatMoney(v.precoUnit)}</td>
-          <td>${formatMoney(total)}</td>
+          <td>${formatMoney(v.quantidade * v.precoUnit)}</td>
           <td>${escapeHtml(v.dataStr)}</td>
-          <td class="actions-cell">
-            <button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button>
-            <button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button>
-          </td>
-        </tr>`;
-      }).join('');
-      tbody.innerHTML = rows;
+        </tr>
+      `).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
     }
+    const comprasTbody = $('#relComprasTbody');
+    if (comprasTbody) {
+      comprasTbody.innerHTML = state.compras.length ? state.compras.map(c => `
+        <tr>
+          <td>${escapeHtml(c.fornecedorNome)}</td>
+          <td>${escapeHtml(c.produto)}</td>
+          <td>${c.quantidade}</td>
+          <td>${formatMoney(c.precoUnit)}</td>
+          <td>${formatMoney(c.quantidade * c.precoUnit)}</td>
+          <td>${escapeHtml(c.dataStr)}</td>
+        </tr>
+      `).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
+    }
+    const entregasTbody = $('#relEntregasTbody');
+    if (entregasTbody) {
+      entregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `
+        <tr>
+          <td>${escapeHtml(e.clienteNome||'')}</td>
+          <td>${escapeHtml(e.produtoNome||'')}</td>
+          <td>${escapeHtml(e.entregadorNome)}</td>
+          <td>${escapeHtml(e.bairroNome)}</td>
+          <td>${formatMoney(e.valor)}</td>
+          <td>${escapeHtml(e.dataStr)}</td>
+        </tr>
+      `).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
+    }
+    const notasDiv = $('#relNotasContainer');
+    if (notasDiv) {
+      notasDiv.innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div style="color:#FFB347;">Sem anotações.</div>';
+    }
+  }
 
-    function refreshVendasModal() {
-      const clienteSelect = $('#vendaClienteIdFull'); clienteSelect.innerHTML = '<option value="">Selecione cliente</option>';
-      state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
-      const produtoSelect = $('#vendaProdutoIdFull'); produtoSelect.innerHTML = '<option value="">Selecione produto</option>';
-      state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); });
-      produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; $('#vendaPrecoFull').value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : ''; };
-      renderSalesTable();
+  function addProduto(nome, preco, selectAfter = false, fullMode = false) {
+    if (!nome) return null;
+    const novo = { id: uid(), nome, preco: isNaN(preco) ? 0 : preco };
+    state.produtos.push(novo);
+    save();
+    updateTotals();
+    refreshProdutosModal();
+    refreshVendasModal();
+    if (selectAfter && fullMode) {
+      const sel = $('#vendaProdutoIdFull');
+      for (let i = 0; i < sel.options.length; i++) {
+        if (parseInt(sel.options[i].value) === novo.id) {
+          sel.selectedIndex = i;
+          sel.dispatchEvent(new Event('change'));
+          break;
+        }
+      }
     }
-    function refreshProdutosModal() {
-      renderCards('produtosCardsContainer', state.produtos, cardFns.produto, 'Nenhum produto cadastrado');
-      refreshVendasModal();
-    }
-    function refreshComprasModal() {
-      const fornSelect = $('#compraFornecedorIdFull'); fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>';
-      state.fornecedores.forEach(f => { const opt = document.createElement('option'); opt.value = f.id; opt.textContent = f.nome; fornSelect.appendChild(opt); });
-      renderCards('comprasCardsContainer', state.compras, cardFns.compra, 'Nenhuma compra registrada');
-    }
-    function refreshClientesModal() {
-      renderCards('clientesCardsContainer', state.clientes, cardFns.cliente, 'Nenhum cliente cadastrado');
-      refreshVendasModal();
-    }
-    function refreshFornecedoresModal() {
-      renderCards('fornecedoresCardsContainer', state.fornecedores, cardFns.fornecedor, 'Nenhum fornecedor cadastrado');
-      refreshComprasModal();
-    }
-    function refreshEntregadorModal() {
-      renderCards('entregadoresCardsContainer', state.entregadores, cardFns.entregador, 'Nenhum entregador cadastrado');
-      refreshDeliveryModal();
-    }
-    function refreshDeliveryModal() {
-      if (bairrosVisible) { renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado'); }
-      const clienteSelect = $('#entregaClienteIdFull'); clienteSelect.innerHTML = '<option value="">Selecione</option>';
-      state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
-      const produtoSelect = $('#entregaProdutoIdFull'); produtoSelect.innerHTML = '<option value="">Selecione</option>';
-      state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.nome; produtoSelect.appendChild(opt); });
-      const entSelect = $('#entregaEntregadorIdFull'); entSelect.innerHTML = '<option value="">Selecione</option>';
-      state.entregadores.forEach(e => { const opt = document.createElement('option'); opt.value = e.id; opt.textContent = e.nome; entSelect.appendChild(opt); });
-      const bairroSelect = $('#entregaBairroIdFull'); bairroSelect.innerHTML = '<option value="">Selecione</option>';
-      state.bairros.forEach(b => { const opt = document.createElement('option'); opt.value = b.id; opt.textContent = `${b.nome} - ${formatMoney(b.taxa)}`; opt.dataset.taxa = b.taxa; bairroSelect.appendChild(opt); });
-      bairroSelect.onchange = () => { const sel = bairroSelect.options[bairroSelect.selectedIndex]; $('#entregaValorFull').value = sel && sel.dataset.taxa ? parseFloat(sel.dataset.taxa).toFixed(2) : ''; };
-      if (entregasVisible) { renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada'); }
-    }
-    function refreshAnotacoesModal() {
-      renderCards('notasCardsContainer', state.notas, cardFns.nota, 'Sem anotações');
-    }
-    function refreshRelatorioModal() {
-      const totalVendas = state.vendas.reduce((s,v) => s + v.quantidade * v.precoUnit, 0);
-      const totalCompras = state.compras.reduce((s,c) => s + c.quantidade * c.precoUnit, 0);
-      const totalEntregas = state.entregas.reduce((s,e) => s + e.valor, 0);
-      const lucro = totalVendas - totalCompras - totalEntregas;
-      $('#relatorioResumo').innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#f87171'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
-      $('#relVendasTbody').innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${v.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
-      $('#relComprasTbody').innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${c.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
-      $('#relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${e.dataStr}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
-      $('#relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div class="item-card-body">${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div style="color:#93c5fd;">Sem anotações.</div>';
-    }
+    return novo;
+  }
 
-    function renderAll() { updateTotals(); }
+  function addVenda() {
+    const clienteId = parseInt($('#vendaClienteIdFull').value);
+    const cliente = state.clientes.find(c => c.id === clienteId);
+    if (!cliente) return alert('Selecione um cliente!');
+    const produtoId = parseInt($('#vendaProdutoIdFull').value);
+    const produto = state.produtos.find(p => p.id === produtoId);
+    if (!produto) return alert('Selecione um produto!');
+    const qtd = parseFloat($('#vendaQtdFull').value);
+    let preco = parseFloat($('#vendaPrecoFull').value);
+    if (isNaN(qtd) || qtd <= 0) return alert('Quantidade inválida!');
+    if (isNaN(preco) || preco < 0) preco = produto.preco;
+    state.vendas.push({
+      id: uid(), clienteId: cliente.id, clienteNome: cliente.nome,
+      produtoId: produto.id, produtoNome: produto.nome,
+      quantidade: qtd, precoUnit: preco, dataStr: nowStr()
+    });
+    save();
+    updateTotals();
+    refreshVendasModal();
+    $('#vendaProdutoIdFull').value = '';
+    $('#vendaQtdFull').value = '1';
+    $('#vendaPrecoFull').value = '';
+  }
 
-    function addProduto(nome, preco, selectAfter=false, fullMode=false) {
-      if (!nome) return null; if (isNaN(preco)) preco = 0;
-      const novo = { id:uid(), nome, preco }; state.produtos.push(novo); save(); renderAll(); refreshProdutosModal(); refreshVendasModal();
-      if (selectAfter && fullMode) { const sel = $('#vendaProdutoIdFull'); for (let i = 0; i < sel.options.length; i++) { if (parseInt(sel.options[i].value) === novo.id) { sel.selectedIndex = i; sel.dispatchEvent(new Event('change')); break; } } }
-      return novo;
-    }
-    function addVenda() {
-      const clienteId = parseInt($('#vendaClienteIdFull').value); const cliente = state.clientes.find(c => c.id === clienteId);
-      if (!cliente) return alert('Selecione um cliente!');
-      const produtoId = parseInt($('#vendaProdutoIdFull').value); const produto = state.produtos.find(p => p.id === produtoId);
-      if (!produto) return alert('Selecione um produto!');
-      const qtd = parseFloat($('#vendaQtdFull').value); let preco = parseFloat($('#vendaPrecoFull').value);
-      if (isNaN(qtd) || qtd <= 0) return alert('Quantidade inválida!'); if (isNaN(preco) || preco < 0) preco = produto.preco;
-      state.vendas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, quantidade:qtd, precoUnit:preco, dataStr:now() });
-      save(); renderAll(); refreshVendasModal();
-      $('#vendaProdutoIdFull').value = ''; $('#vendaQtdFull').value = '1'; $('#vendaPrecoFull').value = '';
-    }
-    function addCompra() {
-      const fornId = parseInt($('#compraFornecedorIdFull').value); const forn = state.fornecedores.find(f => f.id === fornId);
-      if (!forn) return alert('Selecione um fornecedor!');
-      let produto = $('#compraProdutoFull').value.trim() || 'Produto'; const qtd = parseFloat($('#compraQtdFull').value); let preco = parseFloat($('#compraPrecoFull').value);
-      if (isNaN(qtd) || qtd <= 0) return alert('Quantidade inválida!'); if (isNaN(preco)) preco = 0;
-      state.compras.push({ id:uid(), fornecedorId:forn.id, fornecedorNome:forn.nome, produto, quantidade:qtd, precoUnit:preco, dataStr:now() });
-      save(); renderAll(); $('#compraProdutoFull').value = ''; $('#compraQtdFull').value = '1'; $('#compraPrecoFull').value = ''; refreshComprasModal();
-    }
-    function addCliente() {
-      const nome = $('#clienteNomeFull').value.trim(); if (!nome) return alert('Nome obrigatório!');
-      state.clientes.push({ id:uid(), nome, email:$('#clienteEmailFull').value, whatsapp:$('#clienteWhatsappFull').value, endereco:$('#clienteEnderecoFull').value });
-      save(); renderAll(); refreshVendasModal(); refreshClientesModal(); refreshDeliveryModal();
-      ['clienteNomeFull','clienteEmailFull','clienteWhatsappFull','clienteEnderecoFull'].forEach(id => $('#'+id).value = '');
-    }
-    function addFornecedor() {
-      const nome = $('#fornecedorNomeFull').value.trim(); if (!nome) return alert('Nome obrigatório!');
-      state.fornecedores.push({ id:uid(), nome, cnpj:$('#fornecedorCnpjFull').value, contato:$('#fornecedorContatoFull').value });
-      save(); renderAll(); refreshComprasModal(); refreshFornecedoresModal();
-      ['fornecedorNomeFull','fornecedorCnpjFull','fornecedorContatoFull'].forEach(id => $('#'+id).value = '');
-    }
-    function addNota() { const texto = $('#textoNotaFull').value.trim(); if (!texto) return; state.notas.push({ id:uid(), texto, data:now() }); save(); $('#textoNotaFull').value = ''; refreshAnotacoesModal(); }
-    function addEntregador() {
-      const nome = $('#entregadorNomeFull').value.trim(); if (!nome) return alert('Nome obrigatório!');
-      state.entregadores.push({ id:uid(), nome, telefone:$('#entregadorTelefoneFull').value, veiculo:$('#entregadorVeiculoFull').value, placa:$('#entregadorPlacaFull').value });
-      save(); refreshEntregadorModal(); ['entregadorNomeFull','entregadorTelefoneFull','entregadorVeiculoFull','entregadorPlacaFull'].forEach(id => $('#'+id).value = '');
-    }
-    function addBairro() {
-      const nome = $('#bairroNomeFull').value.trim(); if (!nome) return alert('Nome do bairro obrigatório!'); let taxa = parseFloat($('#bairroTaxaFull').value); if (isNaN(taxa)) taxa = 0;
-      state.bairros.push({ id:uid(), nome, taxa }); save(); refreshDeliveryModal(); $('#bairroNomeFull').value = ''; $('#bairroTaxaFull').value = '';
-      if (bairrosVisible) { renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado'); }
-    }
-    function addEntrega() {
-      const clienteId = parseInt($('#entregaClienteIdFull').value); const cliente = state.clientes.find(c => c.id === clienteId);
-      if (!cliente) return alert('Selecione um cliente!');
-      const produtoId = parseInt($('#entregaProdutoIdFull').value); const produto = state.produtos.find(p => p.id === produtoId);
-      if (!produto) return alert('Selecione um produto!');
-      const entId = parseInt($('#entregaEntregadorIdFull').value); const ent = state.entregadores.find(e => e.id === entId);
-      if (!ent) return alert('Selecione um entregador!');
-      const bairroId = parseInt($('#entregaBairroIdFull').value); const bairro = state.bairros.find(b => b.id === bairroId);
-      if (!bairro) return alert('Selecione um bairro!');
-      let valor = parseFloat($('#entregaValorFull').value); if (isNaN(valor) || valor <= 0) valor = bairro.taxa;
-      state.entregas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, entregadorId:ent.id, entregadorNome:ent.nome, bairroId:bairro.id, bairroNome:bairro.nome, valor, dataStr:now() });
-      save(); refreshDeliveryModal();
-      $('#entregaClienteIdFull').value = ''; $('#entregaProdutoIdFull').value = ''; $('#entregaEntregadorIdFull').value = ''; $('#entregaBairroIdFull').value = ''; $('#entregaValorFull').value = '';
-      if (entregasVisible) { renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada'); }
-    }
+  function addCompra() {
+    const fornId = parseInt($('#compraFornecedorIdFull').value);
+    const forn = state.fornecedores.find(f => f.id === fornId);
+    if (!forn) return alert('Selecione um fornecedor!');
+    const produto = $('#compraProdutoFull').value.trim() || 'Produto';
+    const qtd = parseFloat($('#compraQtdFull').value);
+    let preco = parseFloat($('#compraPrecoFull').value);
+    if (isNaN(qtd) || qtd <= 0) return alert('Quantidade inválida!');
+    if (isNaN(preco)) preco = 0;
+    state.compras.push({
+      id: uid(), fornecedorId: forn.id, fornecedorNome: forn.nome,
+      produto, quantidade: qtd, precoUnit: preco, dataStr: nowStr()
+    });
+    save();
+    updateTotals();
+    refreshComprasModal();
+    $('#compraProdutoFull').value = '';
+    $('#compraQtdFull').value = '1';
+    $('#compraPrecoFull').value = '';
+  }
 
-    let calcExpr = '0';
-    function buildCalc() { const btns = ['C','(',')','/','7','8','9','*','4','5','6','-','1','2','3','+','0','.','⌫','=']; $('#calcButtons').innerHTML = btns.map(b => `<button data-calc="${b}">${b}</button>`).join(''); $$('#calcButtons button').forEach(btn => btn.addEventListener('click', () => calcAction(btn.dataset.calc))); $('#calcDisplay').textContent = calcExpr; }
-    function calcAction(val) { const disp = $('#calcDisplay'); if (val === 'C') { calcExpr = '0'; disp.textContent = calcExpr; return; } if (val === '⌫') { calcExpr = (calcExpr.length === 1 || calcExpr === '0') ? '0' : calcExpr.slice(0, -1); disp.textContent = calcExpr; return; } if (val === '=') { try { const expr = calcExpr.replace(/×/g,'*').replace(/÷/g,'/'); const res = Function('"use strict";return ('+expr+')')(); if (isNaN(res) || !isFinite(res)) throw new Error(); calcExpr = String(parseFloat(res.toFixed(8))); disp.textContent = calcExpr; } catch (e) { disp.textContent = 'Erro'; setTimeout(() => { calcExpr = '0'; disp.textContent = '0'; }, 800); } return; } if (calcExpr === '0' && /[0-9]/.test(val) && val !== '.') calcExpr = val; else if (calcExpr === 'Erro') calcExpr = val; else calcExpr += val; disp.textContent = calcExpr; }
+  function addCliente() {
+    const nome = $('#clienteNomeFull').value.trim();
+    if (!nome) return alert('Nome obrigatório!');
+    state.clientes.push({
+      id: uid(), nome,
+      email: $('#clienteEmailFull').value,
+      whatsapp: $('#clienteWhatsappFull').value,
+      endereco: $('#clienteEnderecoFull').value
+    });
+    save();
+    updateTotals();
+    refreshClientesModal();
+    refreshDeliveryModal();
+    ['clienteNomeFull', 'clienteEmailFull', 'clienteWhatsappFull', 'clienteEnderecoFull'].forEach(id => $(`#${id}`).value = '');
+  }
 
-    function openEditModal(title, fieldsHtml, onSave) { const modal = $('#editModal'); $('#modalTitle').textContent = title; $('#modalFields').innerHTML = fieldsHtml; modal.classList.add('active'); $('#saveEditBtn').onclick = () => { onSave(); modal.classList.remove('active'); }; $('#closeEditModalBtn').onclick = () => modal.classList.remove('active'); }
+  function addFornecedor() {
+    const nome = $('#fornecedorNomeFull').value.trim();
+    if (!nome) return alert('Nome obrigatório!');
+    state.fornecedores.push({
+      id: uid(), nome,
+      cnpj: $('#fornecedorCnpjFull').value,
+      contato: $('#fornecedorContatoFull').value
+    });
+    save();
+    refreshFornecedoresModal();
+    ['fornecedorNomeFull', 'fornecedorCnpjFull', 'fornecedorContatoFull'].forEach(id => $(`#${id}`).value = '');
+  }
 
-    function handleEditDelete(e) {
-      const btn = e.target.closest('button');
-      if (!btn || !btn.dataset.entity) return;
-      const entity = btn.dataset.entity;
-      const id = parseInt(btn.dataset.id);
-      const isDelete = btn.classList.contains('delete-btn') || btn.classList.contains('delete-btn-table');
-      const after = (fns) => { save(); renderAll(); fns.forEach(fn => fn()); };
-      const actions = {
-        venda: () => { const v = state.vendas.find(x => x.id === id); if (isDelete) { if (confirm('Excluir venda?')) { state.vendas = state.vendas.filter(x => x.id !== id); after([refreshVendasModal]); } } else if (v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p) && q > 0) { v.clienteNome = $('#editCliente').value; v.produtoNome = $('#editProduto').value; v.quantidade = q; v.precoUnit = p; v.dataStr = now(); after([refreshVendasModal]); } }); },
-        produto: () => { const p = state.produtos.find(x => x.id === id); if (isDelete) { if (confirm('Excluir produto?')) { state.produtos = state.produtos.filter(x => x.id !== id); after([refreshVendasModal, refreshProdutosModal, refreshDeliveryModal]); } } else if (p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div>`, () => { const nn = $('#editNome').value.trim(); const np = parseFloat($('#editPreco').value); if (nn && !isNaN(np)) { p.nome = nn; p.preco = np; after([refreshVendasModal, refreshProdutosModal, refreshDeliveryModal]); } }); },
-        compra: () => { const c = state.compras.find(x => x.id === id); if (isDelete) { if (confirm('Excluir compra?')) { state.compras = state.compras.filter(x => x.id !== id); after([refreshComprasModal]); } } else if (c) openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`, () => { const q = parseFloat($('#editQtd').value); const p = parseFloat($('#editPreco').value); if (!isNaN(q) && !isNaN(p)) { c.fornecedorNome = $('#editForn').value; c.produto = $('#editProd').value; c.quantidade = q; c.precoUnit = p; c.dataStr = now(); after([refreshComprasModal]); } }); },
-        cliente: () => { const c = state.clientes.find(x => x.id === id); if (isDelete) { if (confirm('Excluir cliente?')) { state.clientes = state.clientes.filter(x => x.id !== id); after([refreshVendasModal, refreshClientesModal, refreshDeliveryModal]); } } else if (c) openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { c.nome = nn; c.email = $('#editEmail').value; c.whatsapp = $('#editWhatsapp').value; c.endereco = $('#editEndereco').value; after([refreshVendasModal, refreshClientesModal, refreshDeliveryModal]); } }); },
-        fornecedor: () => { const f = state.fornecedores.find(x => x.id === id); if (isDelete) { if (confirm('Excluir fornecedor?')) { state.fornecedores = state.fornecedores.filter(x => x.id !== id); after([refreshComprasModal, refreshFornecedoresModal]); } } else if (f) openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { f.nome = nn; f.cnpj = $('#editCnpj').value; f.contato = $('#editContato').value; after([refreshComprasModal, refreshFornecedoresModal]); } }); },
-        entregador: () => { const e = state.entregadores.find(x => x.id === id); if (isDelete) { if (confirm('Excluir entregador?')) { state.entregadores = state.entregadores.filter(x => x.id !== id); after([refreshEntregadorModal, refreshDeliveryModal]); } } else if (e) openEditModal('Editar Entregador', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(e.nome)}"></div><div class="input-group"><label>Telefone</label><input id="editTelefone" value="${escapeHtml(e.telefone||'')}"></div><div class="input-group"><label>Veículo</label><input id="editVeiculo" value="${escapeHtml(e.veiculo||'')}"></div><div class="input-group"><label>Placa</label><input id="editPlaca" value="${escapeHtml(e.placa||'')}"></div>`, () => { const nn = $('#editNome').value.trim(); if (nn) { e.nome = nn; e.telefone = $('#editTelefone').value; e.veiculo = $('#editVeiculo').value; e.placa = $('#editPlaca').value; after([refreshEntregadorModal, refreshDeliveryModal]); } }); },
-        bairro: () => { const b = state.bairros.find(x => x.id === id); if (isDelete) { if (confirm('Excluir bairro?')) { state.bairros = state.bairros.filter(x => x.id !== id); after([refreshDeliveryModal]); if (bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado'); } } else if (b) openEditModal('Editar Bairro', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(b.nome)}"></div><div class="input-group"><label>Taxa</label><input id="editTaxa" type="number" step="any" value="${b.taxa}"></div>`, () => { const nn = $('#editNome').value.trim(); const np = parseFloat($('#editTaxa').value); if (nn && !isNaN(np)) { b.nome = nn; b.taxa = np; after([refreshDeliveryModal]); if (bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado'); } }); },
-        entrega: () => { const e = state.entregas.find(x => x.id === id); if (isDelete) { if (confirm('Excluir entrega?')) { state.entregas = state.entregas.filter(x => x.id !== id); after([refreshDeliveryModal]); if (entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada'); } } else if (e) openEditModal('Editar Entrega', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(e.clienteNome||'')}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(e.produtoNome||'')}"></div><div class="input-group"><label>Entregador</label><input id="editEntregador" value="${escapeHtml(e.entregadorNome)}"></div><div class="input-group"><label>Bairro</label><input id="editBairro" value="${escapeHtml(e.bairroNome)}"></div><div class="input-group"><label>Valor</label><input id="editValor" type="number" step="any" value="${e.valor}"></div>`, () => { const cn = $('#editCliente').value.trim(); const pn = $('#editProduto').value.trim(); const en = $('#editEntregador').value.trim(); const bn = $('#editBairro').value.trim(); const v = parseFloat($('#editValor').value); if (cn && pn && en && bn && !isNaN(v)) { e.clienteNome = cn; e.produtoNome = pn; e.entregadorNome = en; e.bairroNome = bn; e.valor = v; e.dataStr = now(); after([refreshDeliveryModal]); if (entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada'); } }); },
-        nota: () => { const n = state.notas.find(x => x.id === id); if (isDelete) { if (confirm('Excluir anotação?')) { state.notas = state.notas.filter(x => x.id !== id); save(); refreshAnotacoesModal(); } } else if (n) openEditModal('Editar Anotação', `<div class="input-group"><label>Texto</label><textarea id="editTexto" rows="3">${escapeHtml(n.texto)}</textarea></div>`, () => { const nt = $('#editTexto').value.trim(); if (nt) { n.texto = nt; n.data = now(); save(); refreshAnotacoesModal(); } }); }
-      };
-      if (actions[entity]) actions[entity]();
+  function addNota() {
+    const texto = $('#textoNotaFull').value.trim();
+    if (!texto) return;
+    state.notas.push({ id: uid(), texto, data: nowStr() });
+    save();
+    $('#textoNotaFull').value = '';
+    refreshAnotacoesModal();
+  }
+
+  function addEntregador() {
+    const nome = $('#entregadorNomeFull').value.trim();
+    if (!nome) return alert('Nome obrigatório!');
+    state.entregadores.push({
+      id: uid(), nome,
+      telefone: $('#entregadorTelefoneFull').value,
+      veiculo: $('#entregadorVeiculoFull').value,
+      placa: $('#entregadorPlacaFull').value
+    });
+    save();
+    refreshEntregadorModal();
+    ['entregadorNomeFull', 'entregadorTelefoneFull', 'entregadorVeiculoFull', 'entregadorPlacaFull'].forEach(id => $(`#${id}`).value = '');
+  }
+
+  function addBairro() {
+    const nome = $('#bairroNomeFull').value.trim();
+    if (!nome) return alert('Nome do bairro obrigatório!');
+    let taxa = parseFloat($('#bairroTaxaFull').value);
+    if (isNaN(taxa)) taxa = 0;
+    state.bairros.push({ id: uid(), nome, taxa });
+    save();
+    refreshDeliveryModal();
+    $('#bairroNomeFull').value = '';
+    $('#bairroTaxaFull').value = '';
+    if (bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado');
+  }
+
+  function addEntrega() {
+    const clienteId = parseInt($('#entregaClienteIdFull').value);
+    const cliente = state.clientes.find(c => c.id === clienteId);
+    if (!cliente) return alert('Selecione um cliente!');
+    const produtoId = parseInt($('#entregaProdutoIdFull').value);
+    const produto = state.produtos.find(p => p.id === produtoId);
+    if (!produto) return alert('Selecione um produto!');
+    const entId = parseInt($('#entregaEntregadorIdFull').value);
+    const ent = state.entregadores.find(e => e.id === entId);
+    if (!ent) return alert('Selecione um entregador!');
+    const bairroId = parseInt($('#entregaBairroIdFull').value);
+    const bairro = state.bairros.find(b => b.id === bairroId);
+    if (!bairro) return alert('Selecione um bairro!');
+    let valor = parseFloat($('#entregaValorFull').value);
+    if (isNaN(valor) || valor <= 0) valor = bairro.taxa;
+    state.entregas.push({
+      id: uid(), clienteId: cliente.id, clienteNome: cliente.nome,
+      produtoId: produto.id, produtoNome: produto.nome,
+      entregadorId: ent.id, entregadorNome: ent.nome,
+      bairroId: bairro.id, bairroNome: bairro.nome,
+      valor, dataStr: nowStr()
+    });
+    save();
+    refreshDeliveryModal();
+    $('#entregaClienteIdFull').value = '';
+    $('#entregaProdutoIdFull').value = '';
+    $('#entregaEntregadorIdFull').value = '';
+    $('#entregaBairroIdFull').value = '';
+    $('#entregaValorFull').value = '';
+    if (entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada');
+  }
+
+  // Calculadora
+  let calcExpr = '0';
+  function buildCalc() {
+    const btns = ['C', '(', ')', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '⌫', '='];
+    const container = $('#calcButtons');
+    if (container) {
+      container.innerHTML = btns.map(b => `<button data-calc="${b}">${b}</button>`).join('');
+      $$('#calcButtons button').forEach(btn => btn.addEventListener('click', () => calcAction(btn.dataset.calc)));
+      $('#calcDisplay').textContent = calcExpr;
     }
+  }
+  function calcAction(val) {
+    const disp = $('#calcDisplay');
+    if (!disp) return;
+    if (val === 'C') { calcExpr = '0'; disp.textContent = calcExpr; return; }
+    if (val === '⌫') { calcExpr = (calcExpr.length === 1 || calcExpr === '0') ? '0' : calcExpr.slice(0, -1); disp.textContent = calcExpr; return; }
+    if (val === '=') {
+      try {
+        const expr = calcExpr.replace(/×/g, '*').replace(/÷/g, '/');
+        const res = Function('"use strict";return (' + expr + ')')();
+        if (isNaN(res) || !isFinite(res)) throw new Error();
+        calcExpr = String(parseFloat(res.toFixed(8)));
+        disp.textContent = calcExpr;
+      } catch (e) { disp.textContent = 'Erro'; setTimeout(() => { calcExpr = '0'; disp.textContent = '0'; }, 800); }
+      return;
+    }
+    if (calcExpr === '0' && /[0-9]/.test(val) && val !== '.') calcExpr = val;
+    else if (calcExpr === 'Erro') calcExpr = val;
+    else calcExpr += val;
+    disp.textContent = calcExpr;
+  }
 
-    function init() {
-      load();
-      refreshVendasModal(); refreshComprasModal(); refreshEntregadorModal(); refreshDeliveryModal();
-      renderAll(); buildCalc();
+  function openEditModal(title, fieldsHtml, onSave) {
+    const modal = $('#editModal');
+    $('#modalTitle').textContent = title;
+    $('#modalFields').innerHTML = fieldsHtml;
+    modal.classList.add('active');
+    $('#saveEditBtn').onclick = () => { onSave(); modal.classList.remove('active'); };
+    $('#closeEditModalBtn').onclick = () => modal.classList.remove('active');
+  }
 
-      $('#toggleBairrosBtn').addEventListener('click', () => {
-        bairrosVisible = !bairrosVisible;
-        const section = $('#bairrosSection');
-        const btn = $('#toggleBairrosBtn');
-        if (bairrosVisible) { section.classList.add('visible'); btn.innerHTML = '🔒 Ocultar Bairros'; renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado'); }
-        else { section.classList.remove('visible'); btn.innerHTML = '📋 Ver Bairros Cadastrados'; }
-      });
-      $('#toggleEntregasBtn').addEventListener('click', () => {
-        entregasVisible = !entregasVisible;
-        const section = $('#entregasSection');
-        const btn = $('#toggleEntregasBtn');
-        if (entregasVisible) { section.classList.add('visible'); btn.innerHTML = '🔒 Ocultar Entregas'; renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada'); }
-        else { section.classList.remove('visible'); btn.innerHTML = '📋 Ver Entregas Realizadas'; }
-      });
+  function handleEditDelete(e) {
+    const btn = e.target.closest('button');
+    if (!btn || !btn.dataset.entity) return;
+    const entity = btn.dataset.entity;
+    const id = parseInt(btn.dataset.id);
+    const isDelete = btn.classList.contains('delete-btn') || btn.classList.contains('delete-btn-table');
+    const after = (fns) => { save(); updateTotals(); fns.forEach(fn => fn()); };
+    const actions = {
+      venda: () => {
+        const v = state.vendas.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir venda?')) { state.vendas = state.vendas.filter(x => x.id !== id); after([refreshVendasModal]); }
+        } else if (v) {
+          openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`, () => {
+            const q = parseFloat($('#editQtd').value);
+            const p = parseFloat($('#editPreco').value);
+            if (!isNaN(q) && !isNaN(p) && q > 0) {
+              v.clienteNome = $('#editCliente').value;
+              v.produtoNome = $('#editProduto').value;
+              v.quantidade = q;
+              v.precoUnit = p;
+              v.dataStr = nowStr();
+              after([refreshVendasModal]);
+            }
+          });
+        }
+      },
+      produto: () => {
+        const p = state.produtos.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir produto?')) { state.produtos = state.produtos.filter(x => x.id !== id); after([refreshVendasModal, refreshProdutosModal, refreshDeliveryModal]); }
+        } else if (p) {
+          openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div>`, () => {
+            const nn = $('#editNome').value.trim();
+            const np = parseFloat($('#editPreco').value);
+            if (nn && !isNaN(np)) { p.nome = nn; p.preco = np; after([refreshVendasModal, refreshProdutosModal, refreshDeliveryModal]); }
+          });
+        }
+      },
+      compra: () => {
+        const c = state.compras.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir compra?')) { state.compras = state.compras.filter(x => x.id !== id); after([refreshComprasModal]); }
+        } else if (c) {
+          openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`, () => {
+            const q = parseFloat($('#editQtd').value);
+            const p = parseFloat($('#editPreco').value);
+            if (!isNaN(q) && !isNaN(p)) {
+              c.fornecedorNome = $('#editForn').value;
+              c.produto = $('#editProd').value;
+              c.quantidade = q;
+              c.precoUnit = p;
+              c.dataStr = nowStr();
+              after([refreshComprasModal]);
+            }
+          });
+        }
+      },
+      cliente: () => {
+        const c = state.clientes.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir cliente?')) { state.clientes = state.clientes.filter(x => x.id !== id); after([refreshVendasModal, refreshClientesModal, refreshDeliveryModal]); }
+        } else if (c) {
+          openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`, () => {
+            const nn = $('#editNome').value.trim();
+            if (nn) {
+              c.nome = nn; c.email = $('#editEmail').value; c.whatsapp = $('#editWhatsapp').value; c.endereco = $('#editEndereco').value;
+              after([refreshVendasModal, refreshClientesModal, refreshDeliveryModal]);
+            }
+          });
+        }
+      },
+      fornecedor: () => {
+        const f = state.fornecedores.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir fornecedor?')) { state.fornecedores = state.fornecedores.filter(x => x.id !== id); after([refreshComprasModal, refreshFornecedoresModal]); }
+        } else if (f) {
+          openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`, () => {
+            const nn = $('#editNome').value.trim();
+            if (nn) { f.nome = nn; f.cnpj = $('#editCnpj').value; f.contato = $('#editContato').value; after([refreshComprasModal, refreshFornecedoresModal]); }
+          });
+        }
+      },
+      entregador: () => {
+        const e = state.entregadores.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir entregador?')) { state.entregadores = state.entregadores.filter(x => x.id !== id); after([refreshEntregadorModal, refreshDeliveryModal]); }
+        } else if (e) {
+          openEditModal('Editar Entregador', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(e.nome)}"></div><div class="input-group"><label>Telefone</label><input id="editTelefone" value="${escapeHtml(e.telefone||'')}"></div><div class="input-group"><label>Veículo</label><input id="editVeiculo" value="${escapeHtml(e.veiculo||'')}"></div><div class="input-group"><label>Placa</label><input id="editPlaca" value="${escapeHtml(e.placa||'')}"></div>`, () => {
+            const nn = $('#editNome').value.trim();
+            if (nn) { e.nome = nn; e.telefone = $('#editTelefone').value; e.veiculo = $('#editVeiculo').value; e.placa = $('#editPlaca').value; after([refreshEntregadorModal, refreshDeliveryModal]); }
+          });
+        }
+      },
+      bairro: () => {
+        const b = state.bairros.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir bairro?')) { state.bairros = state.bairros.filter(x => x.id !== id); after([refreshDeliveryModal]); if (bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado'); }
+        } else if (b) {
+          openEditModal('Editar Bairro', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(b.nome)}"></div><div class="input-group"><label>Taxa</label><input id="editTaxa" type="number" step="any" value="${b.taxa}"></div>`, () => {
+            const nn = $('#editNome').value.trim();
+            const np = parseFloat($('#editTaxa').value);
+            if (nn && !isNaN(np)) { b.nome = nn; b.taxa = np; after([refreshDeliveryModal]); if (bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado'); }
+          });
+        }
+      },
+      entrega: () => {
+        const e = state.entregas.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir entrega?')) { state.entregas = state.entregas.filter(x => x.id !== id); after([refreshDeliveryModal]); if (entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada'); }
+        } else if (e) {
+          openEditModal('Editar Entrega', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(e.clienteNome||'')}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(e.produtoNome||'')}"></div><div class="input-group"><label>Entregador</label><input id="editEntregador" value="${escapeHtml(e.entregadorNome)}"></div><div class="input-group"><label>Bairro</label><input id="editBairro" value="${escapeHtml(e.bairroNome)}"></div><div class="input-group"><label>Valor</label><input id="editValor" type="number" step="any" value="${e.valor}"></div>`, () => {
+            const cn = $('#editCliente').value.trim();
+            const pn = $('#editProduto').value.trim();
+            const en = $('#editEntregador').value.trim();
+            const bn = $('#editBairro').value.trim();
+            const v = parseFloat($('#editValor').value);
+            if (cn && pn && en && bn && !isNaN(v)) {
+              e.clienteNome = cn; e.produtoNome = pn; e.entregadorNome = en; e.bairroNome = bn; e.valor = v; e.dataStr = nowStr();
+              after([refreshDeliveryModal]); if (entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada');
+            }
+          });
+        }
+      },
+      nota: () => {
+        const n = state.notas.find(x => x.id === id);
+        if (isDelete) {
+          if (confirm('Excluir anotação?')) { state.notas = state.notas.filter(x => x.id !== id); save(); refreshAnotacoesModal(); }
+        } else if (n) {
+          openEditModal('Editar Anotação', `<div class="input-group"><label>Texto</label><textarea id="editTexto" rows="3">${escapeHtml(n.texto)}</textarea></div>`, () => {
+            const nt = $('#editTexto').value.trim();
+            if (nt) { n.texto = nt; n.data = nowStr(); save(); refreshAnotacoesModal(); }
+          });
+        }
+      }
+    };
+    if (actions[entity]) actions[entity]();
+  }
 
-      $$('.nav-btn').forEach(btn => { btn.addEventListener('click', () => { const tab = btn.dataset.tab;
-          if (tab === 'vendas') { $('#vendasFullModal').classList.add('active'); refreshVendasModal(); }
-          else if (tab === 'produtos') { $('#produtosFullModal').classList.add('active'); refreshProdutosModal(); }
-          else if (tab === 'compras') { $('#comprasFullModal').classList.add('active'); refreshComprasModal(); }
-          else if (tab === 'clientes') { $('#clientesFullModal').classList.add('active'); refreshClientesModal(); }
-          else if (tab === 'fornecedores') { $('#fornecedoresFullModal').classList.add('active'); refreshFornecedoresModal(); }
-          else if (tab === 'entregador') { $('#entregadorFullModal').classList.add('active'); refreshEntregadorModal(); }
-          else if (tab === 'delivery') {
-            $('#deliveryFullModal').classList.add('active'); refreshDeliveryModal();
+  // Inicialização e eventos
+  function init() {
+    load();
+    refreshVendasModal();
+    refreshComprasModal();
+    refreshEntregadorModal();
+    refreshDeliveryModal();
+    updateTotals();
+    buildCalc();
+
+    // Toggles do Delivery
+    $('#toggleBairrosBtn')?.addEventListener('click', () => {
+      bairrosVisible = !bairrosVisible;
+      const section = $('#bairrosSection');
+      const btn = $('#toggleBairrosBtn');
+      if (bairrosVisible) {
+        section.classList.add('visible');
+        btn.innerHTML = '🔒 Ocultar Bairros';
+        renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro cadastrado');
+      } else {
+        section.classList.remove('visible');
+        btn.innerHTML = '📋 Ver Bairros Cadastrados';
+      }
+    });
+    $('#toggleEntregasBtn')?.addEventListener('click', () => {
+      entregasVisible = !entregasVisible;
+      const section = $('#entregasSection');
+      const btn = $('#toggleEntregasBtn');
+      if (entregasVisible) {
+        section.classList.add('visible');
+        btn.innerHTML = '🔒 Ocultar Entregas';
+        renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega registrada');
+      } else {
+        section.classList.remove('visible');
+        btn.innerHTML = '📋 Ver Entregas Realizadas';
+      }
+    });
+
+    // Navegação principal
+    $$('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        const fullModals = {
+          vendas: 'vendasFullModal', produtos: 'produtosFullModal', compras: 'comprasFullModal',
+          clientes: 'clientesFullModal', fornecedores: 'fornecedoresFullModal', entregador: 'entregadorFullModal',
+          delivery: 'deliveryFullModal', anotacoes: 'anotacoesFullModal', calc: 'calcFullModal', relatorio: 'relatorioFullModal'
+        };
+        if (fullModals[tab]) {
+          const modal = document.getElementById(fullModals[tab]);
+          if (modal) modal.classList.add('active');
+          if (tab === 'relatorio') refreshRelatorioModal();
+          if (tab === 'delivery') {
+            refreshDeliveryModal();
             bairrosVisible = false; entregasVisible = false;
-            $('#bairrosSection').classList.remove('visible'); $('#entregasSection').classList.remove('visible');
-            $('#toggleBairrosBtn').innerHTML = '📋 Ver Bairros Cadastrados'; $('#toggleEntregasBtn').innerHTML = '📋 Ver Entregas Realizadas';
+            $('#bairrosSection')?.classList.remove('visible');
+            $('#entregasSection')?.classList.remove('visible');
+            $('#toggleBairrosBtn').innerHTML = '📋 Ver Bairros Cadastrados';
+            $('#toggleEntregasBtn').innerHTML = '📋 Ver Entregas Realizadas';
           }
-          else if (tab === 'anotacoes') { $('#anotacoesFullModal').classList.add('active'); refreshAnotacoesModal(); }
-          else if (tab === 'calc') { $('#calcFullModal').classList.add('active'); }
-          else if (tab === 'relatorio') { $('#relatorioFullModal').classList.add('active'); refreshRelatorioModal(); }
-          else {
-            $$('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
-            $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
-            const pane = document.getElementById(tab + 'Pane'); if (pane) pane.classList.add('active-pane');
-            $('.main-content').scrollTop = 0;
-          }
-      });});
-
-      const returnToDashboard = () => {
-        renderAll(); $$('.nav-btn').forEach(b => b.classList.remove('active'));
-        const dashboardBtn = document.querySelector('[data-tab="dashboard"]'); if (dashboardBtn) dashboardBtn.classList.add('active');
+          return;
+        }
+        // Dashboard (sem modal)
+        $$('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
         $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
-        const dashPane = document.getElementById('dashboardPane'); if (dashPane) dashPane.classList.add('active-pane');
-      };
+        const pane = document.getElementById(tab + 'Pane');
+        if (pane) pane.classList.add('active-pane');
+        document.querySelector('.main-content')?.scrollTo(0, 0);
+      });
+    });
 
-      $('#closeVendasModalBtn').addEventListener('click', () => { $('#vendasFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeProdutosModalBtn').addEventListener('click', () => { $('#produtosFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeComprasModalBtn').addEventListener('click', () => { $('#comprasFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeClientesModalBtn').addEventListener('click', () => { $('#clientesFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeFornecedoresModalBtn').addEventListener('click', () => { $('#fornecedoresFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeEntregadorModalBtn').addEventListener('click', () => { $('#entregadorFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeDeliveryModalBtn').addEventListener('click', () => { $('#deliveryFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeAnotacoesModalBtn').addEventListener('click', () => { $('#anotacoesFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeCalcModalBtn').addEventListener('click', () => { $('#calcFullModal').classList.remove('active'); returnToDashboard(); });
-      $('#closeRelatorioModalBtn').addEventListener('click', () => { $('#relatorioFullModal').classList.remove('active'); returnToDashboard(); });
-
-      $('#addVendaBtnFull').addEventListener('click', addVenda);
-      $('#quickAddProdutoBtnFull').addEventListener('click', () => { $('#quickProdutoNomeFull').value = ''; $('#quickProdutoPrecoFull').value = ''; $('#quickProdutoModalFull').classList.add('active'); });
-      $('#closeQuickModalBtnFull').addEventListener('click', () => $('#quickProdutoModalFull').classList.remove('active'));
-      $('#quickSalvarProdutoBtnFull').addEventListener('click', () => { const nome = $('#quickProdutoNomeFull').value.trim(); const preco = parseFloat($('#quickProdutoPrecoFull').value); if (!nome) return alert('Nome obrigatório'); const novo = addProduto(nome, isNaN(preco) ? 0 : preco, true, true); if (novo) { $('#quickProdutoModalFull').classList.remove('active'); alert(`Produto "${novo.nome}" cadastrado com sucesso!`); } });
-      $('#addProdutoBtnFull').addEventListener('click', () => { const nome = $('#produtoNomeFull').value.trim(); const preco = parseFloat($('#produtoPrecoFull').value); if (!nome) return alert('Nome do produto obrigatório'); addProduto(nome, isNaN(preco) ? 0 : preco, false, false); $('#produtoNomeFull').value = ''; $('#produtoPrecoFull').value = ''; });
-      $('#addCompraBtnFull').addEventListener('click', addCompra);
-      $('#addClienteBtnFull').addEventListener('click', addCliente);
-      $('#addFornecedorBtnFull').addEventListener('click', addFornecedor);
-      $('#addEntregadorBtnFull').addEventListener('click', addEntregador);
-      $('#addBairroBtnFull').addEventListener('click', addBairro);
-      $('#addEntregaBtnFull').addEventListener('click', addEntrega);
-      $('#addNotaBtnFull').addEventListener('click', addNota);
-
-      $('#toggleDashVendas').addEventListener('click', () => { dashVendasVisible = !dashVendasVisible; updateTotals(); });
-      $('#toggleDashCompras').addEventListener('click', () => { dashComprasVisible = !dashComprasVisible; updateTotals(); });
-      $('#toggleDashLucro').addEventListener('click', () => { dashLucroVisible = !dashLucroVisible; updateTotals(); });
-
-      document.body.addEventListener('click', handleEditDelete);
+    function returnToDashboard() {
+      updateTotals();
+      $$('.nav-btn').forEach(b => b.classList.remove('active'));
+      const dashBtn = document.querySelector('[data-tab="dashboard"]');
+      if (dashBtn) dashBtn.classList.add('active');
+      $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
+      const dashPane = document.getElementById('dashboardPane');
+      if (dashPane) dashPane.classList.add('active-pane');
     }
 
-    init();
-  })();
+    const closeButtons = [
+      'closeVendasModalBtn', 'closeProdutosModalBtn', 'closeComprasModalBtn', 'closeClientesModalBtn',
+      'closeFornecedoresModalBtn', 'closeEntregadorModalBtn', 'closeDeliveryModalBtn', 'closeAnotacoesModalBtn',
+      'closeCalcModalBtn', 'closeRelatorioModalBtn'
+    ];
+    closeButtons.forEach(id => {
+      const btn = document.getElementById(id);
+      if (btn) btn.addEventListener('click', () => {
+        const modal = btn.closest('.fullscreen-modal');
+        if (modal) modal.classList.remove('active');
+        returnToDashboard();
+      });
+    });
+
+    // Botões de ação
+    $('#addVendaBtnFull')?.addEventListener('click', addVenda);
+    $('#quickAddProdutoBtnFull')?.addEventListener('click', () => {
+      $('#quickProdutoNomeFull').value = '';
+      $('#quickProdutoPrecoFull').value = '';
+      $('#quickProdutoModalFull').classList.add('active');
+    });
+    $('#closeQuickModalBtnFull')?.addEventListener('click', () => $('#quickProdutoModalFull').classList.remove('active'));
+    $('#quickSalvarProdutoBtnFull')?.addEventListener('click', () => {
+      const nome = $('#quickProdutoNomeFull').value.trim();
+      const preco = parseFloat($('#quickProdutoPrecoFull').value);
+      if (!nome) return alert('Nome obrigatório');
+      const novo = addProduto(nome, isNaN(preco) ? 0 : preco, true, true);
+      if (novo) {
+        $('#quickProdutoModalFull').classList.remove('active');
+        alert(`Produto "${novo.nome}" cadastrado!`);
+      }
+    });
+    $('#addProdutoBtnFull')?.addEventListener('click', () => {
+      const nome = $('#produtoNomeFull').value.trim();
+      const preco = parseFloat($('#produtoPrecoFull').value);
+      if (!nome) return alert('Nome obrigatório');
+      addProduto(nome, isNaN(preco) ? 0 : preco);
+      $('#produtoNomeFull').value = '';
+      $('#produtoPrecoFull').value = '';
+    });
+    $('#addCompraBtnFull')?.addEventListener('click', addCompra);
+    $('#addClienteBtnFull')?.addEventListener('click', addCliente);
+    $('#addFornecedorBtnFull')?.addEventListener('click', addFornecedor);
+    $('#addEntregadorBtnFull')?.addEventListener('click', addEntregador);
+    $('#addBairroBtnFull')?.addEventListener('click', addBairro);
+    $('#addEntregaBtnFull')?.addEventListener('click', addEntrega);
+    $('#addNotaBtnFull')?.addEventListener('click', addNota);
+
+    // Toggles do dashboard
+    $('#toggleDashVendas')?.addEventListener('click', () => { dashVendasVisible = !dashVendasVisible; updateTotals(); });
+    $('#toggleDashCompras')?.addEventListener('click', () => { dashComprasVisible = !dashComprasVisible; updateTotals(); });
+    $('#toggleDashLucro')?.addEventListener('click', () => { dashLucroVisible = !dashLucroVisible; updateTotals(); });
+
+    document.body.addEventListener('click', handleEditDelete);
+  }
+  init();
+})();
 </script>
 </body>
 </html>
