@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>DBZ Gestão · Tema Sombrio Supremo</title>
+  <title>Rumo Gestão · Sistema de Gestão</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
@@ -93,9 +93,17 @@
       text-shadow: 0 0 18px rgba(255, 140, 0, 0.6);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
-    .app-logo::before { content: "🐉"; font-size: 2rem; background: none; -webkit-text-fill-color: initial; text-shadow: 0 0 5px #ff9900; }
+
+    /* Ícone de gestão substituindo o dragão */
+    .app-logo::before {
+      content: "📊";
+      font-size: 1.9rem;
+      background: none;
+      -webkit-text-fill-color: initial;
+      text-shadow: 0 0 5px #ff9900;
+    }
 
     .clock-container {
       display: flex;
@@ -416,7 +424,7 @@
   </nav>
   <main class="main-content">
     <div class="app-header">
-      <span class="app-logo">DBZ GESTÃO</span>
+      <span class="app-logo">RUMO GESTÃO</span>
       <div class="clock-container">
         <span class="digital-clock" id="liveClock">00:00:00</span>
         <span class="digital-date" id="liveDate">Carregando...</span>
@@ -424,14 +432,14 @@
     </div>
     <div id="dashboardPane" class="tab-pane active-pane">
       <div class="dashboard-widget">
-        <h2 style="color:#FFD966;">⚡ Visão Geral do Guerreiro</h2>
+        <h2 style="color:#FFD966;">⚡ Visão Geral do Gestor</h2>
         <div class="big-cards">
           <div class="big-card"><span class="big-icon">💰</span><h3>Vendas Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashVendas">R$ 0,00</span><span class="toggle-eye" id="toggleDashVendas">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📦</span><h3>Compras Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashCompras">R$ 0,00</span><span class="toggle-eye" id="toggleDashCompras">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📈</span><h3>Lucro Líquido</h3><div class="big-valor-container"><span class="big-valor" id="dashLucro">R$ 0,00</span><span class="toggle-eye" id="toggleDashLucro">👁️</span></div></div>
         </div>
         <div style="margin-top:1.8rem;">
-          <h3 style="color:#FFCD94;">📊 Ki das Vendas vs Compras</h3>
+          <h3 style="color:#FFCD94;">📊 Indicadores de Desempenho</h3>
           <div class="chart-container" style="display: flex; gap: 2rem; justify-content: center; align-items: flex-end; height: 150px; background: rgba(0,0,0,0.5); border-radius: 2rem; padding: 1rem;">
             <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barVendas" style="width: 50px; background: linear-gradient(to top,#FFAA33,#FFE484); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Vendas</span></div>
             <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barCompras" style="width: 50px; background: linear-gradient(to top,#DD4422,#FF8866); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Compras</span></div>
@@ -459,7 +467,7 @@
 
 <script>
 (function() {
-  // ===================== FUNÇÕES AUXILIARES =====================
+  // ========== FUNÇÕES AUXILIARES ==========
   function updateClock() {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2,'0');
@@ -515,7 +523,7 @@
         { id: 4002, clienteId: 2001, clienteNome: 'Cliente Exemplo', produtoId: 1002, produtoNome: 'Mouse Gamer', quantidade: 1, precoUnit: 129.9, dataStr: nowStr() }
       ];
       state.compras = [];
-      state.notas = [{ id: 6001, texto: 'Sistema DBZ Gestão funcionando perfeitamente!', data: nowStr() }];
+      state.notas = [{ id: 6001, texto: 'Sistema Rumo Gestão funcionando perfeitamente!', data: nowStr() }];
       state.entregadores = [{ id: 7001, nome: 'João Motoboy', telefone: '(11) 98888-7777', veiculo: 'Moto', placa: 'ABC-1234' }];
       state.bairros = [
         { id: 8001, nome: 'Centro', taxa: 5 },
@@ -686,7 +694,7 @@
     if (vendasTbody) {
       vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => `
         <tr>
-          <td>${escapeHtml(v.clienteNome)}</td>
+          <td>${escapeHtml(v.clienteName)}</td>
           <td>${escapeHtml(v.produtoNome)}</td>
           <td>${v.quantidade}</td>
           <td>${formatMoney(v.precoUnit)}</td>
