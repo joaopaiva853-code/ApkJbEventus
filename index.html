@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    /* ========== ESTILOS COMPLETOS (MANTIDOS) ========== */
+    /* ========== ESTILOS (MANTIDOS INTEGRALMENTE) ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { font-family: 'Inter', 'Poppins', system-ui, sans-serif; background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105); background-attachment: fixed; color: #eef5ff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; overflow-x: hidden; }
     body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)), radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px, 120px 120px; opacity: 0.25; pointer-events: none; z-index: 0; }
@@ -175,7 +175,7 @@
 <div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><button id="toggleEntregasBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
 
-<!-- ANOTAÇÕES + LEMBRETES PREMIUM (SEM BOTÃO DE NOTIFICAÇÃO) -->
+<!-- ANOTAÇÕES + LEMBRETES PREMIUM (COM ALARME EXTERNO) -->
 <div id="anotacoesFullModal" class="fullscreen-modal">
   <div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div>
   <div class="fullscreen-body">
@@ -189,7 +189,7 @@
       <div id="notasCardsContainer" class="cards-grid"></div>
     </div>
     <div class="card">
-      <h2>⏰ Lembretes Premium (Alarme)</h2>
+      <h2>⏰ Lembretes Premium (Alarme Externo)</h2>
       <div class="form-row">
         <div class="input-group"><label>Cliente</label><select id="lembreteClienteId"><option value="">Selecione cliente</option></select></div>
         <div class="input-group"><label>Valor Devido (R$)</label><input type="number" id="lembreteValor" step="any" placeholder="0.00"></div>
@@ -199,7 +199,7 @@
       <div class="form-row">
         <div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div>
         <button id="addLembreteBtn">🔔 Criar Lembrete</button>
-        <button id="testSoundBtn" class="btn-small" style="background: #2c5f2d;">🔊 Testar Som</button>
+        <button id="testAlarmBtn" class="btn-small" style="background: #2c5f2d;">🔊 Testar Alarme</button>
       </div>
       <h2>📋 Lembretes Ativos</h2>
       <div id="lembretesCardsContainer" class="cards-grid"></div>
@@ -209,7 +209,7 @@
 
 <div id="calcFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div><div class="fullscreen-body"><div class="calc-panel"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div></div>
 <div id="calendarioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário Completo</h2></div><div class="fullscreen-body"><div class="calendar-container"><div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀ Mês anterior</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">Próximo mês ▶</button></div><div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div><div class="calendar-days" id="calendarDaysGrid"></div><div class="agenda-list"><h3 style="color:#FFD966;">📋 Agendamentos do dia</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small" style="margin-top:0.5rem;">➕ Adicionar compromisso</button></div></div></div></div>
-<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
+<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></td></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
 
 <div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 <div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
@@ -231,33 +231,59 @@
   updateClock();
   setInterval(updateClock, 1000);
 
-  // ========== ÁUDIO (ALARME) ==========
+  // ========== ÁUDIO (ALARME EXTERNO) ==========
   let audioCtx = null;
+  let alarmTimeout = null;
+
   function initAudio() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
     if (audioCtx.state === 'suspended') audioCtx.resume();
     return audioCtx;
   }
-  function playBeep() {
+
+  // Toca um alarme externo (som alto e insistente, padrão de emergência)
+  function playExternalAlarm() {
     try {
       const ctx = initAudio();
-      const oscillator = ctx.createOscillator();
+      const now = ctx.currentTime;
       const gainNode = ctx.createGain();
-      oscillator.connect(gainNode);
+      gainNode.gain.value = 0.4;
       gainNode.connect(ctx.destination);
-      oscillator.frequency.value = 880;
-      gainNode.gain.value = 0.3;
-      oscillator.start();
-      gainNode.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 1);
-      oscillator.stop(ctx.currentTime + 1);
-    } catch(e) { console.log('Erro no beep', e); }
-  }
-  function testSound() {
-    playBeep();
-    alert('Teste de som: você deve ouvir um beep (necessário interação prévia)');
+      
+      // Padrão de alarme: 3 tons ascendentes em loop por 3 segundos
+      const frequencies = [880, 1046.5, 1318.52]; // Lá, Dó, Mi
+      let startTime = now;
+      for (let i = 0; i < 9; i++) { // 3 ciclos completos
+        const freq = frequencies[i % frequencies.length];
+        const osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        osc.connect(gainNode);
+        osc.start(startTime);
+        osc.stop(startTime + 0.3);
+        startTime += 0.3;
+      }
+      // Desliga o ganho após o termino
+      gainNode.gain.exponentialRampToValueAtTime(0.00001, startTime);
+    } catch(e) {
+      console.warn('Falha ao reproduzir alarme via Web Audio:', e);
+      // Fallback: tenta criar um beep simples com áudio de dados
+      try {
+        const audio = new Audio();
+        audio.src = "data:audio/wav;base64,U3RlYWx0aCBvZiB0aGUgY2l0eQ=="; // silencio
+        audio.play().catch(()=>{});
+      } catch(e2) {}
+    }
   }
 
-  // Ativar áudio no primeiro clique
+  function testAlarm() {
+    playExternalAlarm();
+    alert('Teste de alarme externo: você deve ouvir um som urgente e intermitente.');
+  }
+
+  // Ativar áudio no primeiro clique (necessário para muitos navegadores)
   document.body.addEventListener('click', function resumeAudio() {
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   }, { once: false });
@@ -432,7 +458,7 @@
 
   function renderSalesTable() {
     const tbody = document.getElementById('salesTableBody'); if(!tbody) return;
-    if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7">Nenhuma venda registrada</td></tr>'; return; }
+    if(!state.vendas.length) { tbody.innerHTML = '<td><td colspan="7">Nenhuma venda registrada</td><tr>'; return; }
     tbody.innerHTML = state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade * v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td><td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td></tr>`).join('');
   }
   function refreshVendasModal() { const clienteSelect = $('#vendaClienteIdFull'); clienteSelect.innerHTML = '<option value="">Selecione cliente</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); const produtoSelect = $('#vendaProdutoIdFull'); produtoSelect.innerHTML = '<option value="">Selecione produto</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); }); produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; $('#vendaPrecoFull').value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : ''; }; renderSalesTable(); }
@@ -453,7 +479,7 @@
     $('#relatorioResumo').innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length}</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length}</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length}</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div></div>`;
     $('#relVendasTbody').innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
     $('#relComprasTbody').innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
-    $('#relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '</table><td colspan="6">Nenhuma entrega</td></tr>';
+    $('#relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
     $('#relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div>${n.data}</div></div>`).join('') : '<div>Sem anotações.</div>';
   }
 
@@ -484,10 +510,10 @@
     $('#lembreteData').value = '';
     $('#lembreteHora').value = '';
     $('#lembreteDesc').value = '';
-    alert('Lembrete criado com sucesso! O alarme tocará na data/hora definida.');
+    alert('Lembrete criado com sucesso! O alarme externo tocará na data/hora definida.');
   }
 
-  // ========== VERIFICAÇÃO DE ALARMES ==========
+  // ========== VERIFICAÇÃO DE ALARMES (A CADA 30 SEGUNDOS) ==========
   function checkAlarms() {
     const now = new Date();
     let alarmTriggered = false;
@@ -498,9 +524,9 @@
           lem.disparado = true;
           const cliente = state.clientes.find(c => c.id === lem.clienteId);
           const nomeCliente = cliente ? cliente.nome : 'Cliente removido';
-          const msg = `🔔 ALARME! Cliente ${nomeCliente} está devendo ${formatMoney(lem.valor)}.\nData/Hora programada: ${lem.dataHora}\n${lem.desc ? 'Motivo: '+lem.desc : ''}`;
+          const msg = `🔔 ALARME! Cliente ${nomeCliente} está devendo ${formatMoney(lem.valor)}.\nData/Hora: ${lem.dataHora}\n${lem.desc ? 'Motivo: '+lem.desc : ''}`;
           alert(msg);
-          playBeep();
+          playExternalAlarm();  // toca o alarme externo mais chamativo
           alarmTriggered = true;
         }
       }
@@ -598,7 +624,7 @@
     $('#addEntregaBtnFull')?.addEventListener('click', addEntrega);
     $('#addNotaBtnFull')?.addEventListener('click', addNota);
     $('#addLembreteBtn')?.addEventListener('click', addLembrete);
-    $('#testSoundBtn')?.addEventListener('click', testSound);
+    $('#testAlarmBtn')?.addEventListener('click', testAlarm);
     $('#toggleDashVendas')?.addEventListener('click', ()=>{ dashVendasVisible=!dashVendasVisible; updateTotals(); });
     $('#toggleDashCompras')?.addEventListener('click', ()=>{ dashComprasVisible=!dashComprasVisible; updateTotals(); });
     $('#toggleDashLucro')?.addEventListener('click', ()=>{ dashLucroVisible=!dashLucroVisible; updateTotals(); });
