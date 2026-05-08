@@ -96,7 +96,7 @@
       gap: 8px;
     }
 
-    /* Ícone de gestão substituindo o dragão */
+    /* Ícone de gestão */
     .app-logo::before {
       content: "📊";
       font-size: 1.9rem;
@@ -105,15 +105,18 @@
       text-shadow: 0 0 5px #ff9900;
     }
 
+    /* Container do relógio com centralização */
     .clock-container {
       display: flex;
       flex-direction: column;
-      align-items: flex-end;
-      gap: 0.2rem;
+      align-items: center;
+      justify-content: center;
       background: rgba(0, 0, 0, 0.6);
-      padding: 0.3rem 1rem;
+      padding: 0.4rem 1.2rem;
       border-radius: 2rem;
       backdrop-filter: blur(4px);
+      min-width: 180px;
+      text-align: center;
     }
     .digital-clock {
       font-size: 1.8rem;
@@ -122,8 +125,15 @@
       font-family: 'Fira Code', monospace;
       letter-spacing: 2px;
       text-shadow: 0 0 10px #ffaa33, 0 0 20px #ff7700;
+      line-height: 1.2;
     }
-    .digital-date { font-size: 0.8rem; font-weight: 500; color: #FFCD94; }
+    .digital-date {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: #FFCD94;
+      margin-top: 2px;
+      letter-spacing: 0.5px;
+    }
 
     /* Navegação */
     .nav-grid {
@@ -404,6 +414,9 @@
       .app-container { padding: 0.8rem; }
       .nav-grid { grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); gap: 0.6rem; }
       .big-valor { font-size: 1.4rem; }
+      .clock-container { min-width: 140px; padding: 0.3rem 0.8rem; }
+      .digital-clock { font-size: 1.4rem; }
+      .digital-date { font-size: 0.65rem; }
     }
   </style>
 </head>
@@ -438,9 +451,10 @@
           <div class="big-card"><span class="big-icon">📦</span><h3>Compras Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashCompras">R$ 0,00</span><span class="toggle-eye" id="toggleDashCompras">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📈</span><h3>Lucro Líquido</h3><div class="big-valor-container"><span class="big-valor" id="dashLucro">R$ 0,00</span><span class="toggle-eye" id="toggleDashLucro">👁️</span></div></div>
         </div>
-        <div style="margin-top:1.8rem;">
+        <div style="margin-top: 1.8rem;">
           <h3 style="color:#FFCD94;">📊 Indicadores de Desempenho</h3>
-          <div class="chart-container" style="display: flex; gap: 2rem; justify-content: center; align-items: flex-end; height: 150px; background: rgba(0,0,0,0.5); border-radius: 2rem; padding: 1rem;">
+          <!-- Gráfico com espaçamento aumentado (margin-top: 2.5rem) -->
+          <div class="chart-container" style="display: flex; gap: 2rem; justify-content: center; align-items: flex-end; height: 150px; background: rgba(0,0,0,0.5); border-radius: 2rem; padding: 1rem; margin-top: 2.5rem;">
             <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barVendas" style="width: 50px; background: linear-gradient(to top,#FFAA33,#FFE484); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Vendas</span></div>
             <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barCompras" style="width: 50px; background: linear-gradient(to top,#DD4422,#FF8866); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Compras</span></div>
           </div>
@@ -460,7 +474,7 @@
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><button id="toggleEntregasBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
 <div id="anotacoesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Anotação</h2><div class="form-row"><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button></div><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="calcFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div><div class="fullscreen-body"><div class="calc-panel"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div></div>
-<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
+<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><tr><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
 
 <div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 <div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
@@ -694,7 +708,7 @@
     if (vendasTbody) {
       vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => `
         <tr>
-          <td>${escapeHtml(v.clienteName)}</td>
+          <td>${escapeHtml(v.clienteNome)}</td>
           <td>${escapeHtml(v.produtoNome)}</td>
           <td>${v.quantidade}</td>
           <td>${formatMoney(v.precoUnit)}</td>
