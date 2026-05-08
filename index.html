@@ -175,7 +175,7 @@
 <div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><button id="toggleEntregasBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
 
-<!-- ANOTAÇÕES + LEMBRETES PREMIUM (COM ALARME SONORO GARANTIDO) -->
+<!-- ANOTAÇÕES + LEMBRETES PREMIUM (COM NOTIFICAÇÃO PUSH) -->
 <div id="anotacoesFullModal" class="fullscreen-modal">
   <div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div>
   <div class="fullscreen-body">
@@ -189,7 +189,7 @@
       <div id="notasCardsContainer" class="cards-grid"></div>
     </div>
     <div class="card">
-      <h2>⏰ Lembretes Premium (Alarme)</h2>
+      <h2>⏰ Lembretes Premium (Com Notificação)</h2>
       <div class="form-row">
         <div class="input-group"><label>Cliente</label><select id="lembreteClienteId"><option value="">Selecione cliente</option></select></div>
         <div class="input-group"><label>Valor Devido (R$)</label><input type="number" id="lembreteValor" step="any" placeholder="0.00"></div>
@@ -199,6 +199,7 @@
       <div class="form-row">
         <div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div>
         <button id="addLembreteBtn">🔔 Criar Lembrete</button>
+        <button id="requestNotificationPermBtn" class="btn-small" style="background: #2c5f2d;">🔔 Ativar Notificações</button>
         <button id="testSoundBtn" class="btn-small" style="background: #2c5f2d;">🔊 Testar Som</button>
       </div>
       <h2>📋 Lembretes Ativos</h2>
@@ -231,15 +232,42 @@
   updateClock();
   setInterval(updateClock, 1000);
 
-  // ========== ÁUDIO (para alarme) - Garantir que o som toque ==========
+  // ========== NOTIFICAÇÃO PUSH ==========
+  let notificacaoPermitida = false;
+  function solicitarPermissaoNotificacao() {
+    if (!("Notification" in window)) {
+      alert("Este navegador não suporta notificações desktop.");
+      return;
+    }
+    if (Notification.permission === "granted") {
+      notificacaoPermitida = true;
+      alert("Permissão para notificações já concedida!");
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then(permission => {
+        if (permission === "granted") {
+          notificacaoPermitida = true;
+          new Notification("✅ Notificações ativadas!", { body: "Você receberá alertas dos lembretes premium." });
+          alert("Notificações ativadas com sucesso!");
+        } else {
+          alert("Permissão negada. Você não receberá notificações.");
+        }
+      });
+    } else {
+      alert("Permissão para notificações foi negada anteriormente. Habilite nas configurações do navegador.");
+    }
+  }
+
+  function enviarNotificacao(titulo, corpo) {
+    if (notificacaoPermitida && Notification.permission === "granted") {
+      new Notification(titulo, { body: corpo, icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" });
+    }
+  }
+
+  // ========== ÁUDIO (ALARME) ==========
   let audioCtx = null;
   function initAudio() {
-    if (!audioCtx) {
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
     return audioCtx;
   }
   function playBeep() {
@@ -254,21 +282,16 @@
       oscillator.start();
       gainNode.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 1);
       oscillator.stop(ctx.currentTime + 1);
-    } catch(e) {
-      console.log('Erro ao tocar beep', e);
-    }
+    } catch(e) { console.log('Erro no beep', e); }
   }
-  // Teste de som manual
   function testSound() {
     playBeep();
-    alert('Teste de som: você deve ouvir um beep (necessário interação prévia com a página para ativar áudio).');
+    alert('Teste de som: você deve ouvir um beep (necessário interação prévia)');
   }
 
-  // Forçar retomada do áudio no primeiro clique em qualquer lugar da página
+  // Ativar áudio no primeiro clique
   document.body.addEventListener('click', function resumeAudio() {
-    if (audioCtx && audioCtx.state === 'suspended') {
-      audioCtx.resume();
-    }
+    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   }, { once: false });
 
   // ========== STATE E STORAGE ==========
@@ -493,10 +516,10 @@
     $('#lembreteData').value = '';
     $('#lembreteHora').value = '';
     $('#lembreteDesc').value = '';
-    alert('Lembrete criado com sucesso! O alarme tocará na data/hora definida.');
+    alert('Lembrete criado com sucesso! Você receberá uma notificação push na data/hora definida.');
   }
 
-  // ========== VERIFICAÇÃO DE ALARMES (A CADA 30 SEGUNDOS) ==========
+  // ========== VERIFICAÇÃO DE ALARMES COM NOTIFICAÇÃO ==========
   function checkAlarms() {
     const now = new Date();
     let alarmTriggered = false;
@@ -507,9 +530,17 @@
           lem.disparado = true;
           const cliente = state.clientes.find(c => c.id === lem.clienteId);
           const nomeCliente = cliente ? cliente.nome : 'Cliente removido';
-          const msg = `🔔 ALARME! Cliente ${nomeCliente} está devendo ${formatMoney(lem.valor)}.\nData/Hora programada: ${lem.dataHora}\n${lem.desc ? 'Motivo: '+lem.desc : ''}`;
-          alert(msg);
-          playBeep();  // aqui o som toca
+          const msgCorpo = `Valor devido: ${formatMoney(lem.valor)}.\n${lem.desc ? 'Motivo: '+lem.desc : ''}`;
+          
+          // Alerta visual
+          alert(`🔔 ALARME! Cliente ${nomeCliente} está devendo ${formatMoney(lem.valor)}.\nData/Hora programada: ${lem.dataHora}\n${lem.desc ? 'Motivo: '+lem.desc : ''}`);
+          
+          // Som
+          playBeep();
+          
+          // Notificação push
+          enviarNotificacao(`💰 Cliente ${nomeCliente} - Dívida`, msgCorpo);
+          
           alarmTriggered = true;
         }
       }
@@ -521,7 +552,7 @@
     }
   }
   setInterval(checkAlarms, 30000);
-  setTimeout(checkAlarms, 2000); // primeira verificação
+  setTimeout(checkAlarms, 2000);
 
   // ========== CALCULADORA ==========
   let calcExpr = '0';
@@ -607,6 +638,7 @@
     $('#addEntregaBtnFull')?.addEventListener('click', addEntrega);
     $('#addNotaBtnFull')?.addEventListener('click', addNota);
     $('#addLembreteBtn')?.addEventListener('click', addLembrete);
+    $('#requestNotificationPermBtn')?.addEventListener('click', solicitarPermissaoNotificacao);
     $('#testSoundBtn')?.addEventListener('click', testSound);
     $('#toggleDashVendas')?.addEventListener('click', ()=>{ dashVendasVisible=!dashVendasVisible; updateTotals(); });
     $('#toggleDashCompras')?.addEventListener('click', ()=>{ dashComprasVisible=!dashComprasVisible; updateTotals(); });
