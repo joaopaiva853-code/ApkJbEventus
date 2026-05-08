@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    /* ========== ESTILOS (MANTIDOS INTEGRALMENTE) ========== */
+    /* ========== ESTILOS COMPLETOS (MANTIDOS) ========== */
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
     body { font-family: 'Inter', 'Poppins', system-ui, sans-serif; background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105); background-attachment: fixed; color: #eef5ff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; overflow-x: hidden; }
     body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)), radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px, 120px 120px; opacity: 0.25; pointer-events: none; z-index: 0; }
@@ -166,7 +166,7 @@
   </main>
 </div>
 
-<!-- MÓDULOS COMPLETOS (VENDAS, PRODUTOS, COMPRAS, CLIENTES, FORNECEDORES, ENTREGADOR, DELIVERY, CALC, CALENDÁRIO, RELATÓRIO) -->
+<!-- MODAIS COMPLETOS (VENDAS, PRODUTOS, COMPRAS, CLIENTES, FORNECEDORES, ENTREGADOR, DELIVERY, CALC, CALENDÁRIO, RELATÓRIO) -->
 <div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
 <div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><h2>📋 Produtos Cadastrados</h2><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
@@ -175,7 +175,7 @@
 <div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><button id="toggleEntregasBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
 
-<!-- ANOTAÇÕES + LEMBRETES PREMIUM (COM NOTIFICAÇÃO PUSH) -->
+<!-- ANOTAÇÕES + LEMBRETES PREMIUM (SEM BOTÃO DE NOTIFICAÇÃO) -->
 <div id="anotacoesFullModal" class="fullscreen-modal">
   <div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div>
   <div class="fullscreen-body">
@@ -189,7 +189,7 @@
       <div id="notasCardsContainer" class="cards-grid"></div>
     </div>
     <div class="card">
-      <h2>⏰ Lembretes Premium (Com Notificação)</h2>
+      <h2>⏰ Lembretes Premium (Alarme)</h2>
       <div class="form-row">
         <div class="input-group"><label>Cliente</label><select id="lembreteClienteId"><option value="">Selecione cliente</option></select></div>
         <div class="input-group"><label>Valor Devido (R$)</label><input type="number" id="lembreteValor" step="any" placeholder="0.00"></div>
@@ -199,7 +199,6 @@
       <div class="form-row">
         <div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div>
         <button id="addLembreteBtn">🔔 Criar Lembrete</button>
-        <button id="requestNotificationPermBtn" class="btn-small" style="background: #2c5f2d;">🔔 Ativar Notificações</button>
         <button id="testSoundBtn" class="btn-small" style="background: #2c5f2d;">🔊 Testar Som</button>
       </div>
       <h2>📋 Lembretes Ativos</h2>
@@ -231,37 +230,6 @@
   }
   updateClock();
   setInterval(updateClock, 1000);
-
-  // ========== NOTIFICAÇÃO PUSH ==========
-  let notificacaoPermitida = false;
-  function solicitarPermissaoNotificacao() {
-    if (!("Notification" in window)) {
-      alert("Este navegador não suporta notificações desktop.");
-      return;
-    }
-    if (Notification.permission === "granted") {
-      notificacaoPermitida = true;
-      alert("Permissão para notificações já concedida!");
-    } else if (Notification.permission !== "denied") {
-      Notification.requestPermission().then(permission => {
-        if (permission === "granted") {
-          notificacaoPermitida = true;
-          new Notification("✅ Notificações ativadas!", { body: "Você receberá alertas dos lembretes premium." });
-          alert("Notificações ativadas com sucesso!");
-        } else {
-          alert("Permissão negada. Você não receberá notificações.");
-        }
-      });
-    } else {
-      alert("Permissão para notificações foi negada anteriormente. Habilite nas configurações do navegador.");
-    }
-  }
-
-  function enviarNotificacao(titulo, corpo) {
-    if (notificacaoPermitida && Notification.permission === "granted") {
-      new Notification(titulo, { body: corpo, icon: "https://cdn-icons-png.flaticon.com/512/190/190411.png" });
-    }
-  }
 
   // ========== ÁUDIO (ALARME) ==========
   let audioCtx = null;
@@ -485,7 +453,7 @@
     $('#relatorioResumo').innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length}</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length}</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length}</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div></div>`;
     $('#relVendasTbody').innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
     $('#relComprasTbody').innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
-    $('#relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
+    $('#relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '</table><td colspan="6">Nenhuma entrega</td></tr>';
     $('#relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div>${n.data}</div></div>`).join('') : '<div>Sem anotações.</div>';
   }
 
@@ -516,10 +484,10 @@
     $('#lembreteData').value = '';
     $('#lembreteHora').value = '';
     $('#lembreteDesc').value = '';
-    alert('Lembrete criado com sucesso! Você receberá uma notificação push na data/hora definida.');
+    alert('Lembrete criado com sucesso! O alarme tocará na data/hora definida.');
   }
 
-  // ========== VERIFICAÇÃO DE ALARMES COM NOTIFICAÇÃO ==========
+  // ========== VERIFICAÇÃO DE ALARMES ==========
   function checkAlarms() {
     const now = new Date();
     let alarmTriggered = false;
@@ -530,17 +498,9 @@
           lem.disparado = true;
           const cliente = state.clientes.find(c => c.id === lem.clienteId);
           const nomeCliente = cliente ? cliente.nome : 'Cliente removido';
-          const msgCorpo = `Valor devido: ${formatMoney(lem.valor)}.\n${lem.desc ? 'Motivo: '+lem.desc : ''}`;
-          
-          // Alerta visual
-          alert(`🔔 ALARME! Cliente ${nomeCliente} está devendo ${formatMoney(lem.valor)}.\nData/Hora programada: ${lem.dataHora}\n${lem.desc ? 'Motivo: '+lem.desc : ''}`);
-          
-          // Som
+          const msg = `🔔 ALARME! Cliente ${nomeCliente} está devendo ${formatMoney(lem.valor)}.\nData/Hora programada: ${lem.dataHora}\n${lem.desc ? 'Motivo: '+lem.desc : ''}`;
+          alert(msg);
           playBeep();
-          
-          // Notificação push
-          enviarNotificacao(`💰 Cliente ${nomeCliente} - Dívida`, msgCorpo);
-          
           alarmTriggered = true;
         }
       }
@@ -638,7 +598,6 @@
     $('#addEntregaBtnFull')?.addEventListener('click', addEntrega);
     $('#addNotaBtnFull')?.addEventListener('click', addNota);
     $('#addLembreteBtn')?.addEventListener('click', addLembrete);
-    $('#requestNotificationPermBtn')?.addEventListener('click', solicitarPermissaoNotificacao);
     $('#testSoundBtn')?.addEventListener('click', testSound);
     $('#toggleDashVendas')?.addEventListener('click', ()=>{ dashVendasVisible=!dashVendasVisible; updateTotals(); });
     $('#toggleDashCompras')?.addEventListener('click', ()=>{ dashComprasVisible=!dashComprasVisible; updateTotals(); });
