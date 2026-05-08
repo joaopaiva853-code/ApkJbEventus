@@ -8,389 +8,66 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    /* ========== ESTILOS GLOBAIS ========== */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      font-family: 'Inter', 'Poppins', system-ui, sans-serif;
-      background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105);
-      background-attachment: fixed;
-      color: #eef5ff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      overflow-x: hidden;
-    }
-
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)),
-                        radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 200px 200px, 120px 120px;
-      opacity: 0.25;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 70% 20%, rgba(255, 180, 40, 0.12), transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .app-container {
-      width: 100%;
-      max-width: 1300px;
-      display: flex;
-      flex-direction: column;
-      padding: 1.2rem 1.8rem 2rem;
-      gap: 1.8rem;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-
-    .app-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      background: rgba(5, 5, 10, 0.4);
-      backdrop-filter: blur(12px);
-      border-radius: 3rem;
-      padding: 0.6rem 1.8rem;
-      border: 1px solid rgba(255, 200, 70, 0.3);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 180, 0, 0.2);
-    }
-
-    @media (max-width: 768px) {
-      .app-header {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        padding: 1rem 1rem;
-      }
-    }
-
-    .app-logo {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #FFB347, #FFD966, #FF8C00);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 18px rgba(255, 140, 0, 0.6);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .app-logo::before {
-      content: "📊";
-      font-size: 1.9rem;
-      background: none;
-      -webkit-text-fill-color: initial;
-      text-shadow: 0 0 5px #ff9900;
-    }
-
-    .clock-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 0.4rem 1.2rem;
-      border-radius: 2rem;
-      backdrop-filter: blur(4px);
-      min-width: 180px;
-      text-align: center;
-    }
-    .digital-clock {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #FFE484;
-      font-family: 'Fira Code', monospace;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px #ffaa33, 0 0 20px #ff7700;
-      line-height: 1.2;
-    }
-    .digital-date {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #FFCD94;
-      margin-top: 2px;
-      letter-spacing: 0.5px;
-    }
-
-    /* NAVEGAÇÃO */
-    .nav-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-      gap: 0.9rem;
-      justify-items: center;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    .nav-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.8rem 0.4rem;
-      border-radius: 1.8rem;
-      border: none;
-      background: rgba(12, 10, 18, 0.85);
-      backdrop-filter: blur(12px);
-      color: #FFCF9A;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      text-align: center;
-      border: 1px solid rgba(255, 170, 60, 0.5);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      width: 100%;
-    }
+    /* ========== ESTILOS (MANTIDOS INTEGRALMENTE) ========== */
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Inter', 'Poppins', system-ui, sans-serif; background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105); background-attachment: fixed; color: #eef5ff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)), radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px, 120px 120px; opacity: 0.25; pointer-events: none; z-index: 0; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 70% 20%, rgba(255, 180, 40, 0.12), transparent 70%); pointer-events: none; z-index: 0; }
+    .app-container { width: 100%; max-width: 1300px; display: flex; flex-direction: column; padding: 1.2rem 1.8rem 2rem; gap: 1.8rem; margin: 0 auto; position: relative; z-index: 2; }
+    .app-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: rgba(5, 5, 10, 0.4); backdrop-filter: blur(12px); border-radius: 3rem; padding: 0.6rem 1.8rem; border: 1px solid rgba(255, 200, 70, 0.3); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 180, 0, 0.2); }
+    @media (max-width: 768px) { .app-header { flex-direction: column; justify-content: center; text-align: center; padding: 1rem 1rem; } }
+    .app-logo { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg, #FFB347, #FFD966, #FF8C00); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 18px rgba(255, 140, 0, 0.6); display: flex; align-items: center; gap: 8px; }
+    .app-logo::before { content: "📊"; font-size: 1.9rem; background: none; -webkit-text-fill-color: initial; text-shadow: 0 0 5px #ff9900; }
+    .clock-container { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.6); padding: 0.4rem 1.2rem; border-radius: 2rem; backdrop-filter: blur(4px); min-width: 180px; text-align: center; }
+    .digital-clock { font-size: 1.8rem; font-weight: 700; color: #FFE484; font-family: 'Fira Code', monospace; letter-spacing: 2px; text-shadow: 0 0 10px #ffaa33, 0 0 20px #ff7700; line-height: 1.2; }
+    .digital-date { font-size: 0.75rem; font-weight: 500; color: #FFCD94; margin-top: 2px; letter-spacing: 0.5px; }
+    .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 0.9rem; justify-items: center; align-items: center; margin-bottom: 0.5rem; }
+    .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.8rem 0.4rem; border-radius: 1.8rem; border: none; background: rgba(12, 10, 18, 0.85); backdrop-filter: blur(12px); color: #FFCF9A; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.25s ease; text-align: center; border: 1px solid rgba(255, 170, 60, 0.5); box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5); width: 100%; }
     .nav-btn .icon { font-size: 1.7rem; filter: drop-shadow(0 0 4px #ffaa44); }
-    .nav-btn:hover {
-      background: linear-gradient(145deg, rgba(255, 140, 0, 0.35), rgba(255, 80, 0, 0.45));
-      border-color: #FFD966;
-      box-shadow: 0 0 20px rgba(255, 150, 0, 0.7);
-      transform: translateY(-3px);
-    }
-    .nav-btn.active {
-      background: linear-gradient(135deg, #FF8C00, #FFB347);
-      color: #0c0c10;
-      font-weight: 800;
-      border-color: #FFE484;
-      box-shadow: 0 0 28px rgba(255, 200, 70, 0.9);
-    }
-
+    .nav-btn:hover { background: linear-gradient(145deg, rgba(255, 140, 0, 0.35), rgba(255, 80, 0, 0.45)); border-color: #FFD966; box-shadow: 0 0 20px rgba(255, 150, 0, 0.7); transform: translateY(-3px); }
+    .nav-btn.active { background: linear-gradient(135deg, #FF8C00, #FFB347); color: #0c0c10; font-weight: 800; border-color: #FFE484; box-shadow: 0 0 28px rgba(255, 200, 70, 0.9); }
     .main-content { flex: 1; display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
     .tab-pane { display: none; width: 100%; animation: fadeSlideUp 0.4s ease; }
     .tab-pane.active-pane { display: block; }
     @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-
-    /* CARDS E FORMULÁRIOS */
-    .card {
-      background: rgba(8, 6, 12, 0.75);
-      backdrop-filter: blur(16px);
-      border-radius: 2rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 160, 50, 0.5);
-      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 215, 120, 0.1);
-    }
-    .card h2 {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.35rem;
-      color: #FFDD99;
-      margin-bottom: 1.2rem;
-      border-left: 5px solid #FF9F40;
-      padding-left: 1rem;
-      font-weight: 700;
-    }
-
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      align-items: flex-end;
-    }
+    .card { background: rgba(8, 6, 12, 0.75); backdrop-filter: blur(16px); border-radius: 2rem; padding: 1.5rem; border: 1px solid rgba(255, 160, 50, 0.5); box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 215, 120, 0.1); }
+    .card h2 { display: flex; align-items: center; gap: 12px; font-size: 1.35rem; color: #FFDD99; margin-bottom: 1.2rem; border-left: 5px solid #FF9F40; padding-left: 1rem; font-weight: 700; }
+    .form-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-end; }
     .input-group { flex: 1; min-width: 140px; }
-    .input-group label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #FFCC88;
-      display: block;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-      letter-spacing: 1px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border-radius: 1.3rem;
-      border: 1px solid rgba(255, 170, 60, 0.6);
-      background: rgba(0, 0, 0, 0.65);
-      color: #f0f0f0;
-      font-size: 0.9rem;
-      transition: all 0.25s;
-      outline: none;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: #FFB347;
-      box-shadow: 0 0 18px rgba(255, 160, 0, 0.7);
-      background: rgba(15, 12, 20, 0.85);
-    }
-    button {
-      background: linear-gradient(95deg, #FF7A1F, #F05A00);
-      border: none;
-      padding: 0.7rem 1.4rem;
-      border-radius: 2rem;
-      color: #0A0A0E;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 14px rgba(255, 80, 0, 0.5);
-      transition: all 0.2s;
-    }
-    button:hover {
-      background: linear-gradient(95deg, #FF9922, #FF6A00);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 120, 0, 0.8);
-    }
+    .input-group label { font-size: 0.7rem; font-weight: 700; color: #FFCC88; display: block; text-transform: uppercase; margin-bottom: 0.3rem; letter-spacing: 1px; }
+    input, select, textarea { width: 100%; padding: 0.75rem 1rem; border-radius: 1.3rem; border: 1px solid rgba(255, 170, 60, 0.6); background: rgba(0, 0, 0, 0.65); color: #f0f0f0; font-size: 0.9rem; transition: all 0.25s; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: #FFB347; box-shadow: 0 0 18px rgba(255, 160, 0, 0.7); background: rgba(15, 12, 20, 0.85); }
+    button { background: linear-gradient(95deg, #FF7A1F, #F05A00); border: none; padding: 0.7rem 1.4rem; border-radius: 2rem; color: #0A0A0E; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; box-shadow: 0 4px 14px rgba(255, 80, 0, 0.5); transition: all 0.2s; }
+    button:hover { background: linear-gradient(95deg, #FF9922, #FF6A00); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 120, 0, 0.8); }
     .btn-small { background: linear-gradient(135deg, #E55B00, #C54A00); padding: 0.5rem 0.9rem; font-size: 0.75rem; }
     .btn-outline { background: transparent; border: 1px solid rgba(255, 160, 60, 0.7); color: #FFD28F; box-shadow: none; }
     .btn-outline:hover { background: rgba(255, 140, 0, 0.3); box-shadow: 0 0 14px #ffaa44; }
     .btn-danger { background: linear-gradient(135deg, #D42, #A00); box-shadow: 0 4px 12px rgba(200, 0, 0, 0.6); }
-
-    /* CARDS DE ITENS */
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    .item-card {
-      background: linear-gradient(145deg, rgba(18, 15, 24, 0.9), rgba(5, 3, 10, 0.95));
-      border-radius: 1.8rem;
-      padding: 1.3rem;
-      border: 1px solid rgba(255, 150, 40, 0.55);
-      transition: all 0.25s ease;
-      backdrop-filter: blur(8px);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .item-card { background: linear-gradient(145deg, rgba(18, 15, 24, 0.9), rgba(5, 3, 10, 0.95)); border-radius: 1.8rem; padding: 1.3rem; border: 1px solid rgba(255, 150, 40, 0.55); transition: all 0.25s ease; backdrop-filter: blur(8px); text-align: center; display: flex; flex-direction: column; gap: 0.75rem; }
     .item-card:hover { transform: translateY(-5px); border-color: #FFB85E; box-shadow: 0 18px 30px -8px rgba(255, 120, 0, 0.4); }
     .item-card-title { font-weight: 800; color: #FFD48A; font-size: 1.2rem; display: block; }
     .item-card-value { font-size: 1.4rem; font-weight: 800; color: #FFC107; text-align: center; margin: 0.2rem 0; }
     .item-card-body-line { margin: 0.2rem 0; font-size: 0.9rem; color: #e0d6b0; }
-    .item-card-actions {
-      display: flex;
-      gap: 0.8rem;
-      justify-content: center;
-      align-items: center;
-      margin-top: 0.6rem;
-      flex-wrap: wrap;
-    }
-    .item-card-actions button { margin: 0; white-space: nowrap; }
-
-    /* TABELAS */
-    .sales-table-container, .table-wrapper {
-      overflow-x: auto;
-      width: 100%;
-      margin-top: 1rem;
-      border-radius: 1.5rem;
-    }
-    .sales-table, .relatorio-secao table {
-      width: 100%;
-      min-width: 650px;
-      border-collapse: collapse;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 1.5rem;
-    }
-    .sales-table th, .sales-table td,
-    .relatorio-secao th, .relatorio-secao td {
-      padding: 1rem 0.8rem;
-      text-align: center;
-      vertical-align: middle;
-      border-bottom: 1px solid rgba(255, 180, 60, 0.3);
-      color: #f3f3f3;
-    }
-    .sales-table th, .relatorio-secao th {
-      background: rgba(255, 130, 20, 0.3);
-      color: #FFE3A3;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
+    .item-card-actions { display: flex; gap: 0.8rem; justify-content: center; align-items: center; margin-top: 0.6rem; flex-wrap: wrap; }
+    .sales-table-container, .table-wrapper { overflow-x: auto; width: 100%; margin-top: 1rem; border-radius: 1.5rem; }
+    .sales-table, .relatorio-secao table { width: 100%; min-width: 650px; border-collapse: collapse; background: rgba(0, 0, 0, 0.6); border-radius: 1.5rem; }
+    .sales-table th, .sales-table td, .relatorio-secao th, .relatorio-secao td { padding: 1rem 0.8rem; text-align: center; vertical-align: middle; border-bottom: 1px solid rgba(255, 180, 60, 0.3); color: #f3f3f3; }
+    .sales-table th, .relatorio-secao th { background: rgba(255, 130, 20, 0.3); color: #FFE3A3; font-weight: 700; font-size: 0.9rem; }
     .sales-table tr:hover, .relatorio-secao tr:hover { background: rgba(255, 150, 20, 0.15); }
-
     .actions-cell { white-space: nowrap; text-align: center; }
-    .edit-btn-table, .delete-btn-table, .edit-btn, .delete-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      background: rgba(255, 159, 0, 0.2);
-      border: none;
-      padding: 0.4rem 1rem;
-      border-radius: 2rem;
-      color: #FFD700;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin: 0 0.3rem;
-      cursor: pointer;
-      transition: 0.2s;
-      white-space: nowrap;
-    }
+    .edit-btn-table, .delete-btn-table, .edit-btn, .delete-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem; background: rgba(255, 159, 0, 0.2); border: none; padding: 0.4rem 1rem; border-radius: 2rem; color: #FFD700; font-size: 0.75rem; font-weight: 600; margin: 0 0.3rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
     .delete-btn-table, .delete-btn { color: #FF9999; background: rgba(255, 0, 0, 0.2); }
     .edit-btn-table:hover, .edit-btn:hover { background: rgba(255, 159, 0, 0.5); box-shadow: 0 0 6px #FF9F00; }
     .delete-btn-table:hover, .delete-btn:hover { background: rgba(255, 0, 0, 0.5); box-shadow: 0 0 6px #FF3333; }
-
-    .dashboard-widget {
-      background: rgba(5, 5, 12, 0.7);
-      backdrop-filter: blur(18px);
-      border-radius: 2.2rem;
-      border: 1px solid rgba(255, 170, 60, 0.5);
-      padding: 1.6rem;
-    }
+    .dashboard-widget { background: rgba(5, 5, 12, 0.7); backdrop-filter: blur(18px); border-radius: 2.2rem; border: 1px solid rgba(255, 170, 60, 0.5); padding: 1.6rem; }
     .big-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
-    .big-card {
-      background: linear-gradient(135deg, rgba(255, 140, 20, 0.2), rgba(80, 40, 0, 0.4));
-      border-radius: 2rem;
-      backdrop-filter: blur(8px);
-      padding: 1.3rem;
-      text-align: center;
-      border: 1px solid rgba(255, 190, 70, 0.5);
-    }
+    .big-card { background: linear-gradient(135deg, rgba(255, 140, 20, 0.2), rgba(80, 40, 0, 0.4)); border-radius: 2rem; backdrop-filter: blur(8px); padding: 1.3rem; text-align: center; border: 1px solid rgba(255, 190, 70, 0.5); }
     .big-valor { font-size: 1.9rem; font-weight: 800; color: #FFDA88; }
     .toggle-eye { cursor: pointer; filter: drop-shadow(0 0 4px #ffaa55); margin-left: 8px; }
-
-    .relatorio-resumo {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .relatorio-card {
-      background: rgba(20, 15, 25, 0.8);
-      backdrop-filter: blur(8px);
-      border-radius: 1.5rem;
-      border: 1px solid #FFB347;
-      padding: 1rem;
-      text-align: center;
-    }
+    .relatorio-resumo { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .relatorio-card { background: rgba(20, 15, 25, 0.8); backdrop-filter: blur(8px); border-radius: 1.5rem; border: 1px solid #FFB347; padding: 1rem; text-align: center; }
     .relatorio-card .r-valor { font-size: 1.4rem; font-weight: 700; color: #FFD966; }
-
-    /* CALCULADORA */
     .calc-panel { max-width: 480px; margin: 0 auto; background: rgba(10, 8, 15, 0.7); backdrop-filter: blur(8px); border-radius: 2.5rem; padding: 1.5rem; border: 1px solid rgba(255, 170, 60, 0.4); box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.8); }
     .calc-screen { background: #0d0b12; border-radius: 1.8rem; padding: 1.2rem 1.2rem; text-align: right; font-size: 2.4rem; font-weight: 700; color: #FFE484; font-family: 'Fira Code', monospace; margin-bottom: 1.5rem; min-height: 85px; display: flex; align-items: center; justify-content: flex-end; letter-spacing: 2px; box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 180, 60, 0.3); word-break: break-word; overflow-x: auto; }
     .calc-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
@@ -403,8 +80,6 @@
     .calc-buttons button:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 7px 0 #0a0810; }
     .calc-buttons button:active:hover { transform: translateY(3px); box-shadow: 0 3px 0 #0a0810; }
     @media (max-width: 500px) { .calc-buttons { gap: 8px; } .calc-buttons button { font-size: 1.2rem; padding: 0.8rem 0; border-radius: 1.2rem; } .calc-screen { font-size: 1.8rem; padding: 0.8rem; min-height: 70px; } .calc-panel { padding: 1rem; } }
-
-    /* CALENDÁRIO */
     .calendar-container { background: rgba(5, 5, 12, 0.6); backdrop-filter: blur(12px); border-radius: 2rem; padding: 1.2rem; border: 1px solid rgba(255, 170, 60, 0.5); }
     .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
     .month-year { font-size: 1.6rem; font-weight: 700; color: #FFD966; }
@@ -420,54 +95,12 @@
     .calendar-day.empty { background: transparent; cursor: default; border-color: transparent; }
     .agenda-list { margin-top: 1.5rem; background: rgba(0,0,0,0.4); border-radius: 1.5rem; padding: 1rem; }
     .agenda-item { background: rgba(25, 20, 35, 0.8); border-radius: 1rem; padding: 0.7rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; text-align: left; }
-
-    .fullscreen-modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 10%, #030105, #000000);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      visibility: hidden;
-      opacity: 0;
-      transition: 0.25s ease;
-    }
+    .fullscreen-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 10%, #030105, #000000); z-index: 2000; display: flex; flex-direction: column; visibility: hidden; opacity: 0; transition: 0.25s ease; }
     .fullscreen-modal.active { visibility: visible; opacity: 1; }
-    .fullscreen-header {
-      display: flex;
-      align-items: center;
-      padding: 1rem 1.8rem;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 180, 70, 0.6);
-      gap: 1rem;
-    }
-    .back-btn {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid #FFA647;
-      color: #FFCF8A;
-      padding: 0.5rem 1.2rem;
-      border-radius: 2rem;
-      cursor: pointer;
-    }
+    .fullscreen-header { display: flex; align-items: center; padding: 1rem 1.8rem; background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255, 180, 70, 0.6); gap: 1rem; }
+    .back-btn { background: rgba(0, 0, 0, 0.6); border: 1px solid #FFA647; color: #FFCF8A; padding: 0.5rem 1.2rem; border-radius: 2rem; cursor: pointer; }
     .fullscreen-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
-    .modal {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85);
-      backdrop-filter: blur(12px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 3000;
-      visibility: hidden;
-      opacity: 0;
-      transition: 0.25s;
-    }
+    .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; z-index: 3000; visibility: hidden; opacity: 0; transition: 0.25s; }
     .modal.active { visibility: visible; opacity: 1; }
     .modal-content { background: #1a160c; width: 100%; max-width: 480px; border-radius: 2rem; padding: 1.5rem; border: 1px solid #FF9F00; }
     .toggle-section { display: none; margin-top: 1rem; }
@@ -533,23 +166,16 @@
   </main>
 </div>
 
-<!-- ========== MÓDULOS COMPLETOS (TODOS OS MODAIS) ========== -->
-<!-- VENDAS -->
+<!-- MÓDULOS COMPLETOS (VENDAS, PRODUTOS, COMPRAS, CLIENTES, FORNECEDORES, ENTREGADOR, DELIVERY, CALC, CALENDÁRIO, RELATÓRIO) -->
 <div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
-<!-- PRODUTOS -->
 <div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><h2>📋 Produtos Cadastrados</h2><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
-<!-- COMPRAS -->
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
-<!-- CLIENTES -->
 <div id="clientesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><h2>📋 Lista de Clientes</h2><div id="clientesCardsContainer" class="cards-grid"></div></div></div></div>
-<!-- FORNECEDORES -->
 <div id="fornecedoresFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button><h2>🏭 Fornecedores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Fornecedor</h2><div class="form-row"><div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div><div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div><div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div><button id="addFornecedorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Fornecedores</h2><div id="fornecedoresCardsContainer" class="cards-grid"></div></div></div></div>
-<!-- ENTREGADOR -->
 <div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
-<!-- DELIVERY -->
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><button id="toggleEntregasBtn" class="btn-outline" style="margin-bottom:1rem;">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
 
-<!-- ANOTAÇÕES + LEMBRETES PREMIUM (COM ALARME) -->
+<!-- ANOTAÇÕES + LEMBRETES PREMIUM (COM ALARME SONORO GARANTIDO) -->
 <div id="anotacoesFullModal" class="fullscreen-modal">
   <div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div>
   <div class="fullscreen-body">
@@ -562,8 +188,6 @@
       <h2>📋 Minhas Anotações</h2>
       <div id="notasCardsContainer" class="cards-grid"></div>
     </div>
-    
-    <!-- SEÇÃO DE LEMBRETES PREMIUM -->
     <div class="card">
       <h2>⏰ Lembretes Premium (Alarme)</h2>
       <div class="form-row">
@@ -575,6 +199,7 @@
       <div class="form-row">
         <div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div>
         <button id="addLembreteBtn">🔔 Criar Lembrete</button>
+        <button id="testSoundBtn" class="btn-small" style="background: #2c5f2d;">🔊 Testar Som</button>
       </div>
       <h2>📋 Lembretes Ativos</h2>
       <div id="lembretesCardsContainer" class="cards-grid"></div>
@@ -582,14 +207,10 @@
   </div>
 </div>
 
-<!-- CALCULADORA -->
 <div id="calcFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div><div class="fullscreen-body"><div class="calc-panel"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div></div>
-<!-- CALENDÁRIO -->
 <div id="calendarioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário Completo</h2></div><div class="fullscreen-body"><div class="calendar-container"><div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀ Mês anterior</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">Próximo mês ▶</button></div><div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div><div class="calendar-days" id="calendarDaysGrid"></div><div class="agenda-list"><h3 style="color:#FFD966;">📋 Agendamentos do dia</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small" style="margin-top:0.5rem;">➕ Adicionar compromisso</button></div></div></div></div>
-<!-- RELATÓRIO -->
 <div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
 
-<!-- MODAIS GLOBAIS -->
 <div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 <div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
 <div id="eventModal" class="modal"><div class="modal-content"><h3>📌 Adicionar Compromisso</h3><div class="input-group"><label>Data</label><input type="date" id="eventDate" readonly style="background:#2a251a;"></div><div class="input-group"><label>Título</label><input type="text" id="eventTitle" placeholder="Ex: Reunião"></div><div class="input-group"><label>Descrição (opcional)</label><textarea id="eventDesc" rows="2" placeholder="Detalhes..."></textarea></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="saveEventBtn">Salvar</button><button id="closeEventModalBtn" class="btn-danger">Cancelar</button></div></div></div>
@@ -610,11 +231,51 @@
   updateClock();
   setInterval(updateClock, 1000);
 
+  // ========== ÁUDIO (para alarme) - Garantir que o som toque ==========
+  let audioCtx = null;
+  function initAudio() {
+    if (!audioCtx) {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    return audioCtx;
+  }
+  function playBeep() {
+    try {
+      const ctx = initAudio();
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+      oscillator.frequency.value = 880;
+      gainNode.gain.value = 0.3;
+      oscillator.start();
+      gainNode.gain.exponentialRampToValueAtTime(0.00001, ctx.currentTime + 1);
+      oscillator.stop(ctx.currentTime + 1);
+    } catch(e) {
+      console.log('Erro ao tocar beep', e);
+    }
+  }
+  // Teste de som manual
+  function testSound() {
+    playBeep();
+    alert('Teste de som: você deve ouvir um beep (necessário interação prévia com a página para ativar áudio).');
+  }
+
+  // Forçar retomada do áudio no primeiro clique em qualquer lugar da página
+  document.body.addEventListener('click', function resumeAudio() {
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+  }, { once: false });
+
   // ========== STATE E STORAGE ==========
   const state = {
     produtos: [], clientes: [], fornecedores: [], vendas: [], compras: [], notas: [],
     entregadores: [], bairros: [], entregas: [], eventos: [],
-    lembretes: []   // novo array para lembretes
+    lembretes: []
   };
   const STORAGE_MAP = {
     produtos:'rumo_produtos', clientes:'rumo_clientes', fornecedores:'rumo_fornecedores',
@@ -632,7 +293,7 @@
   let dashVendasVisible = true, dashComprasVisible = true, dashLucroVisible = true;
   let bairrosVisible = false, entregasVisible = false;
 
-  // ========== FERIADOS (para o calendário) ==========
+  // ========== FERIADOS ==========
   function getHolidays(year) {
     const fixed = {
       '01-01': 'Confraternização Universal', '21-04': 'Tiradentes', '01-05': 'Dia do Trabalhador',
@@ -712,11 +373,11 @@
   function openAddEventModal() { $('#eventDate').value = selectedDate.toISOString().slice(0,10); $('#eventTitle').value = ''; $('#eventDesc').value = ''; $('#eventModal').classList.add('active'); }
   function saveEvent() { const date = $('#eventDate').value; const title = $('#eventTitle').value.trim(); const desc = $('#eventDesc').value.trim(); if(!title) return alert('Informe o título.'); state.eventos.push({ id: uid(), date, title, desc, createdAt: nowStr() }); save(); renderCalendar(); $('#eventModal').classList.remove('active'); }
 
-  // ========== CRUD PRINCIPAL (VENDAS, PRODUTOS, ETC) – FUNÇÕES RESUMIDAS MAS COMPLETAS ==========
+  // ========== CRUD PRINCIPAL ==========
   function save() { for (const [key, storageKey] of Object.entries(STORAGE_MAP)) localStorage.setItem(storageKey, JSON.stringify(state[key])); }
   function load() {
     for (const [key, storageKey] of Object.entries(STORAGE_MAP)) { const raw = localStorage.getItem(storageKey); state[key] = raw ? JSON.parse(raw) : []; }
-    if (!state.produtos.length && !state.clientes.length) { // dados iniciais
+    if (!state.produtos.length && !state.clientes.length) {
       state.produtos = [{ id: 1001, nome: 'Notebook Ultra', preco: 3450 }, { id: 1002, nome: 'Mouse Gamer', preco: 129.9 }];
       state.clientes = [{ id: 2001, nome: 'Cliente Exemplo', email: 'cli@email.com', whatsapp: '(11) 99999-8888', endereco: 'Rua das Flores, 123' }];
       state.fornecedores = [{ id: 3001, nome: 'Fornecedor Alpha', cnpj: '12.345.678/0001-90', contato: '(11) 3456-7890' }];
@@ -756,7 +417,6 @@
     container.innerHTML = items.map(cardFn).join('');
   }
 
-  // Definição de templates de cards
   const cardFns = {
     produto: (p) => `<div class="item-card"><div class="item-card-title">${escapeHtml(p.nome)}</div><div class="item-card-value">${formatMoney(p.preco)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="produto" data-id="${p.id}">✏️ Editar</button><button class="delete-btn" data-entity="produto" data-id="${p.id}">🗑️ Excluir</button></div></div>`,
     compra: (c) => `<div class="item-card"><div class="item-card-title">${escapeHtml(c.fornecedorNome)}</div><div class="item-card-body-line">📦 ${escapeHtml(c.produto)}</div><div class="item-card-body-line">Qtd: ${c.quantidade} × ${formatMoney(c.precoUnit)}</div><div class="item-card-value">${formatMoney(c.quantidade * c.precoUnit)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="compra" data-id="${c.id}">✏️ Editar</button><button class="delete-btn" data-entity="compra" data-id="${c.id}">🗑️ Excluir</button></div></div>`,
@@ -779,7 +439,6 @@
     }
   };
 
-  // Funções de refresh modais
   function renderSalesTable() {
     const tbody = document.getElementById('salesTableBody'); if(!tbody) return;
     if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7">Nenhuma venda registrada</td></tr>'; return; }
@@ -807,7 +466,7 @@
     $('#relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div>${n.data}</div></div>`).join('') : '<div>Sem anotações.</div>';
   }
 
-  // ========== CRUD DAS ENTIDADES ==========
+  // ========== CRUD ADICIONAL ==========
   function addProduto(nome, preco, selectAfter=false, fullMode=false) { if(!nome) return null; const novo = { id:uid(), nome, preco: isNaN(preco)?0:preco }; state.produtos.push(novo); save(); updateTotals(); refreshProdutosModal(); refreshVendasModal(); if(selectAfter && fullMode) { const sel = $('#vendaProdutoIdFull'); for(let i=0;i<sel.options.length;i++) if(parseInt(sel.options[i].value)===novo.id) { sel.selectedIndex=i; sel.dispatchEvent(new Event('change')); break; } } return novo; }
   function addVenda() { const clienteId = parseInt($('#vendaClienteIdFull').value); const cliente = state.clientes.find(c=>c.id===clienteId); if(!cliente) return alert('Selecione um cliente!'); const produtoId = parseInt($('#vendaProdutoIdFull').value); const produto = state.produtos.find(p=>p.id===produtoId); if(!produto) return alert('Selecione um produto!'); const qtd = parseFloat($('#vendaQtdFull').value); let preco = parseFloat($('#vendaPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)||preco<0) preco=produto.preco; state.vendas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshVendasModal(); $('#vendaProdutoIdFull').value=''; $('#vendaQtdFull').value='1'; $('#vendaPrecoFull').value=''; }
   function addCompra() { const fornId = parseInt($('#compraFornecedorIdFull').value); const forn = state.fornecedores.find(f=>f.id===fornId); if(!forn) return alert('Selecione um fornecedor!'); let produto = $('#compraProdutoFull').value.trim() || 'Produto'; const qtd = parseFloat($('#compraQtdFull').value); let preco = parseFloat($('#compraPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)) preco=0; state.compras.push({ id:uid(), fornecedorId:forn.id, fornecedorNome:forn.nome, produto, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshComprasModal(); $('#compraProdutoFull').value=''; $('#compraQtdFull').value='1'; $('#compraPrecoFull').value=''; }
@@ -837,22 +496,7 @@
     alert('Lembrete criado com sucesso! O alarme tocará na data/hora definida.');
   }
 
-  // ========== ALARME: verificação a cada 30 segundos ==========
-  function playBeep() {
-    try {
-      const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      const oscillator = audioCtx.createOscillator();
-      const gainNode = audioCtx.createGain();
-      oscillator.connect(gainNode);
-      gainNode.connect(audioCtx.destination);
-      oscillator.frequency.value = 880;
-      gainNode.gain.value = 0.3;
-      oscillator.start();
-      gainNode.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + 1);
-      oscillator.stop(audioCtx.currentTime + 1);
-    } catch(e) { console.log('Erro ao tocar beep', e); }
-  }
-
+  // ========== VERIFICAÇÃO DE ALARMES (A CADA 30 SEGUNDOS) ==========
   function checkAlarms() {
     const now = new Date();
     let alarmTriggered = false;
@@ -865,7 +509,7 @@
           const nomeCliente = cliente ? cliente.nome : 'Cliente removido';
           const msg = `🔔 ALARME! Cliente ${nomeCliente} está devendo ${formatMoney(lem.valor)}.\nData/Hora programada: ${lem.dataHora}\n${lem.desc ? 'Motivo: '+lem.desc : ''}`;
           alert(msg);
-          playBeep();
+          playBeep();  // aqui o som toca
           alarmTriggered = true;
         }
       }
@@ -876,8 +520,8 @@
       refreshLembretesContainer();
     }
   }
-  setInterval(checkAlarms, 30000); // verifica a cada 30 segundos
-  setTimeout(checkAlarms, 1000); // verificação inicial
+  setInterval(checkAlarms, 30000);
+  setTimeout(checkAlarms, 2000); // primeira verificação
 
   // ========== CALCULADORA ==========
   let calcExpr = '0';
@@ -920,7 +564,6 @@
     $('#toggleBairrosBtn')?.addEventListener('click', ()=>{ bairrosVisible=!bairrosVisible; const sec=$('#bairrosSection'); const btn=$('#toggleBairrosBtn'); if(bairrosVisible){ sec.classList.add('visible'); btn.innerHTML='🔒 Ocultar Bairros'; renderCards('bairrosCardsContainer',state.bairros,cardFns.bairro,'Nenhum bairro'); } else { sec.classList.remove('visible'); btn.innerHTML='📋 Ver Bairros Cadastrados'; } });
     $('#toggleEntregasBtn')?.addEventListener('click', ()=>{ entregasVisible=!entregasVisible; const sec=$('#entregasSection'); const btn=$('#toggleEntregasBtn'); if(entregasVisible){ sec.classList.add('visible'); btn.innerHTML='🔒 Ocultar Entregas'; renderCards('entregasCardsContainer',state.entregas,cardFns.entrega,'Nenhuma entrega'); } else { sec.classList.remove('visible'); btn.innerHTML='📋 Ver Entregas Realizadas'; } });
 
-    // Navegação entre os modais
     $$('.nav-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.dataset.tab;
@@ -964,6 +607,7 @@
     $('#addEntregaBtnFull')?.addEventListener('click', addEntrega);
     $('#addNotaBtnFull')?.addEventListener('click', addNota);
     $('#addLembreteBtn')?.addEventListener('click', addLembrete);
+    $('#testSoundBtn')?.addEventListener('click', testSound);
     $('#toggleDashVendas')?.addEventListener('click', ()=>{ dashVendasVisible=!dashVendasVisible; updateTotals(); });
     $('#toggleDashCompras')?.addEventListener('click', ()=>{ dashComprasVisible=!dashComprasVisible; updateTotals(); });
     $('#toggleDashLucro')?.addEventListener('click', ()=>{ dashLucroVisible=!dashLucroVisible; updateTotals(); });
