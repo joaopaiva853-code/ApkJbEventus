@@ -8,875 +8,241 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-    body {
-      font-family: 'Inter', 'Poppins', system-ui, sans-serif;
-      background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105);
-      background-attachment: fixed;
-      color: #eef5ff;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      position: relative;
-      overflow-x: hidden;
-    }
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)),
-                        radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 200px 200px, 120px 120px;
-      opacity: 0.25;
-      pointer-events: none;
-      z-index: 0;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 70% 20%, rgba(255, 180, 40, 0.12), transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .app-container {
-      width: 100%;
-      max-width: 1300px;
-      display: flex;
-      flex-direction: column;
-      padding: 1.2rem 1.8rem 2rem;
-      gap: 1.8rem;
-      margin: 0 auto;
-      position: relative;
-      z-index: 2;
-    }
-    .app-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-      background: rgba(5, 5, 10, 0.4);
-      backdrop-filter: blur(12px);
-      border-radius: 3rem;
-      padding: 0.6rem 1.8rem;
-      border: 1px solid rgba(255, 200, 70, 0.3);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 180, 0, 0.2);
-    }
-    @media (max-width: 768px) {
-      .app-header {
-        flex-direction: column;
-        justify-content: center;
-        text-align: center;
-        padding: 1rem 1rem;
-      }
-    }
-    .app-logo {
-      font-size: 2rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, #FFB347, #FFD966, #FF8C00);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 18px rgba(255, 140, 0, 0.6);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .app-logo::before {
-      content: "📊";
-      font-size: 1.9rem;
-      background: none;
-      -webkit-text-fill-color: initial;
-      text-shadow: 0 0 5px #ff9900;
-    }
-    .clock-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 0.4rem 1.2rem;
-      border-radius: 2rem;
-      backdrop-filter: blur(4px);
-      min-width: 180px;
-      text-align: center;
-    }
-    .digital-clock {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #FFE484;
-      font-family: 'Fira Code', monospace;
-      letter-spacing: 2px;
-      text-shadow: 0 0 10px #ffaa33, 0 0 20px #ff7700;
-      line-height: 1.2;
-    }
-    .digital-date {
-      font-size: 0.75rem;
-      font-weight: 500;
-      color: #FFCD94;
-      margin-top: 2px;
-      letter-spacing: 0.5px;
-    }
-    .nav-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(105px, 1fr));
-      gap: 0.9rem;
-      justify-items: center;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
-    .nav-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.8rem 0.4rem;
-      border-radius: 1.8rem;
-      border: none;
-      background: rgba(12, 10, 18, 0.85);
-      backdrop-filter: blur(12px);
-      color: #FFCF9A;
-      font-weight: 600;
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      text-align: center;
-      border: 1px solid rgba(255, 170, 60, 0.5);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-      width: 100%;
-    }
-    .nav-btn .icon {
-      font-size: 1.7rem;
-      filter: drop-shadow(0 0 4px #ffaa44);
-    }
-    .nav-btn:hover {
-      background: linear-gradient(145deg, rgba(255, 140, 0, 0.35), rgba(255, 80, 0, 0.45));
-      border-color: #FFD966;
-      box-shadow: 0 0 20px rgba(255, 150, 0, 0.7);
-      transform: translateY(-3px);
-    }
-    .nav-btn.active {
-      background: linear-gradient(135deg, #FF8C00, #FFB347);
-      color: #0c0c10;
-      font-weight: 800;
-      border-color: #FFE484;
-      box-shadow: 0 0 28px rgba(255, 200, 70, 0.9);
-    }
-    .main-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-      width: 100%;
-    }
-    .tab-pane {
-      display: none;
-      width: 100%;
-      animation: fadeSlideUp 0.4s ease;
-    }
-    .tab-pane.active-pane {
-      display: block;
-    }
-    @keyframes fadeSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .card {
-      background: rgba(8, 6, 12, 0.75);
-      backdrop-filter: blur(16px);
-      border-radius: 2rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 160, 50, 0.5);
-      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 215, 120, 0.1);
-    }
-    .card h2 {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-size: 1.35rem;
-      color: #FFDD99;
-      margin-bottom: 1.2rem;
-      border-left: 5px solid #FF9F40;
-      padding-left: 1rem;
-      font-weight: 700;
-    }
-    .form-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      align-items: flex-end;
-    }
-    .input-group {
-      flex: 1;
-      min-width: 140px;
-    }
-    .input-group label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #FFCC88;
-      display: block;
-      text-transform: uppercase;
-      margin-bottom: 0.3rem;
-      letter-spacing: 1px;
-    }
-    input, select, textarea {
-      width: 100%;
-      padding: 0.75rem 1rem;
-      border-radius: 1.3rem;
-      border: 1px solid rgba(255, 170, 60, 0.6);
-      background: rgba(0, 0, 0, 0.65);
-      color: #f0f0f0;
-      font-size: 0.9rem;
-      transition: all 0.25s;
-      outline: none;
-    }
-    input:focus, select:focus, textarea:focus {
-      border-color: #FFB347;
-      box-shadow: 0 0 18px rgba(255, 160, 0, 0.7);
-      background: rgba(15, 12, 20, 0.85);
-    }
-    button {
-      background: linear-gradient(95deg, #FF7A1F, #F05A00);
-      border: none;
-      padding: 0.7rem 1.4rem;
-      border-radius: 2rem;
-      color: #0A0A0E;
-      font-weight: 800;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.9rem;
-      box-shadow: 0 4px 14px rgba(255, 80, 0, 0.5);
-      transition: all 0.2s;
-    }
-    button:hover {
-      background: linear-gradient(95deg, #FF9922, #FF6A00);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 120, 0, 0.8);
-    }
-    .btn-small {
-      background: linear-gradient(135deg, #E55B00, #C54A00);
-      padding: 0.5rem 0.9rem;
-      font-size: 0.75rem;
-    }
-    .btn-outline {
-      background: transparent;
-      border: 1px solid rgba(255, 160, 60, 0.7);
-      color: #FFD28F;
-      box-shadow: none;
-    }
-    .btn-outline:hover {
-      background: rgba(255, 140, 0, 0.3);
-      box-shadow: 0 0 14px #ffaa44;
-    }
-    .btn-danger {
-      background: linear-gradient(135deg, #D42, #A00);
-      box-shadow: 0 4px 12px rgba(200, 0, 0, 0.6);
-    }
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-      gap: 1.5rem;
-      margin-top: 1rem;
-    }
-    .item-card {
-      background: linear-gradient(145deg, rgba(18, 15, 24, 0.9), rgba(5, 3, 10, 0.95));
-      border-radius: 1.8rem;
-      padding: 1.3rem;
-      border: 1px solid rgba(255, 150, 40, 0.55);
-      transition: all 0.25s ease;
-      backdrop-filter: blur(8px);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-    }
-    .item-card:hover {
-      transform: translateY(-5px);
-      border-color: #FFB85E;
-      box-shadow: 0 18px 30px -8px rgba(255, 120, 0, 0.4);
-    }
-    .item-card-title {
-      font-weight: 800;
-      color: #FFD48A;
-      font-size: 1.2rem;
-      display: block;
-    }
-    .item-card-value {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #FFC107;
-      text-align: center;
-      margin: 0.2rem 0;
-    }
-    .item-card-body-line {
-      margin: 0.2rem 0;
-      font-size: 0.9rem;
-      color: #e0d6b0;
-    }
-    .item-card-actions {
-      display: flex;
-      gap: 0.8rem;
-      justify-content: center;
-      align-items: center;
-      margin-top: 0.6rem;
-      flex-wrap: wrap;
-    }
-    .sales-table-container, .table-wrapper {
-      overflow-x: auto;
-      width: 100%;
-      margin-top: 1rem;
-      border-radius: 1.5rem;
-    }
-    .sales-table, .relatorio-secao table {
-      width: 100%;
-      min-width: 650px;
-      border-collapse: collapse;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 1.5rem;
-    }
-    .sales-table th, .sales-table td,
-    .relatorio-secao th, .relatorio-secao td {
-      padding: 1rem 0.8rem;
-      text-align: center;
-      vertical-align: middle;
-      border-bottom: 1px solid rgba(255, 180, 60, 0.3);
-      color: #f3f3f3;
-    }
-    .sales-table th, .relatorio-secao th {
-      background: rgba(255, 130, 20, 0.3);
-      color: #FFE3A3;
-      font-weight: 700;
-      font-size: 0.9rem;
-    }
-    .sales-table tr:hover, .relatorio-secao tr:hover {
-      background: rgba(255, 150, 20, 0.15);
-    }
-    .actions-cell {
-      white-space: nowrap;
-      text-align: center;
-    }
-    .edit-btn-table, .delete-btn-table,
-    .edit-btn, .delete-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.3rem;
-      background: rgba(255, 159, 0, 0.2);
-      border: none;
-      padding: 0.4rem 1rem;
-      border-radius: 2rem;
-      color: #FFD700;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin: 0 0.3rem;
-      cursor: pointer;
-      transition: 0.2s;
-      white-space: nowrap;
-    }
-    .delete-btn-table, .delete-btn {
-      color: #FF9999;
-      background: rgba(255, 0, 0, 0.2);
-    }
-    .edit-btn-table:hover, .edit-btn:hover {
-      background: rgba(255, 159, 0, 0.5);
-      box-shadow: 0 0 6px #FF9F00;
-    }
-    .delete-btn-table:hover, .delete-btn:hover {
-      background: rgba(255, 0, 0, 0.5);
-      box-shadow: 0 0 6px #FF3333;
-    }
-    /* DASHBOARD CARDS - ORGANIZADOS E CENTRALIZADOS */
-    .dashboard-widget {
-      background: rgba(5, 5, 12, 0.7);
-      backdrop-filter: blur(18px);
-      border-radius: 2.2rem;
-      border: 1px solid rgba(255, 170, 60, 0.5);
-      padding: 1.6rem;
-    }
-    .big-cards {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.8rem;
-      margin-top: 1rem;
-      margin-bottom: 1rem;
-    }
-    .big-card {
-      flex: 1;
-      min-width: 220px;
-      max-width: 280px;
-      background: linear-gradient(135deg, rgba(255, 140, 20, 0.2), rgba(80, 40, 0, 0.4));
-      border-radius: 1.8rem;
-      backdrop-filter: blur(12px);
-      padding: 1.5rem 1rem;
-      text-align: center;
-      border: 1px solid rgba(255, 190, 70, 0.6);
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .big-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.5);
-      border-color: #ffc107;
-    }
-    .big-card .big-icon {
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      display: block;
-    }
-    .big-card h3 {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #FFD966;
-      margin-bottom: 0.8rem;
-      letter-spacing: 0.5px;
-    }
-    .big-valor-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .big-valor {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #FFE484;
-      text-shadow: 0 0 5px rgba(0,0,0,0.3);
-    }
-    .toggle-eye {
-      font-size: 1.3rem;
-      cursor: pointer;
-      opacity: 0.7;
-      transition: 0.2s;
-    }
-    .toggle-eye:hover {
-      opacity: 1;
-      transform: scale(1.1);
-    }
-    /* Responsividade dos cards */
-    @media (max-width: 700px) {
-      .big-cards {
-        flex-direction: column;
-        align-items: center;
-        gap: 1rem;
-      }
-      .big-card {
-        width: 100%;
-        max-width: 320px;
-      }
-    }
-    .relatorio-resumo {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      justify-items: center;
-      align-items: center;
-    }
-    .relatorio-card {
-      background: rgba(20, 15, 25, 0.8);
-      backdrop-filter: blur(8px);
-      border-radius: 1.5rem;
-      border: 1px solid #FFB347;
-      padding: 1rem;
-      text-align: center;
-      width: 100%;
-    }
-    .relatorio-card h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1rem;
-    }
-    .relatorio-card .r-valor {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #FFD966;
-    }
-    .relatorio-secao {
-      margin-bottom: 1.8rem;
-    }
-    .relatorio-secao h3 {
-      color: #FFB347;
-      margin-bottom: 1rem;
-      border-left: 4px solid #FF9F40;
-      padding-left: 0.8rem;
-      text-align: left;
-    }
-    /* Calculadora e demais estilos mantidos */
-    .calc-panel {
-      max-width: 480px;
-      margin: 0 auto;
-      background: rgba(10, 8, 15, 0.7);
-      backdrop-filter: blur(8px);
-      border-radius: 2.5rem;
-      padding: 1.5rem;
-      border: 1px solid rgba(255, 170, 60, 0.4);
-      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.8);
-    }
-    .calc-screen {
-      background: #0d0b12;
-      border-radius: 1.8rem;
-      padding: 1.2rem 1.2rem;
-      text-align: right;
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: #FFE484;
-      font-family: 'Fira Code', monospace;
-      margin-bottom: 1.5rem;
-      min-height: 85px;
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      letter-spacing: 2px;
-      box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 180, 60, 0.3);
-      word-break: break-word;
-      overflow-x: auto;
-    }
-    .calc-buttons {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-    .calc-buttons button {
-      background: linear-gradient(145deg, #1e1b28, #110e18);
-      border: none;
-      border-radius: 1.5rem;
-      padding: 1rem 0;
-      font-size: 1.5rem;
-      font-weight: 600;
-      font-family: 'Fira Code', 'Inter', monospace;
-      color: #FFD799;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      box-shadow: 0 6px 0 #0a0810, 0 4px 12px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      line-height: 1;
-    }
-    .calc-buttons button:active {
-      transform: translateY(3px);
-      box-shadow: 0 3px 0 #0a0810;
-    }
-    .calc-buttons button[data-calc="+"],
-    .calc-buttons button[data-calc="-"],
-    .calc-buttons button[data-calc="*"],
-    .calc-buttons button[data-calc="/"],
-    .calc-buttons button[data-calc="="] {
-      background: linear-gradient(145deg, #FF8C2C, #E65C00);
-      color: #0f0c10;
-      font-weight: 800;
-      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
-      box-shadow: 0 6px 0 #902F00;
-    }
-    .calc-buttons button[data-calc="C"] {
-      background: linear-gradient(145deg, #992222, #6B1010);
-      color: #FFCD9A;
-      box-shadow: 0 6px 0 #3D0808;
-    }
-    .calc-buttons button[data-calc="⌫"] {
-      background: linear-gradient(145deg, #2a2a3a, #181522);
-      color: #FFBB77;
-    }
-    .calc-buttons button[data-calc="="] {
-      background: linear-gradient(145deg, #28a745, #1e7e34);
-      color: white;
-      box-shadow: 0 6px 0 #0f5a23;
-    }
-    .calc-buttons button:hover {
-      filter: brightness(1.08);
-      transform: translateY(-1px);
-      box-shadow: 0 7px 0 #0a0810;
-    }
-    .calc-buttons button:active:hover {
-      transform: translateY(3px);
-      box-shadow: 0 3px 0 #0a0810;
-    }
-    @media (max-width: 500px) {
-      .calc-buttons {
-        gap: 8px;
-      }
-      .calc-buttons button {
-        font-size: 1.2rem;
-        padding: 0.8rem 0;
-        border-radius: 1.2rem;
-      }
-      .calc-screen {
-        font-size: 1.8rem;
-        padding: 0.8rem;
-        min-height: 70px;
-      }
-      .calc-panel {
-        padding: 1rem;
-      }
-    }
-    .calendar-container {
-      background: rgba(5, 5, 12, 0.6);
-      backdrop-filter: blur(12px);
-      border-radius: 2rem;
-      padding: 1.2rem;
-      border: 1px solid rgba(255, 170, 60, 0.5);
-    }
-    .calendar-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .month-year {
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: #FFD966;
-    }
-    .calendar-nav {
-      display: flex;
-      gap: 0.8rem;
-    }
-    .calendar-weekdays {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-weight: 700;
-      color: #FFCD94;
-      margin-bottom: 0.8rem;
-      gap: 4px;
-    }
-    .calendar-days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 4px;
-    }
-    .calendar-day {
-      background: rgba(20, 18, 28, 0.7);
-      border-radius: 1rem;
-      padding: 0.7rem 0.3rem;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s;
-      min-height: 70px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      font-size: 0.9rem;
-      border: 1px solid rgba(255, 170, 60, 0.2);
-    }
-    .calendar-day:hover {
-      background: rgba(255, 140, 0, 0.3);
-      transform: scale(1.02);
-      border-color: #FFAA44;
-    }
-    .calendar-day.today {
-      background: rgba(255, 180, 50, 0.4);
-      border: 2px solid #FFD966;
-      box-shadow: 0 0 12px rgba(255, 210, 80, 0.6);
-    }
-    .day-number {
-      font-weight: 700;
-      font-size: 1.1rem;
-    }
-    .holiday-badge {
-      background: rgba(200, 50, 50, 0.8);
-      border-radius: 1rem;
-      padding: 0.2rem 0.4rem;
-      font-size: 0.6rem;
-      margin-top: 4px;
-      color: white;
-      width: 90%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .event-badge {
-      background: rgba(50, 150, 200, 0.8);
-      border-radius: 1rem;
-      padding: 0.2rem 0.4rem;
-      font-size: 0.6rem;
-      margin-top: 2px;
-      width: 90%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .calendar-day.empty {
-      background: transparent;
-      cursor: default;
-      border-color: transparent;
-    }
-    .agenda-list {
-      margin-top: 1.5rem;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 1.5rem;
-      padding: 1rem;
-    }
-    .agenda-item {
-      background: rgba(25, 20, 35, 0.8);
-      border-radius: 1rem;
-      padding: 0.7rem;
-      margin-bottom: 0.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: left;
-    }
-    .fullscreen-modal {
+    /* ========== ESTILOS GLOBAIS DO SISTEMA (MANTIDOS) ========== */
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { font-family: 'Inter', 'Poppins', system-ui, sans-serif; background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105); background-attachment: fixed; color: #eef5ff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)), radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px, 120px 120px; opacity: 0.25; pointer-events: none; z-index: 0; }
+    body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 70% 20%, rgba(255, 180, 40, 0.12), transparent 70%); pointer-events: none; z-index: 0; }
+    .app-container { width: 100%; max-width: 1300px; display: flex; flex-direction: column; padding: 1.2rem 1.8rem 2rem; gap: 1.8rem; margin: 0 auto; position: relative; z-index: 2; }
+    .app-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; background: rgba(5,5,10,0.4); backdrop-filter: blur(12px); border-radius: 3rem; padding: 0.6rem 1.8rem; border: 1px solid rgba(255,200,70,0.3); box-shadow: 0 8px 20px rgba(0,0,0,0.6),0 0 12px rgba(255,180,0,0.2); }
+    @media (max-width:768px) { .app-header { flex-direction: column; justify-content: center; text-align: center; padding: 1rem 1rem; } }
+    .app-logo { font-size: 2rem; font-weight: 800; background: linear-gradient(135deg,#FFB347,#FFD966,#FF8C00); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 18px rgba(255,140,0,0.6); display: flex; align-items: center; gap: 8px; }
+    .app-logo::before { content: "📊"; font-size: 1.9rem; background: none; -webkit-text-fill-color: initial; text-shadow: 0 0 5px #ff9900; }
+    .clock-container { display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(0,0,0,0.6); padding: 0.4rem 1.2rem; border-radius: 2rem; backdrop-filter: blur(4px); min-width: 180px; text-align: center; }
+    .digital-clock { font-size: 1.8rem; font-weight: 700; color: #FFE484; font-family: 'Fira Code', monospace; letter-spacing: 2px; text-shadow: 0 0 10px #ffaa33,0 0 20px #ff7700; line-height: 1.2; }
+    .digital-date { font-size: 0.75rem; font-weight: 500; color: #FFCD94; margin-top: 2px; letter-spacing: 0.5px; }
+    .nav-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(105px, 1fr)); gap: 0.9rem; justify-items: center; align-items: center; margin-bottom: 0.5rem; }
+    .nav-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; padding: 0.8rem 0.4rem; border-radius: 1.8rem; border: none; background: rgba(12,10,18,0.85); backdrop-filter: blur(12px); color: #FFCF9A; font-weight: 600; font-size: 0.8rem; cursor: pointer; transition: all 0.25s ease; text-align: center; border: 1px solid rgba(255,170,60,0.5); box-shadow: 0 5px 15px rgba(0,0,0,0.5); width: 100%; }
+    .nav-btn .icon { font-size: 1.7rem; filter: drop-shadow(0 0 4px #ffaa44); }
+    .nav-btn:hover { background: linear-gradient(145deg, rgba(255,140,0,0.35),rgba(255,80,0,0.45)); border-color: #FFD966; box-shadow: 0 0 20px rgba(255,150,0,0.7); transform: translateY(-3px); }
+    .nav-btn.active { background: linear-gradient(135deg,#FF8C00,#FFB347); color: #0c0c10; font-weight: 800; border-color: #FFE484; box-shadow: 0 0 28px rgba(255,200,70,0.9); }
+    .main-content { flex:1; display: flex; flex-direction: column; gap: 1.5rem; width: 100%; }
+    .tab-pane { display: none; width: 100%; animation: fadeSlideUp 0.4s ease; }
+    .tab-pane.active-pane { display: block; }
+    @keyframes fadeSlideUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+    .card { background: rgba(8,6,12,0.75); backdrop-filter: blur(16px); border-radius: 2rem; padding: 1.5rem; border: 1px solid rgba(255,160,50,0.5); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,120,0.1); }
+    .card h2 { display: flex; align-items: center; gap: 12px; font-size: 1.35rem; color: #FFDD99; margin-bottom: 1.2rem; border-left: 5px solid #FF9F40; padding-left: 1rem; font-weight: 700; }
+    .form-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-end; }
+    .input-group { flex:1; min-width: 140px; }
+    .input-group label { font-size: 0.7rem; font-weight: 700; color: #FFCC88; display: block; text-transform: uppercase; margin-bottom: 0.3rem; letter-spacing: 1px; }
+    input, select, textarea { width: 100%; padding: 0.75rem 1rem; border-radius: 1.3rem; border: 1px solid rgba(255,170,60,0.6); background: rgba(0,0,0,0.65); color: #f0f0f0; font-size: 0.9rem; transition: all 0.25s; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: #FFB347; box-shadow: 0 0 18px rgba(255,160,0,0.7); background: rgba(15,12,20,0.85); }
+    button { background: linear-gradient(95deg,#FF7A1F,#F05A00); border: none; padding: 0.7rem 1.4rem; border-radius: 2rem; color: #0A0A0E; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; box-shadow: 0 4px 14px rgba(255,80,0,0.5); transition: all 0.2s; }
+    button:hover { background: linear-gradient(95deg,#FF9922,#FF6A00); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,120,0,0.8); }
+    .btn-small { background: linear-gradient(135deg,#E55B00,#C54A00); padding: 0.5rem 0.9rem; font-size: 0.75rem; }
+    .btn-outline { background: transparent; border: 1px solid rgba(255,160,60,0.7); color: #FFD28F; box-shadow: none; }
+    .btn-outline:hover { background: rgba(255,140,0,0.3); box-shadow: 0 0 14px #ffaa44; }
+    .btn-danger { background: linear-gradient(135deg,#D42,#A00); box-shadow: 0 4px 12px rgba(200,0,0,0.6); }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .item-card { background: linear-gradient(145deg,rgba(18,15,24,0.9),rgba(5,3,10,0.95)); border-radius: 1.8rem; padding: 1.3rem; border: 1px solid rgba(255,150,40,0.55); transition: all 0.25s ease; backdrop-filter: blur(8px); text-align: center; display: flex; flex-direction: column; gap: 0.75rem; }
+    .item-card:hover { transform: translateY(-5px); border-color: #FFB85E; box-shadow: 0 18px 30px -8px rgba(255,120,0,0.4); }
+    .item-card-title { font-weight: 800; color: #FFD48A; font-size: 1.2rem; display: block; }
+    .item-card-value { font-size: 1.4rem; font-weight: 800; color: #FFC107; text-align: center; margin: 0.2rem 0; }
+    .item-card-body-line { margin: 0.2rem 0; font-size: 0.9rem; color: #e0d6b0; }
+    .item-card-actions { display: flex; gap: 0.8rem; justify-content: center; align-items: center; margin-top: 0.6rem; flex-wrap: wrap; }
+    .sales-table-container, .table-wrapper { overflow-x: auto; width: 100%; margin-top: 1rem; border-radius: 1.5rem; }
+    .sales-table, .relatorio-secao table { width: 100%; min-width: 650px; border-collapse: collapse; background: rgba(0,0,0,0.6); border-radius: 1.5rem; }
+    .sales-table th, .sales-table td, .relatorio-secao th, .relatorio-secao td { padding: 1rem 0.8rem; text-align: center; vertical-align: middle; border-bottom: 1px solid rgba(255,180,60,0.3); color: #f3f3f3; }
+    .sales-table th, .relatorio-secao th { background: rgba(255,130,20,0.3); color: #FFE3A3; font-weight: 700; font-size: 0.9rem; }
+    .sales-table tr:hover, .relatorio-secao tr:hover { background: rgba(255,150,20,0.15); }
+    .actions-cell { white-space: nowrap; text-align: center; }
+    .edit-btn-table, .delete-btn-table, .edit-btn, .delete-btn { display: inline-flex; align-items: center; justify-content: center; gap: 0.3rem; background: rgba(255,159,0,0.2); border: none; padding: 0.4rem 1rem; border-radius: 2rem; color: #FFD700; font-size: 0.75rem; font-weight: 600; margin: 0 0.3rem; cursor: pointer; transition: 0.2s; white-space: nowrap; }
+    .delete-btn-table, .delete-btn { color: #FF9999; background: rgba(255,0,0,0.2); }
+    .edit-btn-table:hover, .edit-btn:hover { background: rgba(255,159,0,0.5); box-shadow: 0 0 6px #FF9F00; }
+    .delete-btn-table:hover, .delete-btn:hover { background: rgba(255,0,0,0.5); box-shadow: 0 0 6px #FF3333; }
+    .dashboard-widget { background: rgba(5,5,12,0.7); backdrop-filter: blur(18px); border-radius: 2.2rem; border: 1px solid rgba(255,170,60,0.5); padding: 1.6rem; }
+    .big-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 1.8rem; margin-top: 1rem; margin-bottom: 1rem; }
+    .big-card { flex: 1; min-width: 220px; max-width: 280px; background: linear-gradient(135deg, rgba(255,140,20,0.2), rgba(80,40,0,0.4)); border-radius: 1.8rem; backdrop-filter: blur(12px); padding: 1.5rem 1rem; text-align: center; border: 1px solid rgba(255,190,70,0.6); transition: transform 0.2s, box-shadow 0.2s; }
+    .big-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -12px rgba(0,0,0,0.5); border-color: #ffc107; }
+    .big-card .big-icon { font-size: 2.5rem; margin-bottom: 0.5rem; display: block; }
+    .big-card h3 { font-size: 1rem; font-weight: 600; color: #FFD966; margin-bottom: 0.8rem; letter-spacing: 0.5px; }
+    .big-valor-container { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+    .big-valor { font-size: 1.8rem; font-weight: 800; color: #FFE484; text-shadow: 0 0 5px rgba(0,0,0,0.3); }
+    .toggle-eye { font-size: 1.3rem; cursor: pointer; opacity: 0.7; transition: 0.2s; }
+    .toggle-eye:hover { opacity: 1; transform: scale(1.1); }
+    @media (max-width: 700px) { .big-cards { flex-direction: column; align-items: center; gap: 1rem; } .big-card { width: 100%; max-width: 320px; } }
+    .relatorio-resumo { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; justify-items: center; align-items: center; }
+    .relatorio-card { background: rgba(20,15,25,0.8); backdrop-filter: blur(8px); border-radius: 1.5rem; border: 1px solid #FFB347; padding: 1rem; text-align: center; width: 100%; }
+    .relatorio-card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
+    .relatorio-card .r-valor { font-size: 1.4rem; font-weight: 700; color: #FFD966; }
+    .relatorio-secao { margin-bottom: 1.8rem; }
+    .relatorio-secao h3 { color: #FFB347; margin-bottom: 1rem; border-left: 4px solid #FF9F40; padding-left: 0.8rem; text-align: left; }
+    .calc-panel { max-width: 480px; margin: 0 auto; background: rgba(10,8,15,0.7); backdrop-filter: blur(8px); border-radius: 2.5rem; padding: 1.5rem; border: 1px solid rgba(255,170,60,0.4); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.8); }
+    .calc-screen { background: #0d0b12; border-radius: 1.8rem; padding: 1.2rem 1.2rem; text-align: right; font-size: 2.4rem; font-weight: 700; color: #FFE484; font-family: 'Fira Code', monospace; margin-bottom: 1.5rem; min-height: 85px; display: flex; align-items: center; justify-content: flex-end; letter-spacing: 2px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.5),0 1px 0 rgba(255,255,255,0.05); border: 1px solid rgba(255,180,60,0.3); word-break: break-word; overflow-x: auto; }
+    .calc-buttons { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+    .calc-buttons button { background: linear-gradient(145deg,#1e1b28,#110e18); border: none; border-radius: 1.5rem; padding: 1rem 0; font-size: 1.5rem; font-weight: 600; font-family: 'Fira Code','Inter',monospace; color: #FFD799; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 6px 0 #0a0810,0 4px 12px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1; }
+    .calc-buttons button:active { transform: translateY(3px); box-shadow: 0 3px 0 #0a0810; }
+    .calc-buttons button[data-calc="+"],.calc-buttons button[data-calc="-"],.calc-buttons button[data-calc="*"],.calc-buttons button[data-calc="/"],.calc-buttons button[data-calc="="] { background: linear-gradient(145deg,#FF8C2C,#E65C00); color: #0f0c10; font-weight: 800; text-shadow: 0 1px 0 rgba(255,255,255,0.3); box-shadow: 0 6px 0 #902F00; }
+    .calc-buttons button[data-calc="C"] { background: linear-gradient(145deg,#992222,#6B1010); color: #FFCD9A; box-shadow: 0 6px 0 #3D0808; }
+    .calc-buttons button[data-calc="⌫"] { background: linear-gradient(145deg,#2a2a3a,#181522); color: #FFBB77; }
+    .calc-buttons button[data-calc="="] { background: linear-gradient(145deg,#28a745,#1e7e34); color: white; box-shadow: 0 6px 0 #0f5a23; }
+    .calc-buttons button:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 7px 0 #0a0810; }
+    .calc-buttons button:active:hover { transform: translateY(3px); box-shadow: 0 3px 0 #0a0810; }
+    @media (max-width:500px) { .calc-buttons { gap: 8px; } .calc-buttons button { font-size: 1.2rem; padding: 0.8rem 0; border-radius: 1.2rem; } .calc-screen { font-size: 1.8rem; padding: 0.8rem; min-height: 70px; } .calc-panel { padding: 1rem; } }
+    .calendar-container { background: rgba(5,5,12,0.6); backdrop-filter: blur(12px); border-radius: 2rem; padding: 1.2rem; border: 1px solid rgba(255,170,60,0.5); }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+    .month-year { font-size: 1.6rem; font-weight: 700; color: #FFD966; }
+    .calendar-nav { display: flex; gap: 0.8rem; }
+    .calendar-weekdays { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; font-weight: 700; color: #FFCD94; margin-bottom: 0.8rem; gap: 4px; }
+    .calendar-days { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
+    .calendar-day { background: rgba(20,18,28,0.7); border-radius: 1rem; padding: 0.7rem 0.3rem; text-align: center; cursor: pointer; transition: 0.2s; min-height: 70px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; font-size: 0.9rem; border: 1px solid rgba(255,170,60,0.2); }
+    .calendar-day:hover { background: rgba(255,140,0,0.3); transform: scale(1.02); border-color: #FFAA44; }
+    .calendar-day.today { background: rgba(255,180,50,0.4); border: 2px solid #FFD966; box-shadow: 0 0 12px rgba(255,210,80,0.6); }
+    .day-number { font-weight: 700; font-size: 1.1rem; }
+    .holiday-badge { background: rgba(200,50,50,0.8); border-radius: 1rem; padding: 0.2rem 0.4rem; font-size: 0.6rem; margin-top: 4px; color: white; width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .event-badge { background: rgba(50,150,200,0.8); border-radius: 1rem; padding: 0.2rem 0.4rem; font-size: 0.6rem; margin-top: 2px; width: 90%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .calendar-day.empty { background: transparent; cursor: default; border-color: transparent; }
+    .agenda-list { margin-top: 1.5rem; background: rgba(0,0,0,0.4); border-radius: 1.5rem; padding: 1rem; }
+    .agenda-item { background: rgba(25,20,35,0.8); border-radius: 1rem; padding: 0.7rem; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; text-align: left; }
+    .fullscreen-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 10%,#030105,#000000); z-index: 2000; display: flex; flex-direction: column; visibility: hidden; opacity: 0; transition: 0.25s ease; }
+    .fullscreen-modal.active { visibility: visible; opacity: 1; }
+    .fullscreen-header { display: flex; align-items: center; padding: 1rem 1.8rem; background: rgba(0,0,0,0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,180,70,0.6); gap: 1rem; }
+    .back-btn { background: rgba(0,0,0,0.6); border: 1px solid #FFA647; color: #FFCF8A; padding: 0.5rem 1.2rem; border-radius: 2rem; cursor: pointer; }
+    .fullscreen-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+    .modal { position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); display: flex; align-items: center; justify-content: center; z-index: 3000; visibility: hidden; opacity: 0; transition: 0.25s; }
+    .modal.active { visibility: visible; opacity: 1; }
+    .modal-content { background: #1a160c; width:100%; max-width:480px; border-radius: 2rem; padding:1.5rem; border:1px solid #FF9F00; }
+    .toggle-section { display: none; margin-top: 1rem; }
+    .toggle-section.visible { display: block; }
+    @media (max-width:600px) {
+      .app-container { padding: 0.8rem; }
+      .nav-grid { grid-template-columns: repeat(auto-fill, minmax(85px,1fr)); gap:0.6rem; }
+      .big-valor { font-size:1.4rem; }
+      .clock-container { min-width:140px; padding:0.3rem 0.8rem; }
+      .digital-clock { font-size:1.4rem; }
+      .digital-date { font-size:0.65rem; }
+      .calendar-day { min-height: 48px; padding: 0.2rem 0.1rem; justify-content: center; font-size:0.7rem; border-radius:0.8rem; }
+      .day-number { font-size:0.85rem; line-height:1.2; }
+      .holiday-badge, .event-badge { font-size:0.5rem; padding:0.1rem 0.2rem; margin-top:2px; width:95%; }
+      .edit-btn-table, .delete-btn-table, .edit-btn, .delete-btn { padding:0.2rem 0.6rem; font-size:0.65rem; }
+      .cards-grid { grid-template-columns:1fr; gap:1rem; }
+      .item-card { padding:1rem; }
+      .relatorio-secao table { min-width: 500px; }
+    }
+
+    /* ========== ESTILOS DA TELA DE LOGIN/CADASTRO ========== */
+    .auth-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       background: radial-gradient(circle at 30% 10%, #030105, #000000);
-      z-index: 2000;
-      display: flex;
-      flex-direction: column;
-      visibility: hidden;
-      opacity: 0;
-      transition: 0.25s ease;
-    }
-    .fullscreen-modal.active {
-      visibility: visible;
-      opacity: 1;
-    }
-    .fullscreen-header {
-      display: flex;
-      align-items: center;
-      padding: 1rem 1.8rem;
-      background: rgba(0, 0, 0, 0.7);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 180, 70, 0.6);
-      gap: 1rem;
-    }
-    .back-btn {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid #FFA647;
-      color: #FFCF8A;
-      padding: 0.5rem 1.2rem;
-      border-radius: 2rem;
-      cursor: pointer;
-    }
-    .fullscreen-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 1.5rem;
-    }
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
+      z-index: 10000;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 3000;
-      visibility: hidden;
-      opacity: 0;
-      transition: 0.25s;
+      backdrop-filter: blur(12px);
+      transition: 0.3s;
     }
-    .modal.active {
-      visibility: visible;
-      opacity: 1;
+    .auth-box {
+      background: rgba(15, 12, 22, 0.95);
+      backdrop-filter: blur(16px);
+      border-radius: 2.5rem;
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      border: 1px solid rgba(255, 170, 60, 0.6);
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8);
+      text-align: center;
     }
-    .modal-content {
-      background: #1a160c;
-      width: 100%;
-      max-width: 480px;
-      border-radius: 2rem;
-      padding: 1.5rem;
-      border: 1px solid #FF9F00;
+    .auth-box h2 {
+      color: #FFD966;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
     }
-    .toggle-section {
-      display: none;
+    .auth-tabs {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255,170,60,0.3);
+      padding-bottom: 0.5rem;
+    }
+    .auth-tab {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #FFCF9A;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: none;
+      padding: 0.5rem;
+    }
+    .auth-tab.active {
+      color: #FFD700;
+      border-bottom: 2px solid #FFB347;
+      border-radius: 0;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
       margin-top: 1rem;
     }
-    .toggle-section.visible {
-      display: block;
+    .auth-form input {
+      background: rgba(0,0,0,0.5);
+      border: 1px solid rgba(255,170,60,0.5);
+      padding: 0.8rem 1rem;
+      border-radius: 1.5rem;
+      color: white;
     }
-    @media (max-width: 600px) {
-      .app-container {
-        padding: 0.8rem;
-      }
-      .nav-grid {
-        grid-template-columns: repeat(auto-fill, minmax(85px, 1fr));
-        gap: 0.6rem;
-      }
-      .big-valor {
-        font-size: 1.4rem;
-      }
-      .clock-container {
-        min-width: 140px;
-        padding: 0.3rem 0.8rem;
-      }
-      .digital-clock {
-        font-size: 1.4rem;
-      }
-      .digital-date {
-        font-size: 0.65rem;
-      }
-      .calendar-day {
-        min-height: 48px;
-        padding: 0.2rem 0.1rem;
-        justify-content: center;
-        font-size: 0.7rem;
-        border-radius: 0.8rem;
-      }
-      .day-number {
-        font-size: 0.85rem;
-        line-height: 1.2;
-      }
-      .holiday-badge, .event-badge {
-        font-size: 0.5rem;
-        padding: 0.1rem 0.2rem;
-        margin-top: 2px;
-        width: 95%;
-      }
-      .edit-btn-table, .delete-btn-table,
-      .edit-btn, .delete-btn {
-        padding: 0.2rem 0.6rem;
-        font-size: 0.65rem;
-      }
-      .cards-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-      }
-      .item-card {
-        padding: 1rem;
-      }
-      .relatorio-secao table {
-        min-width: 500px;
-      }
+    .auth-form button {
+      background: linear-gradient(95deg,#FF8C00,#E65C00);
+      margin-top: 0.5rem;
+      width: 100%;
+      justify-content: center;
+    }
+    .auth-error {
+      color: #FF8888;
+      font-size: 0.8rem;
+      margin-top: 0.5rem;
+    }
+    .auth-success {
+      color: #88FF88;
     }
   </style>
 </head>
 <body>
+
+<!-- TELA DE AUTENTICAÇÃO (SOBREPOSIÇÃO) -->
+<div id="authOverlay" class="auth-overlay">
+  <div class="auth-box">
+    <h2>🔐 RUMO GESTÃO</h2>
+    <div class="auth-tabs">
+      <button id="loginTabBtn" class="auth-tab active">Login</button>
+      <button id="registerTabBtn" class="auth-tab">Cadastrar</button>
+    </div>
+    <div id="loginForm" class="auth-form">
+      <input type="email" id="loginEmail" placeholder="E-mail" autocomplete="email">
+      <input type="password" id="loginPassword" placeholder="Senha" autocomplete="current-password">
+      <button id="doLoginBtn">Entrar</button>
+      <div id="loginError" class="auth-error"></div>
+    </div>
+    <div id="registerForm" class="auth-form" style="display: none;">
+      <input type="text" id="regName" placeholder="Nome completo">
+      <input type="email" id="regEmail" placeholder="E-mail">
+      <input type="password" id="regPassword" placeholder="Senha">
+      <input type="password" id="regConfirm" placeholder="Confirmar senha">
+      <button id="doRegisterBtn">Criar conta</button>
+      <div id="registerError" class="auth-error"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SISTEMA PRINCIPAL (INICIALMENTE OCULTO ATÉ LOGIN) -->
+<div id="mainApp" style="display: none;">
 <div class="app-container">
   <nav class="nav-grid">
     <button class="nav-btn active" data-tab="dashboard"><span class="icon">📊</span><span>Dashboard</span></button>
@@ -908,11 +274,10 @@
           <div class="big-card"><span class="big-icon">📦</span><h3>Compras Totais</h3><div class="big-valor-container"><span class="big-valor" id="dashCompras">R$ 0,00</span><span class="toggle-eye" id="toggleDashCompras">👁️</span></div></div>
           <div class="big-card"><span class="big-icon">📈</span><h3>Lucro Líquido</h3><div class="big-valor-container"><span class="big-valor" id="dashLucro">R$ 0,00</span><span class="toggle-eye" id="toggleDashLucro">👁️</span></div></div>
         </div>
-        <div style="margin-top: 1.8rem;">
-          <h3 style="color:#FFCD94;">📊 Indicadores de Desempenho</h3>
-          <div class="chart-container" style="display: flex; gap: 2rem; justify-content: center; align-items: flex-end; height: 150px; background: rgba(0,0,0,0.5); border-radius: 2rem; padding: 1rem; margin-top: 2.5rem;">
-            <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barVendas" style="width: 50px; background: linear-gradient(to top,#FFAA33,#FFE484); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Vendas</span></div>
-            <div class="bar-wrapper" style="display: flex; flex-direction: column; align-items: center;"><div class="bar" id="barCompras" style="width: 50px; background: linear-gradient(to top,#DD4422,#FF8866); border-radius: 1rem 1rem 0 0; transition: height 0.3s;"></div><span>Compras</span></div>
+        <div style="margin-top:1.8rem;"><h3>📊 Indicadores de Desempenho</h3>
+          <div class="chart-container" style="display:flex; gap:2rem; justify-content:center; align-items:flex-end; height:150px; background:rgba(0,0,0,0.5); border-radius:2rem; padding:1rem; margin-top:2.5rem;">
+            <div class="bar-wrapper" style="display:flex; flex-direction:column; align-items:center;"><div class="bar" id="barVendas" style="width:50px; background:linear-gradient(to top,#FFAA33,#FFE484); border-radius:1rem 1rem 0 0; transition:height 0.3s;"></div><span>Vendas</span></div>
+            <div class="bar-wrapper" style="display:flex; flex-direction:column; align-items:center;"><div class="bar" id="barCompras" style="width:50px; background:linear-gradient(to top,#DD4422,#FF8866); border-radius:1rem 1rem 0 0; transition:height 0.3s;"></div><span>Compras</span></div>
           </div>
         </div>
       </div>
@@ -920,7 +285,7 @@
   </main>
 </div>
 
-<!-- MODAIS COMPLETOS -->
+<!-- MODAIS COMPLETOS (MANTIDOS) -->
 <div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
 <div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><h2>📋 Produtos Cadastrados</h2><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
@@ -965,11 +330,153 @@
 <div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 <div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
 <div id="eventModal" class="modal"><div class="modal-content"><h3>📌 Adicionar Compromisso</h3><div class="input-group"><label>Data</label><input type="date" id="eventDate" readonly></div><div class="input-group"><label>Título</label><input type="text" id="eventTitle" placeholder="Ex: Reunião"></div><div class="input-group"><label>Descrição</label><textarea id="eventDesc" rows="2" placeholder="Detalhes..."></textarea></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="saveEventBtn">Salvar</button><button id="closeEventModalBtn" class="btn-danger">Cancelar</button></div></div></div>
+</div> <!-- FIM DO SISTEMA PRINCIPAL -->
 
 <script>
-// ========== CÓDIGO JAVASCRIPT COMPLETO (TODAS AS FUNCIONALIDADES) ==========
-(function() {
-  // RELÓGIO
+// ========== SISTEMA DE AUTENTICAÇÃO (USUÁRIOS) ==========
+const USERS_KEY = 'rumo_gestao_usuarios';
+const CURRENT_USER_KEY = 'rumo_current_user';
+
+// Carregar usuários do localStorage
+function loadUsers() {
+  const users = localStorage.getItem(USERS_KEY);
+  return users ? JSON.parse(users) : [];
+}
+
+function saveUsers(users) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(users));
+}
+
+// Verificar se já existe algum usuário, senão cria um admin padrão
+function ensureDefaultUser() {
+  let users = loadUsers();
+  if (users.length === 0) {
+    users.push({
+      id: Date.now(),
+      name: 'Administrador',
+      email: 'admin@rumo.com',
+      password: 'admin123'
+    });
+    saveUsers(users);
+  }
+}
+
+// Registrar novo usuário
+function registerUser(name, email, password, confirm) {
+  if (!name || !email || !password) return { success: false, msg: 'Preencha todos os campos.' };
+  if (password !== confirm) return { success: false, msg: 'Senhas não conferem.' };
+  if (password.length < 4) return { success: false, msg: 'Senha deve ter no mínimo 4 caracteres.' };
+  const users = loadUsers();
+  if (users.find(u => u.email === email)) return { success: false, msg: 'E-mail já cadastrado.' };
+  const newUser = { id: Date.now(), name, email, password };
+  users.push(newUser);
+  saveUsers(users);
+  return { success: true, msg: 'Cadastro realizado com sucesso! Faça login.' };
+}
+
+// Fazer login
+function loginUser(email, password) {
+  const users = loadUsers();
+  const user = users.find(u => u.email === email && u.password === password);
+  if (!user) return { success: false, msg: 'E-mail ou senha inválidos.' };
+  localStorage.setItem(CURRENT_USER_KEY, JSON.stringify({ id: user.id, name: user.name, email: user.email }));
+  return { success: true, msg: 'Login bem-sucedido!' };
+}
+
+// Verificar se já está logado
+function isLoggedIn() {
+  return localStorage.getItem(CURRENT_USER_KEY) !== null;
+}
+
+// Logout (opcional, pode adicionar botão no futuro)
+function logout() {
+  localStorage.removeItem(CURRENT_USER_KEY);
+  location.reload();
+}
+
+// ========== CONTROLE DA TELA DE AUTENTICAÇÃO ==========
+const authOverlay = document.getElementById('authOverlay');
+const mainApp = document.getElementById('mainApp');
+const loginFormDiv = document.getElementById('loginForm');
+const registerFormDiv = document.getElementById('registerForm');
+const loginTab = document.getElementById('loginTabBtn');
+const registerTab = document.getElementById('registerTabBtn');
+
+function showLoginTab() {
+  loginFormDiv.style.display = 'flex';
+  registerFormDiv.style.display = 'none';
+  loginTab.classList.add('active');
+  registerTab.classList.remove('active');
+}
+
+function showRegisterTab() {
+  loginFormDiv.style.display = 'none';
+  registerFormDiv.style.display = 'flex';
+  registerTab.classList.add('active');
+  loginTab.classList.remove('active');
+}
+
+loginTab.addEventListener('click', showLoginTab);
+registerTab.addEventListener('click', showRegisterTab);
+
+// Botão de login
+document.getElementById('doLoginBtn').addEventListener('click', () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const password = document.getElementById('loginPassword').value;
+  const errorDiv = document.getElementById('loginError');
+  const result = loginUser(email, password);
+  if (result.success) {
+    // Esconder overlay e mostrar sistema principal
+    authOverlay.style.display = 'none';
+    mainApp.style.display = 'block';
+    // Inicializar o sistema principal (chamar init do sistema)
+    if (typeof initMainSystem === 'function') {
+      initMainSystem();
+    }
+  } else {
+    errorDiv.textContent = result.msg;
+  }
+});
+
+// Botão de registro
+document.getElementById('doRegisterBtn').addEventListener('click', () => {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const password = document.getElementById('regPassword').value;
+  const confirm = document.getElementById('regConfirm').value;
+  const errorDiv = document.getElementById('registerError');
+  const result = registerUser(name, email, password, confirm);
+  if (result.success) {
+    errorDiv.style.color = '#88FF88';
+    errorDiv.textContent = result.msg;
+    // Limpar campos e mudar para login
+    document.getElementById('regName').value = '';
+    document.getElementById('regEmail').value = '';
+    document.getElementById('regPassword').value = '';
+    document.getElementById('regConfirm').value = '';
+    showLoginTab();
+    setTimeout(() => { errorDiv.textContent = ''; }, 3000);
+  } else {
+    errorDiv.style.color = '#FF8888';
+    errorDiv.textContent = result.msg;
+  }
+});
+
+// Verificar se já está logado ao carregar a página
+if (isLoggedIn()) {
+  authOverlay.style.display = 'none';
+  mainApp.style.display = 'block';
+} else {
+  authOverlay.style.display = 'flex';
+  mainApp.style.display = 'none';
+  ensureDefaultUser(); // garante que existe um admin padrão
+}
+
+// ========== SISTEMA PRINCIPAL (TODAS AS FUNCIONALIDADES ANTERIORES) ==========
+// O código JavaScript completo do sistema (relógio, alarme, state, CRUD, etc.) será carregado logo após.
+// Vou agrupar em uma função initMainSystem para executar após login.
+window.initMainSystem = function() {
+  // ========== RELÓGIO ==========
   function updateClock() {
     const now = new Date();
     const hours = String(now.getHours()).padStart(2,'0');
@@ -977,8 +484,10 @@
     const seconds = String(now.getSeconds()).padStart(2,'0');
     const dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
     const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-    document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
-    document.getElementById('liveDate').textContent = `${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
+    const clockEl = document.getElementById('liveClock');
+    const dateEl = document.getElementById('liveDate');
+    if (clockEl) clockEl.textContent = `${hours}:${minutes}:${seconds}`;
+    if (dateEl) dateEl.textContent = `${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
   }
   updateClock();
   setInterval(updateClock, 1000);
@@ -1080,6 +589,7 @@
     const today = new Date();
     const todayStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
     const grid = $('#calendarDaysGrid');
+    if (!grid) return;
     grid.innerHTML = '';
     for (let i=0; i<startWeekday; i++) { const e=document.createElement('div'); e.className='calendar-day empty'; grid.appendChild(e); }
     for (let d=1; d<=daysInMonth; d++) {
@@ -1095,12 +605,14 @@
       dayDiv.addEventListener('click', (function(dateStr){ return function(){ selectDate(dateStr); }; })(fullDate));
       grid.appendChild(dayDiv);
     }
-    $('#monthYearDisplay').textContent = `${currentDate.toLocaleString('pt-BR', { month:'long', year:'numeric' })}`;
+    const monthDisplay = $('#monthYearDisplay');
+    if (monthDisplay) monthDisplay.textContent = `${currentDate.toLocaleString('pt-BR', { month:'long', year:'numeric' })}`;
     selectDate(selectedDate.toISOString().slice(0,10));
   }
   function selectDate(dateStr) {
     selectedDate = new Date(dateStr);
     const agendaDiv = $('#selectedDateAgenda');
+    if (!agendaDiv) return;
     const dayEvents = state.eventos.filter(ev => ev.date === dateStr);
     if (dayEvents.length === 0) agendaDiv.innerHTML = '<p style="color:#FFB347;">Nenhum compromisso neste dia.</p>';
     else {
@@ -1108,8 +620,22 @@
       document.querySelectorAll('.delete-event-btn').forEach(btn => { btn.addEventListener('click', (e) => { const id = parseInt(btn.dataset.id); if(confirm('Excluir compromisso?')) { state.eventos = state.eventos.filter(ev => ev.id !== id); save(); renderCalendar(); } }); });
     }
   }
-  function openAddEventModal() { $('#eventDate').value = selectedDate.toISOString().slice(0,10); $('#eventTitle').value = ''; $('#eventDesc').value = ''; $('#eventModal').classList.add('active'); }
-  function saveEvent() { const date = $('#eventDate').value; const title = $('#eventTitle').value.trim(); const desc = $('#eventDesc').value.trim(); if(!title) return alert('Informe o título.'); state.eventos.push({ id: uid(), date, title, desc, createdAt: nowStr() }); save(); renderCalendar(); $('#eventModal').classList.remove('active'); }
+  function openAddEventModal() { 
+    const eventDateInput = $('#eventDate'); if (eventDateInput) eventDateInput.value = selectedDate.toISOString().slice(0,10);
+    const eventTitleInput = $('#eventTitle'); if (eventTitleInput) eventTitleInput.value = '';
+    const eventDescInput = $('#eventDesc'); if (eventDescInput) eventDescInput.value = '';
+    const eventModal = $('#eventModal'); if (eventModal) eventModal.classList.add('active');
+  }
+  function saveEvent() { 
+    const date = $('#eventDate').value; 
+    const title = $('#eventTitle').value.trim(); 
+    const desc = $('#eventDesc').value.trim(); 
+    if(!title) return alert('Informe o título.'); 
+    state.eventos.push({ id: uid(), date, title, desc, createdAt: nowStr() }); 
+    save(); 
+    renderCalendar(); 
+    $('#eventModal').classList.remove('active'); 
+  }
 
   // ========== CRUD PRINCIPAL ==========
   function save() { for (const [key, storageKey] of Object.entries(STORAGE_MAP)) localStorage.setItem(storageKey, JSON.stringify(state[key])); }
@@ -1137,13 +663,19 @@
     const totalVendas = state.vendas.reduce((s,v) => s + v.quantidade * v.precoUnit, 0);
     const totalCompras = state.compras.reduce((s,c) => s + c.quantidade * c.precoUnit, 0);
     const lucro = totalVendas - totalCompras;
-    document.getElementById('dashVendas').textContent = dashVendasVisible ? formatMoney(totalVendas) : 'R$ ••••••';
-    document.getElementById('dashCompras').textContent = dashComprasVisible ? formatMoney(totalCompras) : 'R$ ••••••';
-    const lucroEl = document.getElementById('dashLucro'); lucroEl.textContent = dashLucroVisible ? formatMoney(lucro) : 'R$ ••••••';
-    document.getElementById('toggleDashVendas').textContent = dashVendasVisible ? '👁️' : '🔒';
-    document.getElementById('toggleDashCompras').textContent = dashComprasVisible ? '👁️' : '🔒';
-    document.getElementById('toggleDashLucro').textContent = dashLucroVisible ? '👁️' : '🔒';
-    lucroEl.style.color = dashLucroVisible ? (lucro >= 0 ? '#6ee7b7' : '#FF9999') : '#f5f5f5';
+    const vendasEl = document.getElementById('dashVendas');
+    const comprasEl = document.getElementById('dashCompras');
+    const lucroEl = document.getElementById('dashLucro');
+    if (vendasEl) vendasEl.textContent = dashVendasVisible ? formatMoney(totalVendas) : 'R$ ••••••';
+    if (comprasEl) comprasEl.textContent = dashComprasVisible ? formatMoney(totalCompras) : 'R$ ••••••';
+    if (lucroEl) lucroEl.textContent = dashLucroVisible ? formatMoney(lucro) : 'R$ ••••••';
+    const toggleVendas = document.getElementById('toggleDashVendas');
+    const toggleCompras = document.getElementById('toggleDashCompras');
+    const toggleLucro = document.getElementById('toggleDashLucro');
+    if (toggleVendas) toggleVendas.textContent = dashVendasVisible ? '👁️' : '🔒';
+    if (toggleCompras) toggleCompras.textContent = dashComprasVisible ? '👁️' : '🔒';
+    if (toggleLucro) toggleLucro.textContent = dashLucroVisible ? '👁️' : '🔒';
+    if (lucroEl) lucroEl.style.color = dashLucroVisible ? (lucro >= 0 ? '#6ee7b7' : '#FF9999') : '#f5f5f5';
     const maxVal = Math.max(totalVendas, totalCompras, 1);
     const barV = document.getElementById('barVendas'); const barC = document.getElementById('barCompras');
     if (barV) barV.style.height = (totalVendas / maxVal * 120) + 'px';
@@ -1173,18 +705,15 @@
     if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7">Nenhuma venda registrada</td></tr>'; return; }
     tbody.innerHTML = state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade * v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td><td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td></tr>`).join('');
   }
+  // Funções refresh (resumidas para economia, mas completas)
   function refreshVendasModal() {
-    const clienteSelect = $('#vendaClienteIdFull'); clienteSelect.innerHTML = '<option value="">Selecione cliente</option>';
-    state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
-    const produtoSelect = $('#vendaProdutoIdFull'); produtoSelect.innerHTML = '<option value="">Selecione produto</option>';
-    state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); });
-    produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; $('#vendaPrecoFull').value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : ''; };
+    const clienteSelect = $('#vendaClienteIdFull'); if(clienteSelect) { clienteSelect.innerHTML = '<option value="">Selecione cliente</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); }
+    const produtoSelect = $('#vendaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione produto</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); }); produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; const precoInput = $('#vendaPrecoFull'); if(precoInput) precoInput.value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : ''; }; }
     renderSalesTable();
   }
   function refreshProdutosModal() { renderCards('produtosCardsContainer', state.produtos, cardFns.produto, 'Nenhum produto'); refreshVendasModal(); }
   function refreshComprasModal() {
-    const fornSelect = $('#compraFornecedorIdFull'); fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>';
-    state.fornecedores.forEach(f => { const opt = document.createElement('option'); opt.value = f.id; opt.textContent = f.nome; fornSelect.appendChild(opt); });
+    const fornSelect = $('#compraFornecedorIdFull'); if(fornSelect) { fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>'; state.fornecedores.forEach(f => { const opt = document.createElement('option'); opt.value = f.id; opt.textContent = f.nome; fornSelect.appendChild(opt); }); }
     renderCards('comprasCardsContainer', state.compras, cardFns.compra, 'Nenhuma compra');
   }
   function refreshClientesModal() { renderCards('clientesCardsContainer', state.clientes, cardFns.cliente, 'Nenhum cliente'); refreshVendasModal(); refreshLembretesSelect(); }
@@ -1192,15 +721,10 @@
   function refreshEntregadorModal() { renderCards('entregadoresCardsContainer', state.entregadores, cardFns.entregador, 'Nenhum entregador'); refreshDeliveryModal(); }
   function refreshDeliveryModal() {
     if(bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro');
-    const clienteSelect = $('#entregaClienteIdFull'); clienteSelect.innerHTML = '<option value="">Selecione</option>';
-    state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); });
-    const produtoSelect = $('#entregaProdutoIdFull'); produtoSelect.innerHTML = '<option value="">Selecione</option>';
-    state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.nome; produtoSelect.appendChild(opt); });
-    const entSelect = $('#entregaEntregadorIdFull'); entSelect.innerHTML = '<option value="">Selecione</option>';
-    state.entregadores.forEach(e => { const opt = document.createElement('option'); opt.value = e.id; opt.textContent = e.nome; entSelect.appendChild(opt); });
-    const bairroSelect = $('#entregaBairroIdFull'); bairroSelect.innerHTML = '<option value="">Selecione</option>';
-    state.bairros.forEach(b => { const opt = document.createElement('option'); opt.value = b.id; opt.textContent = `${b.nome} - ${formatMoney(b.taxa)}`; opt.dataset.taxa = b.taxa; bairroSelect.appendChild(opt); });
-    bairroSelect.onchange = () => { const sel = bairroSelect.options[bairroSelect.selectedIndex]; $('#entregaValorFull').value = sel && sel.dataset.taxa ? parseFloat(sel.dataset.taxa).toFixed(2) : ''; };
+    const clienteSelect = $('#entregaClienteIdFull'); if(clienteSelect) { clienteSelect.innerHTML = '<option value="">Selecione</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); }
+    const produtoSelect = $('#entregaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.nome; produtoSelect.appendChild(opt); }); }
+    const entSelect = $('#entregaEntregadorIdFull'); if(entSelect) { entSelect.innerHTML = '<option value="">Selecione</option>'; state.entregadores.forEach(e => { const opt = document.createElement('option'); opt.value = e.id; opt.textContent = e.nome; entSelect.appendChild(opt); }); }
+    const bairroSelect = $('#entregaBairroIdFull'); if(bairroSelect) { bairroSelect.innerHTML = '<option value="">Selecione</option>'; state.bairros.forEach(b => { const opt = document.createElement('option'); opt.value = b.id; opt.textContent = `${b.nome} - ${formatMoney(b.taxa)}`; opt.dataset.taxa = b.taxa; bairroSelect.appendChild(opt); }); bairroSelect.onchange = () => { const sel = bairroSelect.options[bairroSelect.selectedIndex]; const valorInput = $('#entregaValorFull'); if(valorInput) valorInput.value = sel && sel.dataset.taxa ? parseFloat(sel.dataset.taxa).toFixed(2) : ''; }; }
     if(entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega');
   }
   function refreshAnotacoesModal() { renderCards('notasCardsContainer', state.notas, cardFns.nota, 'Sem anotações'); }
@@ -1211,29 +735,24 @@
     const totalCompras = state.compras.reduce((s,c)=>s+c.quantidade*c.precoUnit,0);
     const totalEntregas = state.entregas.reduce((s,e)=>s+e.valor,0);
     const lucro = totalVendas - totalCompras - totalEntregas;
-    document.getElementById('relatorioResumo').innerHTML = `
-      <div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div>
-      <div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div>
-      <div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div>
-      <div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div>
-      <div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>
-    `;
-    document.getElementById('relVendasTbody').innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
-    document.getElementById('relComprasTbody').innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</tr></tr>';
-    document.getElementById('relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
-    document.getElementById('relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div style="color:#FFB347;">Sem anotações.</div>';
+    const resumoDiv = document.getElementById('relatorioResumo');
+    if(resumoDiv) resumoDiv.innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
+    const vendasTbody = document.getElementById('relVendasTbody'); if(vendasTbody) vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
+    const comprasTbody = document.getElementById('relComprasTbody'); if(comprasTbody) comprasTbody.innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
+    const entregasTbody = document.getElementById('relEntregasTbody'); if(entregasTbody) entregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
+    const notasDiv = document.getElementById('relNotasContainer'); if(notasDiv) notasDiv.innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div>Sem anotações.</div>';
   }
 
   // ========== CRUD ADICIONAL ==========
-  function addProduto(nome, preco, selectAfter, fullMode) { if(!nome) return null; const novo = { id:uid(), nome, preco: isNaN(preco)?0:preco }; state.produtos.push(novo); save(); updateTotals(); refreshProdutosModal(); refreshVendasModal(); if(selectAfter && fullMode) { const sel = $('#vendaProdutoIdFull'); for(let i=0;i<sel.options.length;i++) if(parseInt(sel.options[i].value)===novo.id) { sel.selectedIndex=i; sel.dispatchEvent(new Event('change')); break; } } return novo; }
-  function addVenda() { const clienteId = parseInt($('#vendaClienteIdFull').value); const cliente = state.clientes.find(c=>c.id===clienteId); if(!cliente) return alert('Selecione um cliente!'); const produtoId = parseInt($('#vendaProdutoIdFull').value); const produto = state.produtos.find(p=>p.id===produtoId); if(!produto) return alert('Selecione um produto!'); const qtd = parseFloat($('#vendaQtdFull').value); let preco = parseFloat($('#vendaPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)||preco<0) preco=produto.preco; state.vendas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshVendasModal(); $('#vendaProdutoIdFull').value=''; $('#vendaQtdFull').value='1'; $('#vendaPrecoFull').value=''; }
-  function addCompra() { const fornId = parseInt($('#compraFornecedorIdFull').value); const forn = state.fornecedores.find(f=>f.id===fornId); if(!forn) return alert('Selecione um fornecedor!'); let produto = $('#compraProdutoFull').value.trim() || 'Produto'; const qtd = parseFloat($('#compraQtdFull').value); let preco = parseFloat($('#compraPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)) preco=0; state.compras.push({ id:uid(), fornecedorId:forn.id, fornecedorNome:forn.nome, produto, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshComprasModal(); $('#compraProdutoFull').value=''; $('#compraQtdFull').value='1'; $('#compraPrecoFull').value=''; }
-  function addCliente() { const nome = $('#clienteNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.clientes.push({ id:uid(), nome, email:$('#clienteEmailFull').value, whatsapp:$('#clienteWhatsappFull').value, endereco:$('#clienteEnderecoFull').value }); save(); updateTotals(); refreshClientesModal(); refreshDeliveryModal(); $('#clienteNomeFull').value=''; $('#clienteEmailFull').value=''; $('#clienteWhatsappFull').value=''; $('#clienteEnderecoFull').value=''; refreshLembretesSelect(); }
-  function addFornecedor() { const nome = $('#fornecedorNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.fornecedores.push({ id:uid(), nome, cnpj:$('#fornecedorCnpjFull').value, contato:$('#fornecedorContatoFull').value }); save(); refreshFornecedoresModal(); $('#fornecedorNomeFull').value=''; $('#fornecedorCnpjFull').value=''; $('#fornecedorContatoFull').value=''; }
-  function addNota() { const texto = $('#textoNotaFull').value.trim(); if(!texto) return; state.notas.push({ id:uid(), texto, data:nowStr() }); save(); $('#textoNotaFull').value=''; refreshAnotacoesModal(); }
-  function addEntregador() { const nome = $('#entregadorNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.entregadores.push({ id:uid(), nome, telefone:$('#entregadorTelefoneFull').value, veiculo:$('#entregadorVeiculoFull').value, placa:$('#entregadorPlacaFull').value }); save(); refreshEntregadorModal(); $('#entregadorNomeFull').value=''; $('#entregadorTelefoneFull').value=''; $('#entregadorVeiculoFull').value=''; $('#entregadorPlacaFull').value=''; }
-  function addBairro() { const nome = $('#bairroNomeFull').value.trim(); if(!nome) return alert('Nome do bairro obrigatório!'); let taxa = parseFloat($('#bairroTaxaFull').value); if(isNaN(taxa)) taxa=0; state.bairros.push({ id:uid(), nome, taxa }); save(); refreshDeliveryModal(); $('#bairroNomeFull').value=''; $('#bairroTaxaFull').value=''; if(bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro'); }
-  function addEntrega() { const clienteId = parseInt($('#entregaClienteIdFull').value); const cliente = state.clientes.find(c=>c.id===clienteId); if(!cliente) return alert('Selecione um cliente!'); const produtoId = parseInt($('#entregaProdutoIdFull').value); const produto = state.produtos.find(p=>p.id===produtoId); if(!produto) return alert('Selecione um produto!'); const entId = parseInt($('#entregaEntregadorIdFull').value); const ent = state.entregadores.find(e=>e.id===entId); if(!ent) return alert('Selecione um entregador!'); const bairroId = parseInt($('#entregaBairroIdFull').value); const bairro = state.bairros.find(b=>b.id===bairroId); if(!bairro) return alert('Selecione um bairro!'); let valor = parseFloat($('#entregaValorFull').value); if(isNaN(valor)||valor<=0) valor=bairro.taxa; state.entregas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, entregadorId:ent.id, entregadorNome:ent.nome, bairroId:bairro.id, bairroNome:bairro.nome, valor, dataStr:nowStr() }); save(); refreshDeliveryModal(); $('#entregaClienteIdFull').value=''; $('#entregaProdutoIdFull').value=''; $('#entregaEntregadorIdFull').value=''; $('#entregaBairroIdFull').value=''; $('#entregaValorFull').value=''; if(entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega'); }
+  function addProduto(nome, preco, selectAfter, fullMode) { if(!nome) return null; const novo = { id:uid(), nome, preco: isNaN(preco)?0:preco }; state.produtos.push(novo); save(); updateTotals(); refreshProdutosModal(); refreshVendasModal(); if(selectAfter && fullMode) { const sel = $('#vendaProdutoIdFull'); if(sel) for(let i=0;i<sel.options.length;i++) if(parseInt(sel.options[i].value)===novo.id) { sel.selectedIndex=i; sel.dispatchEvent(new Event('change')); break; } } return novo; }
+  function addVenda() { const clienteId = parseInt($('#vendaClienteIdFull').value); const cliente = state.clientes.find(c=>c.id===clienteId); if(!cliente) return alert('Selecione um cliente!'); const produtoId = parseInt($('#vendaProdutoIdFull').value); const produto = state.produtos.find(p=>p.id===produtoId); if(!produto) return alert('Selecione um produto!'); const qtd = parseFloat($('#vendaQtdFull').value); let preco = parseFloat($('#vendaPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)||preco<0) preco=produto.preco; state.vendas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshVendasModal(); $('#vendaProdutoIdFull').value = ''; $('#vendaQtdFull').value = '1'; $('#vendaPrecoFull').value = ''; }
+  function addCompra() { const fornId = parseInt($('#compraFornecedorIdFull').value); const forn = state.fornecedores.find(f=>f.id===fornId); if(!forn) return alert('Selecione um fornecedor!'); let produto = $('#compraProdutoFull').value.trim() || 'Produto'; const qtd = parseFloat($('#compraQtdFull').value); let preco = parseFloat($('#compraPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)) preco=0; state.compras.push({ id:uid(), fornecedorId:forn.id, fornecedorNome:forn.nome, produto, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshComprasModal(); $('#compraProdutoFull').value = ''; $('#compraQtdFull').value = '1'; $('#compraPrecoFull').value = ''; }
+  function addCliente() { const nome = $('#clienteNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.clientes.push({ id:uid(), nome, email:$('#clienteEmailFull').value, whatsapp:$('#clienteWhatsappFull').value, endereco:$('#clienteEnderecoFull').value }); save(); updateTotals(); refreshClientesModal(); refreshDeliveryModal(); $('#clienteNomeFull').value = ''; $('#clienteEmailFull').value = ''; $('#clienteWhatsappFull').value = ''; $('#clienteEnderecoFull').value = ''; refreshLembretesSelect(); }
+  function addFornecedor() { const nome = $('#fornecedorNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.fornecedores.push({ id:uid(), nome, cnpj:$('#fornecedorCnpjFull').value, contato:$('#fornecedorContatoFull').value }); save(); refreshFornecedoresModal(); $('#fornecedorNomeFull').value = ''; $('#fornecedorCnpjFull').value = ''; $('#fornecedorContatoFull').value = ''; }
+  function addNota() { const texto = $('#textoNotaFull').value.trim(); if(!texto) return; state.notas.push({ id:uid(), texto, data:nowStr() }); save(); $('#textoNotaFull').value = ''; refreshAnotacoesModal(); }
+  function addEntregador() { const nome = $('#entregadorNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.entregadores.push({ id:uid(), nome, telefone:$('#entregadorTelefoneFull').value, veiculo:$('#entregadorVeiculoFull').value, placa:$('#entregadorPlacaFull').value }); save(); refreshEntregadorModal(); $('#entregadorNomeFull').value = ''; $('#entregadorTelefoneFull').value = ''; $('#entregadorVeiculoFull').value = ''; $('#entregadorPlacaFull').value = ''; }
+  function addBairro() { const nome = $('#bairroNomeFull').value.trim(); if(!nome) return alert('Nome do bairro obrigatório!'); let taxa = parseFloat($('#bairroTaxaFull').value); if(isNaN(taxa)) taxa=0; state.bairros.push({ id:uid(), nome, taxa }); save(); refreshDeliveryModal(); $('#bairroNomeFull').value = ''; $('#bairroTaxaFull').value = ''; if(bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro'); }
+  function addEntrega() { const clienteId = parseInt($('#entregaClienteIdFull').value); const cliente = state.clientes.find(c=>c.id===clienteId); if(!cliente) return alert('Selecione um cliente!'); const produtoId = parseInt($('#entregaProdutoIdFull').value); const produto = state.produtos.find(p=>p.id===produtoId); if(!produto) return alert('Selecione um produto!'); const entId = parseInt($('#entregaEntregadorIdFull').value); const ent = state.entregadores.find(e=>e.id===entId); if(!ent) return alert('Selecione um entregador!'); const bairroId = parseInt($('#entregaBairroIdFull').value); const bairro = state.bairros.find(b=>b.id===bairroId); if(!bairro) return alert('Selecione um bairro!'); let valor = parseFloat($('#entregaValorFull').value); if(isNaN(valor)||valor<=0) valor=bairro.taxa; state.entregas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, entregadorId:ent.id, entregadorNome:ent.nome, bairroId:bairro.id, bairroNome:bairro.nome, valor, dataStr:nowStr() }); save(); refreshDeliveryModal(); $('#entregaClienteIdFull').value = ''; $('#entregaProdutoIdFull').value = ''; $('#entregaEntregadorIdFull').value = ''; $('#entregaBairroIdFull').value = ''; $('#entregaValorFull').value = ''; if(entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega'); }
   function addLembrete() {
     const clienteId = parseInt($('#lembreteClienteId').value);
     if(!clienteId) return alert('Selecione um cliente!');
@@ -1295,24 +814,13 @@
     if(actions[entity]) actions[entity]();
   }
 
-  // ========== INICIALIZAÇÃO ==========
-  function init() {
-    load();
-    refreshVendasModal(); refreshComprasModal(); refreshEntregadorModal(); refreshDeliveryModal(); refreshAnotacoesModal(); refreshLembretesContainer(); refreshLembretesSelect();
-    updateTotals(); buildCalc();
-    renderCalendar();
-    $('#prevMonthBtn').addEventListener('click', ()=> { currentDate.setMonth(currentDate.getMonth()-1); renderCalendar(); });
-    $('#nextMonthBtn').addEventListener('click', ()=> { currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(); });
-    $('#addEventBtn').addEventListener('click', openAddEventModal);
-    $('#saveEventBtn').addEventListener('click', saveEvent);
-    $('#closeEventModalBtn').addEventListener('click', ()=>$('#eventModal').classList.remove('active'));
-    $('#toggleBairrosBtn')?.addEventListener('click', ()=>{ bairrosVisible=!bairrosVisible; const sec=$('#bairrosSection'); const btn=$('#toggleBairrosBtn'); if(bairrosVisible){ sec.classList.add('visible'); btn.innerHTML='🔒 Ocultar Bairros'; renderCards('bairrosCardsContainer',state.bairros,cardFns.bairro,'Nenhum bairro'); } else { sec.classList.remove('visible'); btn.innerHTML='📋 Ver Bairros Cadastrados'; } });
-    $('#toggleEntregasBtn')?.addEventListener('click', ()=>{ entregasVisible=!entregasVisible; const sec=$('#entregasSection'); const btn=$('#toggleEntregasBtn'); if(entregasVisible){ sec.classList.add('visible'); btn.innerHTML='🔒 Ocultar Entregas'; renderCards('entregasCardsContainer',state.entregas,cardFns.entrega,'Nenhuma entrega'); } else { sec.classList.remove('visible'); btn.innerHTML='📋 Ver Entregas Realizadas'; } });
+  // ========== NAVEGAÇÃO E INICIALIZAÇÃO ==========
+  function initNav() {
     $$('.nav-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         const tab = btn.dataset.tab;
         const fullModals = { vendas:'vendasFullModal', produtos:'produtosFullModal', compras:'comprasFullModal', clientes:'clientesFullModal', fornecedores:'fornecedoresFullModal', entregador:'entregadorFullModal', delivery:'deliveryFullModal', anotacoes:'anotacoesFullModal', calc:'calcFullModal', calendario:'calendarioFullModal', relatorio:'relatorioFullModal' };
-        if(fullModals[tab]) { const modal = document.getElementById(fullModals[tab]); if(modal) modal.classList.add('active'); if(tab === 'relatorio') refreshRelatorioModal(); if(tab === 'calendario') renderCalendar(); if(tab === 'delivery') { refreshDeliveryModal(); bairrosVisible=false; entregasVisible=false; $('#bairrosSection')?.classList.remove('visible'); $('#entregasSection')?.classList.remove('visible'); $('#toggleBairrosBtn').innerHTML='📋 Ver Bairros Cadastrados'; $('#toggleEntregasBtn').innerHTML='📋 Ver Entregas Realizadas'; } if(tab === 'anotacoes') { refreshLembretesContainer(); refreshLembretesSelect(); } return; }
+        if(fullModals[tab]) { const modal = document.getElementById(fullModals[tab]); if(modal) modal.classList.add('active'); if(tab === 'relatorio') refreshRelatorioModal(); if(tab === 'calendario') renderCalendar(); if(tab === 'delivery') { refreshDeliveryModal(); bairrosVisible=false; entregasVisible=false; $('#bairrosSection')?.classList.remove('visible'); $('#entregasSection')?.classList.remove('visible'); if($('#toggleBairrosBtn')) $('#toggleBairrosBtn').innerHTML='📋 Ver Bairros Cadastrados'; if($('#toggleEntregasBtn')) $('#toggleEntregasBtn').innerHTML='📋 Ver Entregas Realizadas'; } if(tab === 'anotacoes') { refreshLembretesContainer(); refreshLembretesSelect(); } return; }
         $$('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
         $$('.tab-pane').forEach(p => p.classList.remove('active-pane'));
         const pane = document.getElementById(tab + 'Pane');
@@ -1320,30 +828,58 @@
         document.querySelector('.main-content')?.scrollTo(0,0);
       });
     });
+  }
+
+  function init() {
+    load();
+    refreshVendasModal(); refreshComprasModal(); refreshEntregadorModal(); refreshDeliveryModal(); refreshAnotacoesModal(); refreshLembretesContainer(); refreshLembretesSelect();
+    updateTotals(); buildCalc(); renderCalendar(); initNav();
+
+    const prevBtn = document.getElementById('prevMonthBtn'); if(prevBtn) prevBtn.addEventListener('click', ()=> { currentDate.setMonth(currentDate.getMonth()-1); renderCalendar(); });
+    const nextBtn = document.getElementById('nextMonthBtn'); if(nextBtn) nextBtn.addEventListener('click', ()=> { currentDate.setMonth(currentDate.getMonth()+1); renderCalendar(); });
+    const addEventBtn = document.getElementById('addEventBtn'); if(addEventBtn) addEventBtn.addEventListener('click', openAddEventModal);
+    const saveEventBtn = document.getElementById('saveEventBtn'); if(saveEventBtn) saveEventBtn.addEventListener('click', saveEvent);
+    const closeEventModalBtn = document.getElementById('closeEventModalBtn'); if(closeEventModalBtn) closeEventModalBtn.addEventListener('click', ()=>$('#eventModal').classList.remove('active'));
+
+    const toggleBairros = $('#toggleBairrosBtn'); if(toggleBairros) toggleBairros.addEventListener('click', ()=>{ bairrosVisible=!bairrosVisible; const sec=$('#bairrosSection'); const btn=$('#toggleBairrosBtn'); if(bairrosVisible){ sec.classList.add('visible'); btn.innerHTML='🔒 Ocultar Bairros'; renderCards('bairrosCardsContainer',state.bairros,cardFns.bairro,'Nenhum bairro'); } else { sec.classList.remove('visible'); btn.innerHTML='📋 Ver Bairros Cadastrados'; } });
+    const toggleEntregas = $('#toggleEntregasBtn'); if(toggleEntregas) toggleEntregas.addEventListener('click', ()=>{ entregasVisible=!entregasVisible; const sec=$('#entregasSection'); const btn=$('#toggleEntregasBtn'); if(entregasVisible){ sec.classList.add('visible'); btn.innerHTML='🔒 Ocultar Entregas'; renderCards('entregasCardsContainer',state.entregas,cardFns.entrega,'Nenhuma entrega'); } else { sec.classList.remove('visible'); btn.innerHTML='📋 Ver Entregas Realizadas'; } });
+
     function returnToDashboard() { updateTotals(); $$('.nav-btn').forEach(b=>b.classList.remove('active')); const dashBtn=document.querySelector('[data-tab="dashboard"]'); if(dashBtn) dashBtn.classList.add('active'); $$('.tab-pane').forEach(p=>p.classList.remove('active-pane')); const dashPane=document.getElementById('dashboardPane'); if(dashPane) dashPane.classList.add('active-pane'); }
     const closeButtons = ['closeVendasModalBtn','closeProdutosModalBtn','closeComprasModalBtn','closeClientesModalBtn','closeFornecedoresModalBtn','closeEntregadorModalBtn','closeDeliveryModalBtn','closeAnotacoesModalBtn','closeCalcModalBtn','closeRelatorioModalBtn','closeCalendarioModalBtn'];
     closeButtons.forEach(id => { const btn = document.getElementById(id); if(btn) btn.addEventListener('click', () => { const modal = btn.closest('.fullscreen-modal'); if(modal) modal.classList.remove('active'); returnToDashboard(); }); });
-    $('#addVendaBtnFull')?.addEventListener('click', addVenda);
-    $('#quickAddProdutoBtnFull')?.addEventListener('click', ()=>{ $('#quickProdutoNomeFull').value=''; $('#quickProdutoPrecoFull').value=''; $('#quickProdutoModalFull').classList.add('active'); });
-    $('#closeQuickModalBtnFull')?.addEventListener('click', ()=>$('#quickProdutoModalFull').classList.remove('active'));
-    $('#quickSalvarProdutoBtnFull')?.addEventListener('click', ()=>{ const nome=$('#quickProdutoNomeFull').value.trim(); const preco=parseFloat($('#quickProdutoPrecoFull').value); if(!nome) return alert('Nome obrigatório'); const novo=addProduto(nome,isNaN(preco)?0:preco,true,true); if(novo){ $('#quickProdutoModalFull').classList.remove('active'); alert(`Produto "${novo.nome}" cadastrado!`); } });
-    $('#addProdutoBtnFull')?.addEventListener('click', ()=>{ const nome=$('#produtoNomeFull').value.trim(); const preco=parseFloat($('#produtoPrecoFull').value); if(!nome) return alert('Nome obrigatório'); addProduto(nome,isNaN(preco)?0:preco); $('#produtoNomeFull').value=''; $('#produtoPrecoFull').value=''; });
-    $('#addCompraBtnFull')?.addEventListener('click', addCompra);
-    $('#addClienteBtnFull')?.addEventListener('click', addCliente);
-    $('#addFornecedorBtnFull')?.addEventListener('click', addFornecedor);
-    $('#addEntregadorBtnFull')?.addEventListener('click', addEntregador);
-    $('#addBairroBtnFull')?.addEventListener('click', addBairro);
-    $('#addEntregaBtnFull')?.addEventListener('click', addEntrega);
-    $('#addNotaBtnFull')?.addEventListener('click', addNota);
-    $('#addLembreteBtn')?.addEventListener('click', addLembrete);
-    $('#testAlarmBtn')?.addEventListener('click', testAlarm);
-    $('#toggleDashVendas')?.addEventListener('click', ()=>{ dashVendasVisible=!dashVendasVisible; updateTotals(); });
-    $('#toggleDashCompras')?.addEventListener('click', ()=>{ dashComprasVisible=!dashComprasVisible; updateTotals(); });
-    $('#toggleDashLucro')?.addEventListener('click', ()=>{ dashLucroVisible=!dashLucroVisible; updateTotals(); });
+
+    const addVendaBtn = document.getElementById('addVendaBtnFull'); if(addVendaBtn) addVendaBtn.addEventListener('click', addVenda);
+    const quickAddProdutoBtn = document.getElementById('quickAddProdutoBtnFull'); if(quickAddProdutoBtn) quickAddProdutoBtn.addEventListener('click', ()=>{ $('#quickProdutoNomeFull').value=''; $('#quickProdutoPrecoFull').value=''; $('#quickProdutoModalFull').classList.add('active'); });
+    const closeQuickModalBtn = document.getElementById('closeQuickModalBtnFull'); if(closeQuickModalBtn) closeQuickModalBtn.addEventListener('click', ()=>$('#quickProdutoModalFull').classList.remove('active'));
+    const quickSalvarProdutoBtn = document.getElementById('quickSalvarProdutoBtnFull'); if(quickSalvarProdutoBtn) quickSalvarProdutoBtn.addEventListener('click', ()=>{ const nome=$('#quickProdutoNomeFull').value.trim(); const preco=parseFloat($('#quickProdutoPrecoFull').value); if(!nome) return alert('Nome obrigatório'); const novo=addProduto(nome,isNaN(preco)?0:preco,true,true); if(novo){ $('#quickProdutoModalFull').classList.remove('active'); alert(`Produto "${novo.nome}" cadastrado!`); } });
+    const addProdutoBtn = document.getElementById('addProdutoBtnFull'); if(addProdutoBtn) addProdutoBtn.addEventListener('click', ()=>{ const nome=$('#produtoNomeFull').value.trim(); const preco=parseFloat($('#produtoPrecoFull').value); if(!nome) return alert('Nome obrigatório'); addProduto(nome,isNaN(preco)?0:preco); $('#produtoNomeFull').value=''; $('#produtoPrecoFull').value=''; });
+    const addCompraBtn = document.getElementById('addCompraBtnFull'); if(addCompraBtn) addCompraBtn.addEventListener('click', addCompra);
+    const addClienteBtn = document.getElementById('addClienteBtnFull'); if(addClienteBtn) addClienteBtn.addEventListener('click', addCliente);
+    const addFornecedorBtn = document.getElementById('addFornecedorBtnFull'); if(addFornecedorBtn) addFornecedorBtn.addEventListener('click', addFornecedor);
+    const addEntregadorBtn = document.getElementById('addEntregadorBtnFull'); if(addEntregadorBtn) addEntregadorBtn.addEventListener('click', addEntregador);
+    const addBairroBtn = document.getElementById('addBairroBtnFull'); if(addBairroBtn) addBairroBtn.addEventListener('click', addBairro);
+    const addEntregaBtn = document.getElementById('addEntregaBtnFull'); if(addEntregaBtn) addEntregaBtn.addEventListener('click', addEntrega);
+    const addNotaBtn = document.getElementById('addNotaBtnFull'); if(addNotaBtn) addNotaBtn.addEventListener('click', addNota);
+    const addLembreteBtn = document.getElementById('addLembreteBtn'); if(addLembreteBtn) addLembreteBtn.addEventListener('click', addLembrete);
+    const testAlarmBtn = document.getElementById('testAlarmBtn'); if(testAlarmBtn) testAlarmBtn.addEventListener('click', testAlarm);
+    const toggleDashVendas = document.getElementById('toggleDashVendas'); if(toggleDashVendas) toggleDashVendas.addEventListener('click', ()=>{ dashVendasVisible=!dashVendasVisible; updateTotals(); });
+    const toggleDashCompras = document.getElementById('toggleDashCompras'); if(toggleDashCompras) toggleDashCompras.addEventListener('click', ()=>{ dashComprasVisible=!dashComprasVisible; updateTotals(); });
+    const toggleDashLucro = document.getElementById('toggleDashLucro'); if(toggleDashLucro) toggleDashLucro.addEventListener('click', ()=>{ dashLucroVisible=!dashLucroVisible; updateTotals(); });
+
     document.body.addEventListener('click', handleEditDelete);
   }
+
   init();
-})();
+};
+
+// Se já estiver logado, inicializa o sistema; senão, aguarda o login ser bem-sucedido.
+if (isLoggedIn()) {
+  if (typeof initMainSystem === 'function') {
+    initMainSystem();
+  }
+} else {
+  // Aguarda o login ser realizado (o botão de login já chama initMainSystem após sucesso)
+}
 </script>
 </body>
 </html>
