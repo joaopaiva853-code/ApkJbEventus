@@ -32,8 +32,13 @@
     .card { background: rgba(8,6,12,0.75); backdrop-filter: blur(16px); border-radius: 2rem; padding: 1.5rem; border: 1px solid rgba(255,160,50,0.5); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,120,0.1); }
     .card h2 { display: flex; align-items: center; gap: 12px; font-size: 1.35rem; color: #FFDD99; margin-bottom: 1.2rem; border-left: 5px solid #FF9F40; padding-left: 1rem; font-weight: 700; }
     .form-row { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem; align-items: flex-end; }
-    .input-group { flex:1; min-width: 140px; }
-    .input-group label { font-size: 0.7rem; font-weight: 700; color: #FFCC88; display: block; text-transform: uppercase; margin-bottom: 0.3rem; letter-spacing: 1px; }
+    .form-row .input-group { flex: 1; min-width: 140px; }
+    .form-row button { margin-top: 0; white-space: nowrap; }
+    @media (max-width: 600px) {
+      .form-row { flex-direction: column; align-items: stretch; }
+      .form-row button { width: 100%; justify-content: center; }
+      .input-group { width: 100%; }
+    }
     input, select, textarea { width: 100%; padding: 0.75rem 1rem; border-radius: 1.3rem; border: 1px solid rgba(255,170,60,0.6); background: rgba(0,0,0,0.65); color: #f0f0f0; font-size: 0.9rem; transition: all 0.25s; outline: none; }
     input:focus, select:focus, textarea:focus { border-color: #FFB347; box-shadow: 0 0 18px rgba(255,160,0,0.7); background: rgba(15,12,20,0.85); }
     button { background: linear-gradient(95deg,#FF7A1F,#F05A00); border: none; padding: 0.7rem 1.4rem; border-radius: 2rem; color: #0A0A0E; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; box-shadow: 0 4px 14px rgba(255,80,0,0.5); transition: all 0.2s; }
@@ -69,7 +74,6 @@
     .big-valor { font-size: 1.8rem; font-weight: 800; color: #FFE484; text-shadow: 0 0 5px rgba(0,0,0,0.3); }
     .toggle-eye { font-size: 1.3rem; cursor: pointer; opacity: 0.7; transition: 0.2s; }
     .toggle-eye:hover { opacity: 1; transform: scale(1.1); }
-    @media (max-width: 700px) { .big-cards { flex-direction: column; align-items: center; gap: 1rem; } .big-card { width: 100%; max-width: 320px; } }
     .relatorio-resumo { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; justify-items: center; align-items: center; }
     .relatorio-card { background: rgba(20,15,25,0.8); backdrop-filter: blur(8px); border-radius: 1.5rem; border: 1px solid #FFB347; padding: 1rem; text-align: center; width: 100%; }
     .relatorio-card h3 { margin-bottom: 0.5rem; font-size: 1rem; }
@@ -87,7 +91,6 @@
     .calc-buttons button[data-calc="="] { background: linear-gradient(145deg,#28a745,#1e7e34); color: white; box-shadow: 0 6px 0 #0f5a23; }
     .calc-buttons button:hover { filter: brightness(1.08); transform: translateY(-1px); box-shadow: 0 7px 0 #0a0810; }
     .calc-buttons button:active:hover { transform: translateY(3px); box-shadow: 0 3px 0 #0a0810; }
-    @media (max-width:500px) { .calc-buttons { gap: 8px; } .calc-buttons button { font-size: 1.2rem; padding: 0.8rem 0; border-radius: 1.2rem; } .calc-screen { font-size: 1.8rem; padding: 0.8rem; min-height: 70px; } .calc-panel { padding: 1rem; } }
     .calendar-container { background: rgba(5,5,12,0.6); backdrop-filter: blur(12px); border-radius: 2rem; padding: 1.2rem; border: 1px solid rgba(255,170,60,0.5); }
     .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
     .month-year { font-size: 1.6rem; font-weight: 700; color: #FFD966; }
@@ -173,9 +176,26 @@
   </main>
 </div>
 
-<!-- MODAIS COMPLETOS (TODOS OS MÓDULOS) -->
-<div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
-<div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div><div class="input-group"><label>Preço (R$)</label><input type="number</div><div class="input-group"><button id="addProdutoBtnFull">➕ Salvar</button></div></div><h2>📋 Produtos Cadastrados</h2><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
+<!-- MODAIS COMPLETOS -->
+<div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></td></tbody></table></div></div></div></div>
+
+<!-- PRODUTOS MODAL - LISTA SEMPRE VISÍVEL -->
+<div id="produtosFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Cadastrar Produto</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div>
+        <div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div>
+        <button id="addProdutoBtnFull">➕ Salvar</button>
+      </div>
+      <h2>📋 Produtos Cadastrados</h2>
+      <div id="produtosCardsContainer" class="cards-grid"></div>
+    </div>
+  </div>
+</div>
+
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="clientesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><h2>📋 Lista de Clientes</h2><div id="clientesCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="fornecedoresFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button><h2>🏭 Fornecedores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Fornecedor</h2><div class="form-row"><div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div><div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div><div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div><button id="addFornecedorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Fornecedores</h2><div id="fornecedoresCardsContainer" class="cards-grid"></div></div></div></div>
@@ -210,7 +230,7 @@
     <div class="relatorio-resumo" id="relatorioResumo"></div>
     <div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div>
     <div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div>
-    <div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div>
+    <div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></td></div></div>
     <div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div>
   </div>
 </div>
@@ -445,7 +465,7 @@
   };
   function renderSalesTable() {
     const tbody = document.getElementById('salesTableBody'); if(!tbody) return;
-    if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7">Nenhuma venda registrada</td></table>'; return; }
+    if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7">Nenhuma venda registrada</td></tr>'; return; }
     tbody.innerHTML = state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade * v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td><td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td></tr>`).join('');
   }
   function refreshVendasModal() {
@@ -453,7 +473,10 @@
     const produtoSelect = $('#vendaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione produto</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); }); produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; const precoInput = $('#vendaPrecoFull'); if(precoInput) precoInput.value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : ''; }; }
     renderSalesTable();
   }
-  function refreshProdutosModal() { renderCards('produtosCardsContainer', state.produtos, cardFns.produto, 'Nenhum produto'); refreshVendasModal(); }
+  function refreshProdutosModal() { 
+    renderCards('produtosCardsContainer', state.produtos, cardFns.produto, 'Nenhum produto'); 
+    refreshVendasModal(); 
+  }
   function refreshComprasModal() {
     const fornSelect = $('#compraFornecedorIdFull'); if(fornSelect) { fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>'; state.fornecedores.forEach(f => { const opt = document.createElement('option'); opt.value = f.id; opt.textContent = f.nome; fornSelect.appendChild(opt); }); }
     renderCards('comprasCardsContainer', state.compras, cardFns.compra, 'Nenhuma compra');
@@ -479,9 +502,9 @@
     const lucro = totalVendas - totalCompras - totalEntregas;
     const resumoDiv = document.getElementById('relatorioResumo');
     if(resumoDiv) resumoDiv.innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
-    const vendasTbody = document.getElementById('relVendasTbody'); if(vendasTbody) vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
+    const vendasTbody = document.getElementById('relVendasTbody'); if(vendasTbody) vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => `</td><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
     const comprasTbody = document.getElementById('relComprasTbody'); if(comprasTbody) comprasTbody.innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
-    const entregasTbody = document.getElementById('relEntregasTbody'); if(entregasTbody) entregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
+    const entregasTbody = document.getElementById('relEntregasTbody'); if(entregasTbody) entregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}<tr><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
     const notasDiv = document.getElementById('relNotasContainer'); if(notasDiv) notasDiv.innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div>Sem anotações.</div>';
   }
 
