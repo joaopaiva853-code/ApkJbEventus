@@ -48,6 +48,7 @@
     .btn-outline:hover { background: rgba(255,140,0,0.3); box-shadow: 0 0 14px #ffaa44; }
     .btn-danger { background: linear-gradient(135deg,#D42,#A00); box-shadow: 0 4px 12px rgba(200,0,0,0.6); }
     .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 1.5rem; margin-top: 1rem; }
+    .produtos-list-hidden, .clientes-list-hidden { display: none !important; }
     .item-card { background: linear-gradient(145deg,rgba(18,15,24,0.9),rgba(5,3,10,0.95)); border-radius: 1.8rem; padding: 1.3rem; border: 1px solid rgba(255,150,40,0.55); transition: all 0.25s ease; backdrop-filter: blur(8px); text-align: center; display: flex; flex-direction: column; gap: 0.75rem; }
     .item-card:hover { transform: translateY(-5px); border-color: #FFB85E; box-shadow: 0 18px 30px -8px rgba(255,120,0,0.4); }
     .item-card-title { font-weight: 800; color: #FFD48A; font-size: 1.2rem; display: block; }
@@ -116,7 +117,6 @@
     .modal-content { background: #1a160c; width:100%; max-width:480px; border-radius: 2rem; padding:1.5rem; border:1px solid #FF9F00; }
     .toggle-section { display: none; margin-top: 1rem; }
     .toggle-section.visible { display: block; }
-    /* Estilos da Precificação */
     .precificacao-table-wrapper { overflow-x: auto; margin-top: 1rem; border-radius: 1rem; }
     .precificacao-table { width: 100%; border-collapse: collapse; background: rgba(0,0,0,0.5); border-radius: 1rem; }
     .precificacao-table th, .precificacao-table td { padding: 0.75rem 0.5rem; text-align: center; border-bottom: 1px solid rgba(255,180,60,0.3); }
@@ -185,18 +185,60 @@
   </main>
 </div>
 
-<!-- MODAIS COMPLETOS (VENDAS, PRODUTOS, COMPRAS, CLIENTES, FORNECEDORES, ENTREGADOR, DELIVERY, ANOTAÇÕES, CALC, CALENDÁRIO, RELATÓRIO) -->
-<!-- Mantidos os mesmos IDs e estruturas para não quebrar funcionalidades -->
-<div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
-<div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Notebook"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><h2>📋 Produtos Cadastrados</h2><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
+<!-- MODAIS DOS MÓDULOS -->
+<div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto / Tamanho</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
+
+<!-- PRODUTOS MODAL com TAMANHO -->
+<div id="produtosFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Cadastrar Produto</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Camiseta"></div>
+        <div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div>
+        <div class="input-group"><label>Tamanho</label><input type="text" id="produtoTamanhoFull" placeholder="Ex: P, M, G, 38, Único"></div>
+        <button id="addProdutoBtnFull">➕ Salvar</button>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+        <h2 style="margin-bottom: 0;">📋 Produtos Cadastrados</h2>
+        <button id="toggleProdutosListBtn" class="btn-small" style="background: linear-gradient(135deg, #2c5f2d, #1e3a1e);">👁️ Ocultar Lista</button>
+      </div>
+      <div id="produtosCardsContainer" class="cards-grid"></div>
+    </div>
+  </div>
+</div>
+
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
-<div id="clientesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><h2>📋 Lista de Clientes</h2><div id="clientesCardsContainer" class="cards-grid"></div></div></div></div>
+
+<!-- CLIENTES MODAL COM BOTÃO OCULTAR/EXIBIR -->
+<div id="clientesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;"><h2 style="margin-bottom: 0;">📋 Lista de Clientes</h2><button id="toggleClientesListBtn" class="btn-small" style="background: linear-gradient(135deg, #2c5f2d, #1e3a1e);">👁️ Ocultar Lista</button></div><div id="clientesCardsContainer" class="cards-grid"></div></div></div></div>
+
 <div id="fornecedoresFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button><h2>🏭 Fornecedores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Fornecedor</h2><div class="form-row"><div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div><div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div><div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div><button id="addFornecedorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Fornecedores</h2><div id="fornecedoresCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor (R$)</label><input type="number" id="entregaValorFull" step="any" placeholder="0.00"></div><button id="addEntregaBtnFull">📥 Registrar</button></div><button id="toggleEntregasBtn" class="btn-outline">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
-<div id="anotacoesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div><div class="fullscreen-body"><div class="card"><h2>📌 Nova Anotação</h2><div class="form-row"><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button></div><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div><div class="card"><h2>⏰ Lembretes Premium (Alarme Externo)</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="lembreteClienteId"><option value="">Selecione cliente</option></select></div><div class="input-group"><label>Valor Devido (R$)</label><input type="number" id="lembreteValor" step="any" placeholder="0.00"></div><div class="input-group"><label>Data</label><input type="date" id="lembreteData"></div><div class="input-group"><label>Hora</label><input type="time" id="lembreteHora"></div></div><div class="form-row"><div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div><button id="addLembreteBtn">🔔 Criar Lembrete</button><button id="testAlarmBtn" class="btn-small">🔊 Testar Alarme</button></div><h2>📋 Lembretes Ativos</h2><div id="lembretesCardsContainer" class="cards-grid"></div></div></div></div>
+
+<div id="anotacoesFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div>
+  <div class="fullscreen-body">
+    <div class="card"><h2>📌 Nova Anotação</h2><div class="form-row"><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button></div><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div>
+    <div class="card"><h2>⏰ Lembretes Premium (Alarme Externo)</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="lembreteClienteId"><option value="">Selecione cliente</option></select></div><div class="input-group"><label>Valor Devido (R$)</label><input type="number" id="lembreteValor" step="any" placeholder="0.00"></div><div class="input-group"><label>Data</label><input type="date" id="lembreteData"></div><div class="input-group"><label>Hora</label><input type="time" id="lembreteHora"></div></div><div class="form-row"><div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div><button id="addLembreteBtn">🔔 Criar Lembrete</button><button id="testAlarmBtn" class="btn-small">🔊 Testar Alarme</button></div><h2>📋 Lembretes Ativos</h2><div id="lembretesCardsContainer" class="cards-grid"></div></div>
+  </div>
+</div>
+
 <div id="calcFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div><div class="fullscreen-body"><div class="calc-panel"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div></div>
-<div id="calendarioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário Completo</h2></div><div class="fullscreen-body"><div class="calendar-container"><div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀ Mês anterior</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">Próximo mês ▶</button></div><div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div><div class="calendar-days" id="calendarDaysGrid"></div><div class="agenda-list"><h3>📋 Agendamentos do dia</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small">➕ Adicionar compromisso</button></div></div></div></div>
+
+<div id="calendarioFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário Completo</h2></div>
+  <div class="fullscreen-body">
+    <div class="calendar-container">
+      <div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀ Mês anterior</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">Próximo mês ▶</button></div>
+      <div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div>
+      <div class="calendar-days" id="calendarDaysGrid"></div>
+      <div class="agenda-list"><h3>📋 Agendamentos do dia</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small">➕ Adicionar compromisso</button></div>
+    </div>
+  </div>
+</div>
 
 <!-- PRECIFICAÇÃO MODAL -->
 <div id="precificacaoFullModal" class="fullscreen-modal">
@@ -213,7 +255,7 @@
       <div class="precificacao-table-wrapper">
         <table class="precificacao-table">
           <thead>
-            <tr><th>Produto</th><th>Quantidade</th><th>Preço Unit.</th><th>Subtotal</th><th>Ação</th></tr>
+            <tr><th>Produto (Tamanho)</th><th>Quantidade</th><th>Preço Unit.</th><th>Subtotal</th><th>Ação</th></tr>
           </thead>
           <tbody id="precificacaoTableBody">
             <tr><td colspan="5" style="text-align:center;">Nenhum item adicionado</td></tr>
@@ -230,10 +272,10 @@
   </div>
 </div>
 
-<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></tr></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
+<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto/Tamanho</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
 
 <div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
-<div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
+<div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div class="input-group"><label>Tamanho</label><input type="text" id="quickProdutoTamanhoFull" placeholder="Ex: Único, M, 38"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
 <div id="eventModal" class="modal"><div class="modal-content"><h3>📌 Adicionar Compromisso</h3><div class="input-group"><label>Data</label><input type="date" id="eventDate" readonly></div><div class="input-group"><label>Título</label><input type="text" id="eventTitle" placeholder="Ex: Reunião"></div><div class="input-group"><label>Descrição</label><textarea id="eventDesc" rows="2" placeholder="Detalhes..."></textarea></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="saveEventBtn">Salvar</button><button id="closeEventModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 
 <script>
@@ -307,7 +349,7 @@
   let bairrosVisible = false, entregasVisible = false;
 
   // ========== PRECIFICAÇÃO ==========
-  let precificacaoItems = []; // cada item: { id, produtoId, produtoNome, quantidade, preco }
+  let precificacaoItems = [];
 
   function refreshPrecificacaoProdutosSelect() {
     const select = $('#precificacaoProdutoId');
@@ -316,11 +358,11 @@
     state.produtos.forEach(p => {
       const opt = document.createElement('option');
       opt.value = p.id;
-      opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`;
+      const tamanhoStr = p.tamanho ? ` (${p.tamanho})` : '';
+      opt.textContent = `${p.nome}${tamanhoStr} - ${formatMoney(p.preco)}`;
       opt.dataset.preco = p.preco;
       select.appendChild(opt);
     });
-    // Quando selecionar um produto, preencher automaticamente o preço unitário
     select.onchange = () => {
       const selected = select.options[select.selectedIndex];
       const precoInput = $('#precificacaoPreco');
@@ -346,7 +388,7 @@
       const subtotal = item.quantidade * item.preco;
       total += subtotal;
       return `<tr>
-        <td>${escapeHtml(item.produtoNome)}</td>
+        <td>${escapeHtml(item.produtoNome)}${item.tamanho ? ' ('+escapeHtml(item.tamanho)+')' : ''}</td>
         <td>${item.quantidade}</td>
         <td>${formatMoney(item.preco)}</td>
         <td>${formatMoney(subtotal)}</td>
@@ -354,7 +396,6 @@
       </tr>`;
     }).join('');
     if (totalSpan) totalSpan.textContent = formatMoney(total);
-    // Adicionar eventos de remover
     document.querySelectorAll('.remove-item-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const id = parseInt(btn.dataset.id);
@@ -384,13 +425,12 @@
       id: uid(),
       produtoId: produto.id,
       produtoNome: produto.nome,
+      tamanho: produto.tamanho || '',
       quantidade: qtd,
       preco: preco
     });
     updatePrecificacaoTable();
-    // Limpar campos mas manter o produto selecionado? Vamos manter apenas o produto selecionado e resetar quantidade
     $('#precificacaoQtd').value = '1';
-    // Não limpar o preço para facilitar adições repetidas
   }
 
   function clearPrecificacao() {
@@ -398,6 +438,45 @@
       precificacaoItems = [];
       updatePrecificacaoTable();
     }
+  }
+
+  // ========== CONTROLE DE VISIBILIDADE DAS LISTAS ==========
+  let produtosListVisible = true;
+  const produtosContainer = document.getElementById('produtosCardsContainer');
+  const toggleProdutosBtn = document.getElementById('toggleProdutosListBtn');
+
+  function applyProdutosVisibility() {
+    if (!produtosContainer) return;
+    if (produtosListVisible) {
+      produtosContainer.classList.remove('produtos-list-hidden');
+      if (toggleProdutosBtn) toggleProdutosBtn.innerHTML = '👁️ Ocultar Lista';
+    } else {
+      produtosContainer.classList.add('produtos-list-hidden');
+      if (toggleProdutosBtn) toggleProdutosBtn.innerHTML = '👁️ Exibir Lista';
+    }
+  }
+  function toggleProdutosList() {
+    produtosListVisible = !produtosListVisible;
+    applyProdutosVisibility();
+  }
+
+  let clientesListVisible = true;
+  const clientesContainer = document.getElementById('clientesCardsContainer');
+  const toggleClientesBtn = document.getElementById('toggleClientesListBtn');
+
+  function applyClientesVisibility() {
+    if (!clientesContainer) return;
+    if (clientesListVisible) {
+      clientesContainer.classList.remove('clientes-list-hidden');
+      if (toggleClientesBtn) toggleClientesBtn.innerHTML = '👁️ Ocultar Lista';
+    } else {
+      clientesContainer.classList.add('clientes-list-hidden');
+      if (toggleClientesBtn) toggleClientesBtn.innerHTML = '👁️ Exibir Lista';
+    }
+  }
+  function toggleClientesList() {
+    clientesListVisible = !clientesListVisible;
+    applyClientesVisibility();
   }
 
   // ========== FERIADOS ==========
@@ -495,19 +574,24 @@
   function save() { for (const [key, storageKey] of Object.entries(STORAGE_MAP)) localStorage.setItem(storageKey, JSON.stringify(state[key])); }
   function load() {
     for (const [key, storageKey] of Object.entries(STORAGE_MAP)) { const raw = localStorage.getItem(storageKey); state[key] = raw ? JSON.parse(raw) : []; }
+    // Garantir que produtos antigos tenham campo tamanho
+    state.produtos = state.produtos.map(p => ({ ...p, tamanho: p.tamanho || '' }));
     if (!state.produtos.length && !state.clientes.length) {
-      state.produtos = [{ id:1001, nome:'Notebook Ultra', preco:3450 }, { id:1002, nome:'Mouse Gamer', preco:129.9 }];
+      state.produtos = [
+        { id:1001, nome:'Camiseta Básica', preco:49.9, tamanho:'M' },
+        { id:1002, nome:'Calça Jeans', preco:129.9, tamanho:'42' }
+      ];
       state.clientes = [{ id:2001, nome:'Cliente Exemplo', email:'cli@email.com', whatsapp:'(11) 99999-8888', endereco:'Rua das Flores, 123' }];
       state.fornecedores = [{ id:3001, nome:'Fornecedor Alpha', cnpj:'12.345.678/0001-90', contato:'(11) 3456-7890' }];
       state.vendas = [
-        { id:4001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Notebook Ultra', quantidade:1, precoUnit:3450, dataStr:nowStr() },
-        { id:4002, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1002, produtoNome:'Mouse Gamer', quantidade:1, precoUnit:129.9, dataStr:nowStr() }
+        { id:4001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Camiseta Básica', produtoTamanho:'M', quantidade:1, precoUnit:49.9, dataStr:nowStr() },
+        { id:4002, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1002, produtoNome:'Calça Jeans', produtoTamanho:'42', quantidade:1, precoUnit:129.9, dataStr:nowStr() }
       ];
       state.compras = [];
       state.notas = [{ id:6001, texto:'Sistema Rumo Gestão funcionando perfeitamente!', data:nowStr() }];
       state.entregadores = [{ id:7001, nome:'João Motoboy', telefone:'(11) 98888-7777', veiculo:'Moto', placa:'ABC-1234' }];
       state.bairros = [{ id:8001, nome:'Centro', taxa:5 }, { id:8002, nome:'Jardim das Flores', taxa:8 }];
-      state.entregas = [{ id:9001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Notebook Ultra', entregadorId:7001, entregadorNome:'João Motoboy', bairroId:8001, bairroNome:'Centro', valor:5, dataStr:nowStr() }];
+      state.entregas = [{ id:9001, clienteId:2001, clienteNome:'Cliente Exemplo', produtoId:1001, produtoNome:'Camiseta Básica', entregadorId:7001, entregadorNome:'João Motoboy', bairroId:8001, bairroNome:'Centro', valor:5, dataStr:nowStr() }];
       state.lembretes = [];
       state.eventos = [];
       save();
@@ -541,7 +625,10 @@
     container.innerHTML = items.map(cardFn).join('');
   }
   const cardFns = {
-    produto: (p) => `<div class="item-card"><div class="item-card-title">${escapeHtml(p.nome)}</div><div class="item-card-value">${formatMoney(p.preco)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="produto" data-id="${p.id}">✏️ Editar</button><button class="delete-btn" data-entity="produto" data-id="${p.id}">🗑️ Excluir</button></div></div>`,
+    produto: (p) => {
+      const tamanhoHtml = p.tamanho ? `<div class="item-card-body-line">📏 Tamanho: ${escapeHtml(p.tamanho)}</div>` : '';
+      return `<div class="item-card"><div class="item-card-title">${escapeHtml(p.nome)}</div>${tamanhoHtml}<div class="item-card-value">${formatMoney(p.preco)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="produto" data-id="${p.id}">✏️ Editar</button><button class="delete-btn" data-entity="produto" data-id="${p.id}">🗑️ Excluir</button></div></div>`;
+    },
     compra: (c) => `<div class="item-card"><div class="item-card-title">${escapeHtml(c.fornecedorNome)}</div><div class="item-card-body-line">📦 ${escapeHtml(c.produto)}</div><div class="item-card-body-line">Qtd: ${c.quantidade} × ${formatMoney(c.precoUnit)}</div><div class="item-card-value">${formatMoney(c.quantidade * c.precoUnit)}</div><div class="item-card-actions"><button class="edit-btn" data-entity="compra" data-id="${c.id}">✏️ Editar</button><button class="delete-btn" data-entity="compra" data-id="${c.id}">🗑️ Excluir</button></div></div>`,
     cliente: (c) => `<div class="item-card"><div class="item-card-title">${escapeHtml(c.nome)}</div><div class="item-card-body-line">📧 ${escapeHtml(c.email||'N/A')}</div><div class="item-card-body-line">📱 ${escapeHtml(c.whatsapp||'N/A')}</div><div class="item-card-body-line">📍 ${escapeHtml(c.endereco||'N/A')}</div><div class="item-card-actions"><button class="edit-btn" data-entity="cliente" data-id="${c.id}">✏️ Editar</button><button class="delete-btn" data-entity="cliente" data-id="${c.id}">🗑️ Excluir</button></div></div>`,
     fornecedor: (f) => `<div class="item-card"><div class="item-card-title">${escapeHtml(f.nome)}</div><div class="item-card-body-line">CNPJ: ${escapeHtml(f.cnpj||'N/A')}</div><div class="item-card-body-line">📞 ${escapeHtml(f.contato||'N/A')}</div><div class="item-card-actions"><button class="edit-btn" data-entity="fornecedor" data-id="${f.id}">✏️ Editar</button><button class="delete-btn" data-entity="fornecedor" data-id="${f.id}">🗑️ Excluir</button></div></div>`,
@@ -556,30 +643,47 @@
   };
   function renderSalesTable() {
     const tbody = document.getElementById('salesTableBody'); if(!tbody) return;
-    if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7">Nenhuma venda registrada</td></tr>'; return; }
-    tbody.innerHTML = state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade * v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td><td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td></tr>`).join('');
+    if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Nenhuma venda registrada</td></tr>'; return; }
+    tbody.innerHTML = state.vendas.map(v => {
+      const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : '');
+      return `<tr>
+        <td>${escapeHtml(v.clienteNome)}</td>
+        <td>${escapeHtml(produtoDisplay)}</td>
+        <td>${v.quantidade}</td>
+        <td>${formatMoney(v.precoUnit)}</td>
+        <td>${formatMoney(v.quantidade * v.precoUnit)}</td>
+        <td>${escapeHtml(v.dataStr)}</td>
+        <td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td>
+      </tr>`;
+    }).join('');
   }
   function refreshVendasModal() {
     const clienteSelect = $('#vendaClienteIdFull'); if(clienteSelect) { clienteSelect.innerHTML = '<option value="">Selecione cliente</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); }
-    const produtoSelect = $('#vendaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione produto</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); }); produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; const precoInput = $('#vendaPrecoFull'); if(precoInput) precoInput.value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : ''; }; }
+    const produtoSelect = $('#vendaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione produto</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; const tamanhoStr = p.tamanho ? ` (${p.tamanho})` : ''; opt.textContent = `${p.nome}${tamanhoStr} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); }); produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; const precoInput = $('#vendaPrecoFull'); if(precoInput) precoInput.value = sel && sel.dataset.preco ? parseFloat(sel.dataset.preco).toFixed(2) : ''; }; }
     renderSalesTable();
   }
   function refreshProdutosModal() { 
     renderCards('produtosCardsContainer', state.produtos, cardFns.produto, 'Nenhum produto'); 
+    applyProdutosVisibility();
     refreshVendasModal(); 
-    refreshPrecificacaoProdutosSelect(); // atualiza select da precificação
+    refreshPrecificacaoProdutosSelect();
   }
   function refreshComprasModal() {
     const fornSelect = $('#compraFornecedorIdFull'); if(fornSelect) { fornSelect.innerHTML = '<option value="">Selecione fornecedor</option>'; state.fornecedores.forEach(f => { const opt = document.createElement('option'); opt.value = f.id; opt.textContent = f.nome; fornSelect.appendChild(opt); }); }
     renderCards('comprasCardsContainer', state.compras, cardFns.compra, 'Nenhuma compra');
   }
-  function refreshClientesModal() { renderCards('clientesCardsContainer', state.clientes, cardFns.cliente, 'Nenhum cliente'); refreshVendasModal(); refreshLembretesSelect(); }
+  function refreshClientesModal() { 
+    renderCards('clientesCardsContainer', state.clientes, cardFns.cliente, 'Nenhum cliente'); 
+    applyClientesVisibility();
+    refreshVendasModal(); 
+    refreshLembretesSelect(); 
+  }
   function refreshFornecedoresModal() { renderCards('fornecedoresCardsContainer', state.fornecedores, cardFns.fornecedor, 'Nenhum fornecedor'); refreshComprasModal(); }
   function refreshEntregadorModal() { renderCards('entregadoresCardsContainer', state.entregadores, cardFns.entregador, 'Nenhum entregador'); refreshDeliveryModal(); }
   function refreshDeliveryModal() {
     if(bairrosVisible) renderCards('bairrosCardsContainer', state.bairros, cardFns.bairro, 'Nenhum bairro');
     const clienteSelect = $('#entregaClienteIdFull'); if(clienteSelect) { clienteSelect.innerHTML = '<option value="">Selecione</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); }
-    const produtoSelect = $('#entregaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = p.nome; produtoSelect.appendChild(opt); }); }
+    const produtoSelect = $('#entregaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; const tamanhoStr = p.tamanho ? ` (${p.tamanho})` : ''; opt.textContent = p.nome + tamanhoStr; produtoSelect.appendChild(opt); }); }
     const entSelect = $('#entregaEntregadorIdFull'); if(entSelect) { entSelect.innerHTML = '<option value="">Selecione</option>'; state.entregadores.forEach(e => { const opt = document.createElement('option'); opt.value = e.id; opt.textContent = e.nome; entSelect.appendChild(opt); }); }
     const bairroSelect = $('#entregaBairroIdFull'); if(bairroSelect) { bairroSelect.innerHTML = '<option value="">Selecione</option>'; state.bairros.forEach(b => { const opt = document.createElement('option'); opt.value = b.id; opt.textContent = `${b.nome} - ${formatMoney(b.taxa)}`; opt.dataset.taxa = b.taxa; bairroSelect.appendChild(opt); }); bairroSelect.onchange = () => { const sel = bairroSelect.options[bairroSelect.selectedIndex]; const valorInput = $('#entregaValorFull'); if(valorInput) valorInput.value = sel && sel.dataset.taxa ? parseFloat(sel.dataset.taxa).toFixed(2) : ''; }; }
     if(entregasVisible) renderCards('entregasCardsContainer', state.entregas, cardFns.entrega, 'Nenhuma entrega');
@@ -594,15 +698,53 @@
     const lucro = totalVendas - totalCompras - totalEntregas;
     const resumoDiv = document.getElementById('relatorioResumo');
     if(resumoDiv) resumoDiv.innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
-    const vendasTbody = document.getElementById('relVendasTbody'); if(vendasTbody) vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
+    const vendasTbody = document.getElementById('relVendasTbody'); if(vendasTbody) vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => {
+      const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : '');
+      return `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(produtoDisplay)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`;
+    }).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
     const comprasTbody = document.getElementById('relComprasTbody'); if(comprasTbody) comprasTbody.innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
     const entregasTbody = document.getElementById('relEntregasTbody'); if(entregasTbody) entregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma entrega</td></tr>';
     const notasDiv = document.getElementById('relNotasContainer'); if(notasDiv) notasDiv.innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div class="item-card-subtitle">${n.data}</div></div>`).join('') : '<div>Sem anotações.</div>';
   }
 
   // ========== CRUD ADICIONAL ==========
-  function addProduto(nome, preco, selectAfter, fullMode) { if(!nome) return null; const novo = { id:uid(), nome, preco: isNaN(preco)?0:preco }; state.produtos.push(novo); save(); updateTotals(); refreshProdutosModal(); refreshVendasModal(); if(selectAfter && fullMode) { const sel = $('#vendaProdutoIdFull'); if(sel) for(let i=0;i<sel.options.length;i++) if(parseInt(sel.options[i].value)===novo.id) { sel.selectedIndex=i; sel.dispatchEvent(new Event('change')); break; } } return novo; }
-  function addVenda() { const clienteId = parseInt($('#vendaClienteIdFull').value); const cliente = state.clientes.find(c=>c.id===clienteId); if(!cliente) return alert('Selecione um cliente!'); const produtoId = parseInt($('#vendaProdutoIdFull').value); const produto = state.produtos.find(p=>p.id===produtoId); if(!produto) return alert('Selecione um produto!'); const qtd = parseFloat($('#vendaQtdFull').value); let preco = parseFloat($('#vendaPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)||preco<0) preco=produto.preco; state.vendas.push({ id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, produtoId:produto.id, produtoNome:produto.nome, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshVendasModal(); $('#vendaProdutoIdFull').value = ''; $('#vendaQtdFull').value = '1'; $('#vendaPrecoFull').value = ''; }
+  function addProduto(nome, preco, tamanho, selectAfter, fullMode) { 
+    if(!nome) return null; 
+    const novo = { id:uid(), nome, preco: isNaN(preco)?0:preco, tamanho: tamanho || '' }; 
+    state.produtos.push(novo); 
+    save(); 
+    updateTotals(); 
+    refreshProdutosModal(); 
+    refreshVendasModal(); 
+    if(selectAfter && fullMode) { 
+      const sel = $('#vendaProdutoIdFull'); 
+      if(sel) for(let i=0;i<sel.options.length;i++) if(parseInt(sel.options[i].value)===novo.id) { sel.selectedIndex=i; sel.dispatchEvent(new Event('change')); break; } 
+    } 
+    return novo; 
+  }
+  function addVenda() { 
+    const clienteId = parseInt($('#vendaClienteIdFull').value); 
+    const cliente = state.clientes.find(c=>c.id===clienteId); 
+    if(!cliente) return alert('Selecione um cliente!'); 
+    const produtoId = parseInt($('#vendaProdutoIdFull').value); 
+    const produto = state.produtos.find(p=>p.id===produtoId); 
+    if(!produto) return alert('Selecione um produto!'); 
+    const qtd = parseFloat($('#vendaQtdFull').value); 
+    let preco = parseFloat($('#vendaPrecoFull').value); 
+    if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); 
+    if(isNaN(preco)||preco<0) preco=produto.preco; 
+    state.vendas.push({ 
+      id:uid(), clienteId:cliente.id, clienteNome:cliente.nome, 
+      produtoId:produto.id, produtoNome:produto.nome, produtoTamanho: produto.tamanho || '', 
+      quantidade:qtd, precoUnit:preco, dataStr:nowStr() 
+    }); 
+    save(); 
+    updateTotals(); 
+    refreshVendasModal(); 
+    $('#vendaProdutoIdFull').value = ''; 
+    $('#vendaQtdFull').value = '1'; 
+    $('#vendaPrecoFull').value = ''; 
+  }
   function addCompra() { const fornId = parseInt($('#compraFornecedorIdFull').value); const forn = state.fornecedores.find(f=>f.id===fornId); if(!forn) return alert('Selecione um fornecedor!'); let produto = $('#compraProdutoFull').value.trim() || 'Produto'; const qtd = parseFloat($('#compraQtdFull').value); let preco = parseFloat($('#compraPrecoFull').value); if(isNaN(qtd)||qtd<=0) return alert('Quantidade inválida!'); if(isNaN(preco)) preco=0; state.compras.push({ id:uid(), fornecedorId:forn.id, fornecedorNome:forn.nome, produto, quantidade:qtd, precoUnit:preco, dataStr:nowStr() }); save(); updateTotals(); refreshComprasModal(); $('#compraProdutoFull').value = ''; $('#compraQtdFull').value = '1'; $('#compraPrecoFull').value = ''; }
   function addCliente() { const nome = $('#clienteNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.clientes.push({ id:uid(), nome, email:$('#clienteEmailFull').value, whatsapp:$('#clienteWhatsappFull').value, endereco:$('#clienteEnderecoFull').value }); save(); updateTotals(); refreshClientesModal(); refreshDeliveryModal(); $('#clienteNomeFull').value = ''; $('#clienteEmailFull').value = ''; $('#clienteWhatsappFull').value = ''; $('#clienteEnderecoFull').value = ''; refreshLembretesSelect(); }
   function addFornecedor() { const nome = $('#fornecedorNomeFull').value.trim(); if(!nome) return alert('Nome obrigatório!'); state.fornecedores.push({ id:uid(), nome, cnpj:$('#fornecedorCnpjFull').value, contato:$('#fornecedorContatoFull').value }); save(); refreshFornecedoresModal(); $('#fornecedorNomeFull').value = ''; $('#fornecedorCnpjFull').value = ''; $('#fornecedorContatoFull').value = ''; }
@@ -657,8 +799,8 @@
     const entity=btn.dataset.entity; const id=parseInt(btn.dataset.id); const isDelete=btn.classList.contains('delete-btn')||btn.classList.contains('delete-btn-table');
     const after=(fns)=>{ save(); updateTotals(); fns.forEach(fn=>fn()); };
     const actions = {
-      venda: ()=>{ const v=state.vendas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir venda?')){ state.vendas=state.vendas.filter(x=>x.id!==id); after([refreshVendasModal]); } } else if(v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`,()=>{ const q=parseFloat($('#editQtd').value); const p=parseFloat($('#editPreco').value); if(!isNaN(q)&&!isNaN(p)&&q>0){ v.clienteNome=$('#editCliente').value; v.produtoNome=$('#editProduto').value; v.quantidade=q; v.precoUnit=p; v.dataStr=nowStr(); after([refreshVendasModal]); } }); },
-      produto: ()=>{ const p=state.produtos.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir produto?')){ state.produtos=state.produtos.filter(x=>x.id!==id); after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } } else if(p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div>`,()=>{ const nn=$('#editNome').value.trim(); const np=parseFloat($('#editPreco').value); if(nn&&!isNaN(np)){ p.nome=nn; p.preco=np; after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } }); },
+      venda: ()=>{ const v=state.vendas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir venda?')){ state.vendas=state.vendas.filter(x=>x.id!==id); after([refreshVendasModal]); } } else if(v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Tamanho</label><input id="editTamanho" value="${escapeHtml(v.produtoTamanho||'')}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`,()=>{ const q=parseFloat($('#editQtd').value); const p=parseFloat($('#editPreco').value); if(!isNaN(q)&&!isNaN(p)&&q>0){ v.clienteNome=$('#editCliente').value; v.produtoNome=$('#editProduto').value; v.produtoTamanho=$('#editTamanho').value; v.quantidade=q; v.precoUnit=p; v.dataStr=nowStr(); after([refreshVendasModal]); } }); },
+      produto: ()=>{ const p=state.produtos.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir produto?')){ state.produtos=state.produtos.filter(x=>x.id!==id); after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } } else if(p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div><div class="input-group"><label>Tamanho</label><input id="editTamanho" value="${escapeHtml(p.tamanho||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); const np=parseFloat($('#editPreco').value); if(nn&&!isNaN(np)){ p.nome=nn; p.preco=np; p.tamanho=$('#editTamanho').value; after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } }); },
       compra: ()=>{ const c=state.compras.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir compra?')){ state.compras=state.compras.filter(x=>x.id!==id); after([refreshComprasModal]); } } else if(c) openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`,()=>{ const q=parseFloat($('#editQtd').value); const p=parseFloat($('#editPreco').value); if(!isNaN(q)&&!isNaN(p)){ c.fornecedorNome=$('#editForn').value; c.produto=$('#editProd').value; c.quantidade=q; c.precoUnit=p; c.dataStr=nowStr(); after([refreshComprasModal]); } }); },
       cliente: ()=>{ const c=state.clientes.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir cliente?')){ state.clientes=state.clientes.filter(x=>x.id!==id); after([refreshVendasModal,refreshClientesModal,refreshDeliveryModal]); refreshLembretesSelect(); } } else if(c) openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ c.nome=nn; c.email=$('#editEmail').value; c.whatsapp=$('#editWhatsapp').value; c.endereco=$('#editEndereco').value; after([refreshVendasModal,refreshClientesModal,refreshDeliveryModal]); refreshLembretesSelect(); } }); },
       fornecedor: ()=>{ const f=state.fornecedores.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir fornecedor?')){ state.fornecedores=state.fornecedores.filter(x=>x.id!==id); after([refreshComprasModal,refreshFornecedoresModal]); } } else if(f) openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ f.nome=nn; f.cnpj=$('#editCnpj').value; f.contato=$('#editContato').value; after([refreshComprasModal,refreshFornecedoresModal]); } }); },
@@ -714,7 +856,9 @@
     refreshVendasModal(); refreshComprasModal(); refreshEntregadorModal(); refreshDeliveryModal(); refreshAnotacoesModal(); refreshLembretesContainer(); refreshLembretesSelect();
     updateTotals(); buildCalc(); renderCalendar(); initNav();
 
-    // Eventos da precificação
+    if (toggleProdutosBtn) toggleProdutosBtn.addEventListener('click', toggleProdutosList);
+    if (toggleClientesBtn) toggleClientesBtn.addEventListener('click', toggleClientesList);
+
     const addPrecBtn = document.getElementById('addPrecificacaoItemBtn');
     if (addPrecBtn) addPrecBtn.addEventListener('click', addPrecificacaoItem);
     const clearPrecBtn = document.getElementById('clearPrecificacaoBtn');
@@ -734,10 +878,10 @@
     closeButtons.forEach(id => { const btn = document.getElementById(id); if(btn) btn.addEventListener('click', () => { const modal = btn.closest('.fullscreen-modal'); if(modal) modal.classList.remove('active'); returnToDashboard(); }); });
 
     const addVendaBtn = document.getElementById('addVendaBtnFull'); if(addVendaBtn) addVendaBtn.addEventListener('click', addVenda);
-    const quickAddProdutoBtn = document.getElementById('quickAddProdutoBtnFull'); if(quickAddProdutoBtn) quickAddProdutoBtn.addEventListener('click', ()=>{ $('#quickProdutoNomeFull').value=''; $('#quickProdutoPrecoFull').value=''; $('#quickProdutoModalFull').classList.add('active'); });
+    const quickAddProdutoBtn = document.getElementById('quickAddProdutoBtnFull'); if(quickAddProdutoBtn) quickAddProdutoBtn.addEventListener('click', ()=>{ $('#quickProdutoNomeFull').value=''; $('#quickProdutoPrecoFull').value=''; $('#quickProdutoTamanhoFull').value=''; $('#quickProdutoModalFull').classList.add('active'); });
     const closeQuickModalBtn = document.getElementById('closeQuickModalBtnFull'); if(closeQuickModalBtn) closeQuickModalBtn.addEventListener('click', ()=>$('#quickProdutoModalFull').classList.remove('active'));
-    const quickSalvarProdutoBtn = document.getElementById('quickSalvarProdutoBtnFull'); if(quickSalvarProdutoBtn) quickSalvarProdutoBtn.addEventListener('click', ()=>{ const nome=$('#quickProdutoNomeFull').value.trim(); const preco=parseFloat($('#quickProdutoPrecoFull').value); if(!nome) return alert('Nome obrigatório'); const novo=addProduto(nome,isNaN(preco)?0:preco,true,true); if(novo){ $('#quickProdutoModalFull').classList.remove('active'); alert(`Produto "${novo.nome}" cadastrado!`); } });
-    const addProdutoBtn = document.getElementById('addProdutoBtnFull'); if(addProdutoBtn) addProdutoBtn.addEventListener('click', ()=>{ const nome=$('#produtoNomeFull').value.trim(); const preco=parseFloat($('#produtoPrecoFull').value); if(!nome) return alert('Nome obrigatório'); addProduto(nome,isNaN(preco)?0:preco); $('#produtoNomeFull').value=''; $('#produtoPrecoFull').value=''; });
+    const quickSalvarProdutoBtn = document.getElementById('quickSalvarProdutoBtnFull'); if(quickSalvarProdutoBtn) quickSalvarProdutoBtn.addEventListener('click', ()=>{ const nome=$('#quickProdutoNomeFull').value.trim(); const preco=parseFloat($('#quickProdutoPrecoFull').value); const tamanho=$('#quickProdutoTamanhoFull').value.trim(); if(!nome) return alert('Nome obrigatório'); const novo=addProduto(nome,isNaN(preco)?0:preco,tamanho,true,true); if(novo){ $('#quickProdutoModalFull').classList.remove('active'); alert(`Produto "${novo.nome}" cadastrado!`); } });
+    const addProdutoBtn = document.getElementById('addProdutoBtnFull'); if(addProdutoBtn) addProdutoBtn.addEventListener('click', ()=>{ const nome=$('#produtoNomeFull').value.trim(); const preco=parseFloat($('#produtoPrecoFull').value); const tamanho=$('#produtoTamanhoFull').value.trim(); if(!nome) return alert('Nome obrigatório'); addProduto(nome,isNaN(preco)?0:preco,tamanho); $('#produtoNomeFull').value=''; $('#produtoPrecoFull').value=''; $('#produtoTamanhoFull').value=''; });
     const addCompraBtn = document.getElementById('addCompraBtnFull'); if(addCompraBtn) addCompraBtn.addEventListener('click', addCompra);
     const addClienteBtn = document.getElementById('addClienteBtnFull'); if(addClienteBtn) addClienteBtn.addEventListener('click', addCliente);
     const addFornecedorBtn = document.getElementById('addFornecedorBtnFull'); if(addFornecedorBtn) addFornecedorBtn.addEventListener('click', addFornecedor);
