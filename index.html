@@ -189,7 +189,7 @@
 <!-- MODAIS DOS MÓDULOS -->
 <div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto / Tamanho</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
 
-<!-- PRODUTOS MODAL com TAMANHO -->
+<!-- PRODUTOS MODAL -->
 <div id="produtosFullModal" class="fullscreen-modal">
   <div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div>
   <div class="fullscreen-body">
@@ -212,13 +212,13 @@
 
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
 
-<!-- CLIENTES MODAL COM BOTÃO OCULTAR/EXIBIR -->
+<!-- CLIENTES MODAL -->
 <div id="clientesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;"><h2 style="margin-bottom: 0;">📋 Lista de Clientes</h2><button id="toggleClientesListBtn" class="btn-small" style="background: linear-gradient(135deg, #2c5f2d, #1e3a1e);">👁️ Ocultar Lista</button></div><div id="clientesCardsContainer" class="cards-grid"></div></div></div></div>
 
 <div id="fornecedoresFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button><h2>🏭 Fornecedores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Fornecedor</h2><div class="form-row"><div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div><div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div><div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div><button id="addFornecedorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Fornecedores</h2><div id="fornecedoresCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
 
-<!-- DELIVERY MODAL com campos separados -->
+<!-- DELIVERY MODAL -->
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor do Produto (R$)</label><input type="number" id="entregaValorProdutoFull" step="any" placeholder="0.00"></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Taxa de Entrega (R$)</label><input type="number" id="entregaTaxaFull" step="any" placeholder="0.00"></div></div><div class="total-entrega-info" id="entregaTotalPreview">Total: R$ 0,00</div><div class="form-row"><button id="addEntregaBtnFull">📥 Registrar Entrega</button></div><button id="toggleEntregasBtn" class="btn-outline">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
 
 <div id="anotacoesFullModal" class="fullscreen-modal">
@@ -258,7 +258,7 @@
       <div class="precificacao-table-wrapper">
         <table class="precificacao-table">
           <thead><tr><th>Produto (Tamanho)</th><th>Quantidade</th><th>Preço Unit.</th><th>Subtotal</th><th>Ação</th></tr></thead>
-          <tbody id="precificacaoTableBody"><tr><td colspan="5" style="text-align:center;">Nenhum item adicionado</td></tr></tbody>
+          <tbody id="precificacaoTableBody"><tr><td colspan="5" style="text-align:center;">Nenhum item adicionado</td></tr>}</tbody>
           <tfoot><tr><th colspan="3">Total Geral</th><td id="precificacaoTotal">R$ 0,00</td><td></td></tr></tfoot>
         </table>
       </div>
@@ -377,7 +377,13 @@
     tbody.innerHTML = precificacaoItems.map(item => {
       const subtotal = item.quantidade * item.preco;
       total += subtotal;
-      return `<tr><td>${escapeHtml(item.produtoNome)}${item.tamanho ? ' ('+escapeHtml(item.tamanho)+')' : ''}</td><td>${item.quantidade}</td><td>${formatMoney(item.preco)}</td><td>${formatMoney(subtotal)}</td><td><button class="remove-item-btn" data-id="${item.id}">Remover</button></td></tr>`;
+      return `<tr>
+        <td>${escapeHtml(item.produtoNome)}${item.tamanho ? ' ('+escapeHtml(item.tamanho)+')' : ''}</td>
+        <td>${item.quantidade}</td>
+        <td>${formatMoney(item.preco)}</td>
+        <td>${formatMoney(subtotal)}</td>
+        <td><button class="remove-item-btn" data-id="${item.id}">Remover</button></td>
+      </tr>`;
     }).join('');
     if (totalSpan) totalSpan.textContent = formatMoney(total);
     document.querySelectorAll('.remove-item-btn').forEach(btn => {
@@ -572,7 +578,15 @@
   function renderSalesTable() {
     const tbody = document.getElementById('salesTableBody'); if(!tbody) return;
     if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Nenhuma venda registrada</td></tr>'; return; }
-    tbody.innerHTML = state.vendas.map(v => { const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : ''); return `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(produtoDisplay)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade * v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td><td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td></tr>`; }).join('');
+    tbody.innerHTML = state.vendas.map(v => { const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : ''); return `<tr>
+      <td>${escapeHtml(v.clienteNome)}</td>
+      <td>${escapeHtml(produtoDisplay)}</td>
+      <td>${v.quantidade}</td>
+      <td>${formatMoney(v.precoUnit)}</td>
+      <td>${formatMoney(v.quantidade * v.precoUnit)}</td>
+      <td>${escapeHtml(v.dataStr)}</td>
+      <td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td>
+    </tr>`; }).join('');
   }
   function refreshVendasModal() {
     const clienteSelect = $('#vendaClienteIdFull'); if(clienteSelect) { clienteSelect.innerHTML = '<option value="">Selecione cliente</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); }
@@ -613,10 +627,12 @@
   function refreshRelatorioModal() {
     const totalVendas = state.vendas.reduce((s,v)=>s+v.quantidade*v.precoUnit,0);
     const totalCompras = state.compras.reduce((s,c)=>s+c.quantidade*c.precoUnit,0);
-    const totalEntregas = state.entregas.reduce((s,e)=>s + (e.valor || 0),0);
-    const lucro = totalVendas - totalCompras;
+    const totalEntregasProduto = state.entregas.reduce((s,e)=>s + (e.valorProduto||0),0);
+    const totalTaxasEntregador = state.entregas.reduce((s,e)=>s + (e.taxaEntrega||0),0);
+    const totalEntregasGeral = totalEntregasProduto + totalTaxasEntregador;
+    const lucroOperacional = totalVendas - totalCompras;
     const resumoDiv = document.getElementById('relatorioResumo');
-    if(resumoDiv) resumoDiv.innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro (Vendas - Compras)</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
+    if(resumoDiv) resumoDiv.innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas (Total)</h3><div class="r-valor">${formatMoney(totalEntregasGeral)}</div><small>Produto + Taxa</small></div><div class="relatorio-card"><h3>💰 Taxas Entregador</h3><div class="r-valor">${formatMoney(totalTaxasEntregador)}</div><small>Valor repassado</small></div><div class="relatorio-card"><h3>📈 Lucro Operacional</h3><div class="r-valor" style="color:${lucroOperacional>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucroOperacional)}</div><small>(Vendas - Compras)</small></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
     const vendasTbody = document.getElementById('relVendasTbody'); if(vendasTbody) vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => { const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : ''); return `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(produtoDisplay)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`; }).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
     const comprasTbody = document.getElementById('relComprasTbody'); if(comprasTbody) comprasTbody.innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
     const entregasTbody = document.getElementById('relEntregasTbody'); if(entregasTbody) entregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valorProduto||0)}</td><td>${formatMoney(e.taxaEntrega||0)}</td><td>${formatMoney(e.valor || (e.valorProduto + e.taxaEntrega))}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="8">Nenhuma entrega</td></tr>';
