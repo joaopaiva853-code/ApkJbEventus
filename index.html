@@ -3,26 +3,21 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Rumo Gestão · Sistema de Gestão Offline</title>
-  <!-- PWA: manifest e theme color -->
-  <link rel="manifest" href="data:application/manifest+json,{
-    %22name%22:%22Rumo%20Gest%C3%A3o%22,
-    %22short_name%22:%22Rumo%22,
-    %22start_url%22:%22.%22,
-    %22display%22:%22standalone%22,
-    %22background_color%22:%22%23030105%22,
-    %22theme_color%22:%22%23FF8C00%22,
-    %22icons%22:[
-      {%22src%22:%22data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23FF8C00'/%3E%3Ctext x='50' y='70' font-size='60' text-anchor='middle' fill='white'%3E📊%3C/text%3E%3C/svg%3E%22,%22sizes%22:%22any%22,%22type%22:%22image/svg+xml%22%7D
-    ]
-  }">
-  <meta name="theme-color" content="#FF8C00">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=Poppins:wght@400;500;600;700&family=Fira+Code:wght@500;600&display=swap" rel="stylesheet">
+  <title>Rumo Gestão · Sistema de Gestão (Offline)</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    body { font-family: 'Inter', 'Poppins', system-ui, sans-serif; background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105); background-attachment: fixed; color: #eef5ff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; position: relative; overflow-x: hidden; }
+    body { 
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; 
+      background: radial-gradient(ellipse at 40% 50%, #0a0a0c, #030105); 
+      background-attachment: fixed; 
+      color: #eef5ff; 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      position: relative; 
+      overflow-x: hidden; 
+    }
     body::before { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(2px 2px at 20px 30px, #fff2, rgba(0,0,0,0)), radial-gradient(1px 1px at 80px 150px, #ffdd99, rgba(0,0,0,0)); background-repeat: repeat; background-size: 200px 200px, 120px 120px; opacity: 0.25; pointer-events: none; z-index: 0; }
     body::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 70% 20%, rgba(255, 180, 40, 0.12), transparent 70%); pointer-events: none; z-index: 0; }
     .app-container { width: 100%; max-width: 1300px; display: flex; flex-direction: column; padding: 1.2rem 1.8rem 2rem; gap: 1.8rem; margin: 0 auto; position: relative; z-index: 2; }
@@ -95,9 +90,9 @@
     .relatorio-secao { margin-bottom: 1.8rem; }
     .relatorio-secao h3 { color: #FFB347; margin-bottom: 1rem; border-left: 4px solid #FF9F40; padding-left: 0.8rem; text-align: left; }
     .calc-panel { max-width: 480px; margin: 0 auto; background: rgba(10,8,15,0.7); backdrop-filter: blur(8px); border-radius: 2.5rem; padding: 1.5rem; border: 1px solid rgba(255,170,60,0.4); box-shadow: 0 20px 35px -12px rgba(0,0,0,0.8); }
-    .calc-screen { background: #0d0b12; border-radius: 1.8rem; padding: 1.2rem 1.2rem; text-align: right; font-size: 2.4rem; font-weight: 700; color: #FFE484; font-family: 'Fira Code', monospace; margin-bottom: 1.5rem; min-height: 85px; display: flex; align-items: center; justify-content: flex-end; letter-spacing: 2px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.5),0 1px 0 rgba(255,255,255,0.05); border: 1px solid rgba(255,180,60,0.3); word-break: break-word; overflow-x: auto; }
+    .calc-screen { background: #0d0b12; border-radius: 1.8rem; padding: 1.2rem 1.2rem; text-align: right; font-size: 2.4rem; font-weight: 700; color: #FFE484; font-family: monospace; margin-bottom: 1.5rem; min-height: 85px; display: flex; align-items: center; justify-content: flex-end; letter-spacing: 2px; box-shadow: inset 0 4px 10px rgba(0,0,0,0.5),0 1px 0 rgba(255,255,255,0.05); border: 1px solid rgba(255,180,60,0.3); word-break: break-word; overflow-x: auto; }
     .calc-buttons { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
-    .calc-buttons button { background: linear-gradient(145deg,#1e1b28,#110e18); border: none; border-radius: 1.5rem; padding: 1rem 0; font-size: 1.5rem; font-weight: 600; font-family: 'Fira Code','Inter',monospace; color: #FFD799; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 6px 0 #0a0810,0 4px 12px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1; }
+    .calc-buttons button { background: linear-gradient(145deg,#1e1b28,#110e18); border: none; border-radius: 1.5rem; padding: 1rem 0; font-size: 1.5rem; font-weight: 600; font-family: monospace; color: #FFD799; cursor: pointer; transition: all 0.15s ease; box-shadow: 0 6px 0 #0a0810,0 4px 12px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1; }
     .calc-buttons button:active { transform: translateY(3px); box-shadow: 0 3px 0 #0a0810; }
     .calc-buttons button[data-calc="+"],.calc-buttons button[data-calc="-"],.calc-buttons button[data-calc="*"],.calc-buttons button[data-calc="/"],.calc-buttons button[data-calc="="] { background: linear-gradient(145deg,#FF8C2C,#E65C00); color: #0f0c10; font-weight: 800; text-shadow: 0 1px 0 rgba(255,255,255,0.3); box-shadow: 0 6px 0 #902F00; }
     .calc-buttons button[data-calc="C"] { background: linear-gradient(145deg,#992222,#6B1010); color: #FFCD9A; box-shadow: 0 6px 0 #3D0808; }
@@ -153,8 +148,6 @@
       .relatorio-secao table { min-width: 500px; }
       .precificacao-table th, .precificacao-table td { padding: 0.5rem 0.3rem; font-size: 0.75rem; }
     }
-    /* Badge offline/online */
-    .offline-badge { position: fixed; bottom: 10px; right: 10px; background: rgba(0,0,0,0.7); border-radius: 20px; padding: 4px 10px; font-size: 0.7rem; color: #ffaa66; z-index: 1000; font-family: monospace; backdrop-filter: blur(4px); pointer-events: none; }
   </style>
 </head>
 <body>
@@ -200,86 +193,96 @@
     </div>
   </main>
 </div>
-<div class="offline-badge" id="offlineStatus">✅ Online</div>
 
-<!-- MODAIS (mesmos do código anterior, para manter todas as funcionalidades) -->
+<!-- MODAIS DOS MÓDULOS -->
 <div id="vendasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas</h2><div class="sales-table-container"><table class="sales-table"><thead><tr><th>Cliente</th><th>Produto / Tamanho</th><th>Qtd</th><th>Unitário</th><th>Total</th><th>Data</th><th>Ações</th></tr></thead><tbody id="salesTableBody"><tr><td colspan="7">Carregando...</td></tr></tbody></table></div></div></div></div>
-<div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Camiseta"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><div class="input-group"><label>Tamanho</label><input type="text" id="produtoTamanhoFull" placeholder="Ex: P, M, G, 38, Único"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;"><h2 style="margin-bottom: 0;">📋 Produtos Cadastrados</h2><button id="toggleProdutosListBtn" class="btn-small" style="background: linear-gradient(135deg, #2c5f2d, #1e3a1e);">👁️ Ocultar Lista</button></div><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
+
+<!-- PRODUTOS MODAL com TAMANHO -->
+<div id="produtosFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Cadastrar Produto</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Camiseta"></div>
+        <div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div>
+        <div class="input-group"><label>Tamanho</label><input type="text" id="produtoTamanhoFull" placeholder="Ex: P, M, G, 38, Único"></div>
+        <button id="addProdutoBtnFull">➕ Salvar</button>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+        <h2 style="margin-bottom: 0;">📋 Produtos Cadastrados</h2>
+        <button id="toggleProdutosListBtn" class="btn-small" style="background: linear-gradient(135deg, #2c5f2d, #1e3a1e);">👁️ Ocultar Lista</button>
+      </div>
+      <div id="produtosCardsContainer" class="cards-grid"></div>
+    </div>
+  </div>
+</div>
+
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro de Compras</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
+
+<!-- CLIENTES MODAL COM BOTÃO OCULTAR/EXIBIR -->
 <div id="clientesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeClientesModalBtn">← Voltar</button><h2>👥 Clientes</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Cliente</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="clienteNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Email</label><input type="email" id="clienteEmailFull" placeholder="email@exemplo.com"></div><div class="input-group"><label>WhatsApp</label><input type="text" id="clienteWhatsappFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Endereço</label><input type="text" id="clienteEnderecoFull" placeholder="Rua, nº, cidade"></div><button id="addClienteBtnFull">💾 Salvar</button></div><div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;"><h2 style="margin-bottom: 0;">📋 Lista de Clientes</h2><button id="toggleClientesListBtn" class="btn-small" style="background: linear-gradient(135deg, #2c5f2d, #1e3a1e);">👁️ Ocultar Lista</button></div><div id="clientesCardsContainer" class="cards-grid"></div></div></div></div>
+
 <div id="fornecedoresFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeFornecedoresModalBtn">← Voltar</button><h2>🏭 Fornecedores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Fornecedor</h2><div class="form-row"><div class="input-group"><label>Nome/Razão</label><input type="text" id="fornecedorNomeFull" placeholder="Fornecedor"></div><div class="input-group"><label>CNPJ</label><input type="text" id="fornecedorCnpjFull" placeholder="12.345.678/0001-90"></div><div class="input-group"><label>Contato</label><input type="text" id="fornecedorContatoFull" placeholder="Telefone"></div><button id="addFornecedorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Fornecedores</h2><div id="fornecedoresCardsContainer" class="cards-grid"></div></div></div></div>
 <div id="entregadorFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeEntregadorModalBtn">← Voltar</button><h2>🚚 Entregadores</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Entregador</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="entregadorNomeFull" placeholder="Nome completo"></div><div class="input-group"><label>Telefone</label><input type="text" id="entregadorTelefoneFull" placeholder="(11) 99999-8888"></div><div class="input-group"><label>Veículo</label><input type="text" id="entregadorVeiculoFull" placeholder="Moto / Carro / Bike"></div><div class="input-group"><label>Placa</label><input type="text" id="entregadorPlacaFull" placeholder="ABC-1234"></div><button id="addEntregadorBtnFull">➕ Salvar</button></div><h2>📋 Lista de Entregadores</h2><div id="entregadoresCardsContainer" class="cards-grid"></div></div></div></div>
+
+<!-- DELIVERY MODAL com campos separados -->
 <div id="deliveryFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeDeliveryModalBtn">← Voltar</button><h2>📍 Delivery</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Bairro</h2><div class="form-row"><div class="input-group"><label>Bairro</label><input type="text" id="bairroNomeFull" placeholder="Nome do bairro"></div><div class="input-group"><label>Taxa (R$)</label><input type="number" id="bairroTaxaFull" step="any" placeholder="0.00"></div><button id="addBairroBtnFull">➕ Salvar</button></div><button id="toggleBairrosBtn" class="btn-outline">📋 Ver Bairros Cadastrados</button><div id="bairrosSection" class="toggle-section"><h2>📋 Bairros Cadastrados</h2><div id="bairrosCardsContainer" class="cards-grid"></div></div></div><div class="card"><h2>➕ Registrar Entrega</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="entregaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><select id="entregaProdutoIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Valor do Produto (R$)</label><input type="number" id="entregaValorProdutoFull" step="any" placeholder="0.00"></div><div class="input-group"><label>Entregador</label><select id="entregaEntregadorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Bairro</label><select id="entregaBairroIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Taxa de Entrega (R$)</label><input type="number" id="entregaTaxaFull" step="any" placeholder="0.00"></div></div><div class="total-entrega-info" id="entregaTotalPreview">Total: R$ 0,00</div><div class="form-row"><button id="addEntregaBtnFull">📥 Registrar Entrega</button></div><button id="toggleEntregasBtn" class="btn-outline">📋 Ver Entregas Realizadas</button><div id="entregasSection" class="toggle-section"><h2>📋 Entregas Realizadas</h2><div id="entregasCardsContainer" class="cards-grid"></div></div></div></div></div>
-<div id="anotacoesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div><div class="fullscreen-body"><div class="card"><h2>📌 Nova Anotação</h2><div class="form-row"><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button></div><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div><div class="card"><h2>⏰ Lembretes Premium (Alarme Externo)</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="lembreteClienteId"><option value="">Selecione cliente</option></select></div><div class="input-group"><label>Valor Devido (R$)</label><input type="number" id="lembreteValor" step="any" placeholder="0.00"></div><div class="input-group"><label>Data</label><input type="date" id="lembreteData"></div><div class="input-group"><label>Hora</label><input type="time" id="lembreteHora"></div></div><div class="form-row"><div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div><button id="addLembreteBtn">🔔 Criar Lembrete</button><button id="testAlarmBtn" class="btn-small">🔊 Testar Alarme</button></div><h2>📋 Lembretes Ativos</h2><div id="lembretesCardsContainer" class="cards-grid"></div></div></div></div>
+
+<div id="anotacoesFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações & Lembretes Premium</h2></div>
+  <div class="fullscreen-body">
+    <div class="card"><h2>📌 Nova Anotação</h2><div class="form-row"><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button></div><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div>
+    <div class="card"><h2>⏰ Lembretes Premium (Alarme Externo)</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="lembreteClienteId"><option value="">Selecione cliente</option></select></div><div class="input-group"><label>Valor Devido (R$)</label><input type="number" id="lembreteValor" step="any" placeholder="0.00"></div><div class="input-group"><label>Data</label><input type="date" id="lembreteData"></div><div class="input-group"><label>Hora</label><input type="time" id="lembreteHora"></div></div><div class="form-row"><div class="input-group"><label>Descrição (opcional)</label><input type="text" id="lembreteDesc" placeholder="Motivo da cobrança"></div><button id="addLembreteBtn">🔔 Criar Lembrete</button><button id="testAlarmBtn" class="btn-small">🔊 Testar Alarme</button></div><h2>📋 Lembretes Ativos</h2><div id="lembretesCardsContainer" class="cards-grid"></div></div>
+  </div>
+</div>
+
 <div id="calcFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div><div class="fullscreen-body"><div class="calc-panel"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div></div>
-<div id="calendarioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário Completo</h2></div><div class="fullscreen-body"><div class="calendar-container"><div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀ Mês anterior</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">Próximo mês ▶</button></div><div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div><div class="calendar-days" id="calendarDaysGrid"></div><div class="agenda-list"><h3>📋 Agendamentos do dia</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small">➕ Adicionar compromisso</button></div></div></div></div>
-<div id="precificacaoFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closePrecificacaoModalBtn">← Voltar</button><h2>💰 Precificação</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Adicionar Item</h2><div class="form-row"><div class="input-group"><label>Produto</label><select id="precificacaoProdutoId"><option value="">Selecione produto</option></select></div><div class="input-group"><label>Quantidade</label><input type="number" id="precificacaoQtd" value="1" min="0.01" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="precificacaoPreco" step="any" placeholder="0.00"></div><button id="addPrecificacaoItemBtn" class="btn-small">➕ Adicionar</button></div><div class="precificacao-table-wrapper"><table class="precificacao-table"><thead><tr><th>Produto (Tamanho)</th><th>Quantidade</th><th>Preço Unit.</th><th>Subtotal</th><th>Ação</th></tr></thead><tbody id="precificacaoTableBody"><tr><td colspan="5" style="text-align:center;">Nenhum item adicionado</td></tr></tbody><tfoot><tr><th colspan="3">Total Geral</th><td id="precificacaoTotal">R$ 0,00</td><td></td></tr></tfoot></table></div><div style="margin-top: 1rem; text-align: right;"><button id="clearPrecificacaoBtn" class="btn-outline">Limpar lista</button></div></div></div></div>
+
+<div id="calendarioFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário Completo</h2></div>
+  <div class="fullscreen-body">
+    <div class="calendar-container">
+      <div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀ Mês anterior</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">Próximo mês ▶</button></div>
+      <div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div>
+      <div class="calendar-days" id="calendarDaysGrid"></div>
+      <div class="agenda-list"><h3>📋 Agendamentos do dia</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small">➕ Adicionar compromisso</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRECIFICAÇÃO MODAL -->
+<div id="precificacaoFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closePrecificacaoModalBtn">← Voltar</button><h2>💰 Precificação</h2></div>
+  <div class="fullscreen-body">
+    <div class="card">
+      <h2>➕ Adicionar Item</h2>
+      <div class="form-row">
+        <div class="input-group"><label>Produto</label><select id="precificacaoProdutoId"><option value="">Selecione produto</option></select></div>
+        <div class="input-group"><label>Quantidade</label><input type="number" id="precificacaoQtd" value="1" min="0.01" step="any"></div>
+        <div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="precificacaoPreco" step="any" placeholder="0.00"></div>
+        <button id="addPrecificacaoItemBtn" class="btn-small">➕ Adicionar</button>
+      </div>
+      <div class="precificacao-table-wrapper">
+        <table class="precificacao-table">
+          <thead><tr><th>Produto (Tamanho)</th><th>Quantidade</th><th>Preço Unit.</th><th>Subtotal</th><th>Ação</th></tr></thead>
+          <tbody id="precificacaoTableBody"><tr><td colspan="5" style="text-align:center;">Nenhum item adicionado</td></tr></tbody>
+          <tfoot><tr><th colspan="3">Total Geral</th><td id="precificacaoTotal">R$ 0,00</td><td></td></tr></tfoot>
+        </table>
+      </div>
+      <div style="margin-top: 1rem; text-align: right;"><button id="clearPrecificacaoBtn" class="btn-outline">Limpar lista</button></div>
+    </div>
+  </div>
+</div>
+
 <div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto/Tamanho</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery) - Taxa para entregador destacada</h3><div class="table-wrapper"><table style="width:100%"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor Produto</th><th>Taxa Entrega</th><th>Total</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer"></div></div></div></div>
+
 <div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.8rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 <div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><div class="input-group"><label>Nome</label><input type="text" id="quickProdutoNomeFull" placeholder="Ex: Smartphone"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="quickProdutoPrecoFull" step="any" placeholder="0.00"></div><div class="input-group"><label>Tamanho</label><input type="text" id="quickProdutoTamanhoFull" placeholder="Ex: Único, M, 38"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar e Usar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
 <div id="eventModal" class="modal"><div class="modal-content"><h3>📌 Adicionar Compromisso</h3><div class="input-group"><label>Data</label><input type="date" id="eventDate" readonly></div><div class="input-group"><label>Título</label><input type="text" id="eventTitle" placeholder="Ex: Reunião"></div><div class="input-group"><label>Descrição</label><textarea id="eventDesc" rows="2" placeholder="Detalhes..."></textarea></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="saveEventBtn">Salvar</button><button id="closeEventModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 
 <script>
 (function() {
-  // ========== SERVICE WORKER REGISTRATION (OFFLINE) ==========
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/sw.js').then(reg => {
-      console.log('Service Worker registered', reg);
-      // Atualiza badge de status offline/online
-      function updateOnlineStatus() {
-        const badge = document.getElementById('offlineStatus');
-        if (badge) {
-          if (navigator.onLine) {
-            badge.textContent = '✅ Online';
-            badge.style.color = '#aaffaa';
-          } else {
-            badge.textContent = '📴 Offline (dados locais)';
-            badge.style.color = '#ffaa66';
-          }
-        }
-      }
-      window.addEventListener('online', updateOnlineStatus);
-      window.addEventListener('offline', updateOnlineStatus);
-      updateOnlineStatus();
-    }).catch(err => console.log('Service Worker registration failed', err));
-  }
-  // Fallback: se o sw.js não existir (pois estamos em um único arquivo), 
-  // criamos um service worker dinamicamente via blob URL para garantir o funcionamento offline.
-  // Isso é feito após o carregamento da página.
-  function installOfflineSupport() {
-    if (!('serviceWorker' in navigator)) return;
-    // Verifica se já registramos um service worker manualmente
-    navigator.serviceWorker.getRegistration().then(reg => {
-      if (reg) return;
-      // Cria um service worker em memória que cacheia o próprio HTML
-      const swCode = `
-        const CACHE_NAME = 'rumo-gestao-v1';
-        const urlsToCache = [
-          './',
-          location.pathname
-        ];
-        self.addEventListener('install', event => {
-          event.waitUntil(
-            caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
-          );
-        });
-        self.addEventListener('fetch', event => {
-          event.respondWith(
-            caches.match(event.request).then(response => response || fetch(event.request))
-          );
-        });
-      `;
-      const blob = new Blob([swCode], {type: 'application/javascript'});
-      const swUrl = URL.createObjectURL(blob);
-      navigator.serviceWorker.register(swUrl).then(reg => {
-        console.log('Dynamic Service Worker registered for offline', reg);
-        URL.revokeObjectURL(swUrl);
-      });
-    });
-  }
-  // Aguarda o carregamento para instalar o suporte offline
-  window.addEventListener('load', installOfflineSupport);
-
   // ========== RELÓGIO ==========
   function updateClock() {
     const now = new Date();
@@ -288,15 +291,13 @@
     const seconds = String(now.getSeconds()).padStart(2,'0');
     const dias = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
     const meses = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-    const clockEl = document.getElementById('liveClock');
-    const dateEl = document.getElementById('liveDate');
-    if (clockEl) clockEl.textContent = `${hours}:${minutes}:${seconds}`;
-    if (dateEl) dateEl.textContent = `${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
+    document.getElementById('liveClock').textContent = `${hours}:${minutes}:${seconds}`;
+    document.getElementById('liveDate').textContent = `${dias[now.getDay()]}, ${now.getDate()} de ${meses[now.getMonth()]} de ${now.getFullYear()}`;
   }
   updateClock();
   setInterval(updateClock, 1000);
 
-  // ========== ÁUDIO (ALARME EXTERNO) ==========
+  // ========== ÁUDIO ==========
   let audioCtx = null;
   function initAudio() {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -329,7 +330,7 @@
     if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
   }, { once: false });
 
-  // ========== STATE E STORAGE ==========
+  // ========== STATE ==========
   const state = {
     produtos: [], clientes: [], fornecedores: [], vendas: [], compras: [], notas: [],
     entregadores: [], bairros: [], entregas: [], eventos: [], lembretes: []
@@ -384,13 +385,7 @@
     tbody.innerHTML = precificacaoItems.map(item => {
       const subtotal = item.quantidade * item.preco;
       total += subtotal;
-      return `<tr>
-        <td>${escapeHtml(item.produtoNome)}${item.tamanho ? ' ('+escapeHtml(item.tamanho)+')' : ''}</td>
-        <td>${item.quantidade}</td>
-        <td>${formatMoney(item.preco)}</td>
-        <td>${formatMoney(subtotal)}</td>
-        <td><button class="remove-item-btn" data-id="${item.id}">Remover</button></td>
-      </tr>`;
+      return `<tr><td>${escapeHtml(item.produtoNome)}${item.tamanho ? ' ('+escapeHtml(item.tamanho)+')' : ''}</td><td>${item.quantidade}</td><td>${formatMoney(item.preco)}</td><td>${formatMoney(subtotal)}</td><td><button class="remove-item-btn" data-id="${item.id}">Remover</button></td></tr>`;
     }).join('');
     if (totalSpan) totalSpan.textContent = formatMoney(total);
     document.querySelectorAll('.remove-item-btn').forEach(btn => {
@@ -585,15 +580,7 @@
   function renderSalesTable() {
     const tbody = document.getElementById('salesTableBody'); if(!tbody) return;
     if(!state.vendas.length) { tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;">Nenhuma venda registrada</td></tr>'; return; }
-    tbody.innerHTML = state.vendas.map(v => { const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : ''); return `<tr>
-      <td>${escapeHtml(v.clienteNome)}</td>
-      <td>${escapeHtml(produtoDisplay)}</td>
-      <td>${v.quantidade}</td>
-      <td>${formatMoney(v.precoUnit)}</td>
-      <td>${formatMoney(v.quantidade * v.precoUnit)}</td>
-      <td>${escapeHtml(v.dataStr)}</td>
-      <td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td>
-    </tr>`; }).join('');
+    tbody.innerHTML = state.vendas.map(v => { const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : ''); return `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(produtoDisplay)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade * v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td><td class="actions-cell"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></td></tr>`; }).join('');
   }
   function refreshVendasModal() {
     const clienteSelect = $('#vendaClienteIdFull'); if(clienteSelect) { clienteSelect.innerHTML = '<option value="">Selecione cliente</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); }
@@ -635,9 +622,10 @@
     const totalVendas = state.vendas.reduce((s,v)=>s+v.quantidade*v.precoUnit,0);
     const totalCompras = state.compras.reduce((s,c)=>s+c.quantidade*c.precoUnit,0);
     const totalEntregas = state.entregas.reduce((s,e)=>s + (e.valor || 0),0);
+    const totalTaxaEntregador = state.entregas.reduce((s,e)=>s + (e.taxaEntrega || 0),0);
     const lucro = totalVendas - totalCompras;
     const resumoDiv = document.getElementById('relatorioResumo');
-    if(resumoDiv) resumoDiv.innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>📈 Lucro (Vendas - Compras)</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
+    if(resumoDiv) resumoDiv.innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas (Total)</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>💰 Taxa Entregador</h3><div class="r-valor">${formatMoney(totalTaxaEntregador)}</div><small>Soma das taxas</small></div><div class="relatorio-card"><h3>📈 Lucro (Vendas - Compras)</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
     const vendasTbody = document.getElementById('relVendasTbody'); if(vendasTbody) vendasTbody.innerHTML = state.vendas.length ? state.vendas.map(v => { const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : ''); return `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(produtoDisplay)}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`; }).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
     const comprasTbody = document.getElementById('relComprasTbody'); if(comprasTbody) comprasTbody.innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
     const entregasTbody = document.getElementById('relEntregasTbody'); if(entregasTbody) entregasTbody.innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome||'')}</td><td>${escapeHtml(e.produtoNome||'')}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valorProduto||0)}</td><td>${formatMoney(e.taxaEntrega||0)}</td><td>${formatMoney(e.valor || (e.valorProduto + e.taxaEntrega))}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="8">Nenhuma entrega</td></tr>';
