@@ -532,7 +532,102 @@
       border: 1px solid #FF6B35;
     }
 
-    /* Responsividade */
+    /* CALCULADORA CORRIGIDA - PADRÃO PROFISSIONAL */
+    .calc-panel {
+      max-width: 380px;
+      margin: 0 auto;
+      background: rgba(18, 18, 30, 0.8);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      padding: 1.2rem;
+      border: 1px solid rgba(255,107,53,0.4);
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.5);
+    }
+
+    .calc-screen {
+      background: #0d0b12;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      text-align: right;
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #FFE484;
+      font-family: monospace;
+      margin-bottom: 1rem;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      word-break: break-word;
+      overflow-x: auto;
+      border: 1px solid rgba(255,107,53,0.3);
+    }
+
+    .calc-buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .calc-buttons button {
+      background: rgba(30, 30, 45, 0.9);
+      border: none;
+      border-radius: 1rem;
+      padding: 1rem 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      font-family: monospace;
+      color: #FFD799;
+      cursor: pointer;
+      transition: all 0.1s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .calc-buttons button:active {
+      transform: scale(0.96);
+    }
+
+    .calc-buttons button[data-calc="+"],
+    .calc-buttons button[data-calc="-"],
+    .calc-buttons button[data-calc="*"],
+    .calc-buttons button[data-calc="/"],
+    .calc-buttons button[data-calc="="] {
+      background: linear-gradient(145deg, #FF6B35, #E85D2C);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .calc-buttons button[data-calc="C"] {
+      background: rgba(200, 50, 50, 0.9);
+      color: #FFCD94;
+    }
+
+    .calc-buttons button[data-calc="⌫"] {
+      background: rgba(50, 50, 70, 0.9);
+      color: #FFBB77;
+    }
+
+    .calc-buttons button[data-calc="="] {
+      background: linear-gradient(145deg, #28a745, #1e7e34);
+      color: white;
+    }
+
+    @media (max-width: 480px) {
+      .calc-panel {
+        max-width: 100%;
+        padding: 1rem;
+      }
+      .calc-screen {
+        font-size: 1.8rem;
+        padding: 0.8rem;
+      }
+      .calc-buttons button {
+        padding: 0.7rem 0;
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Responsividade geral */
     @media (max-width: 640px) {
       .app-container {
         padding: 0.8rem;
@@ -637,27 +732,11 @@
 
 <!-- MODAL VENDAS COM LISTA EM CARDS -->
 <div id="vendasFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header">
-    <button class="back-btn" id="closeVendasModalBtn">← Voltar</button>
-    <h2>🏷️ Vendas</h2>
-  </div>
-  <div class="fullscreen-body">
-    <div class="card">
-      <h2>➕ Nova Venda</h2>
-      <div class="form-row">
-        <div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div>
-        <div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div>
-        <div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div>
-        <div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div>
-        <button id="addVendaBtnFull">➕ Registrar</button>
-      </div>
-      <h2>📋 Histórico de Vendas (Cards)</h2>
-      <div id="salesCardsContainer" class="cards-grid"></div>
-    </div>
-  </div>
+  <div class="fullscreen-header"><button class="back-btn" id="closeVendasModalBtn">← Voltar</button><h2>🏷️ Vendas</h2></div>
+  <div class="fullscreen-body"><div class="card"><h2>➕ Nova Venda</h2><div class="form-row"><div class="input-group"><label>Cliente</label><select id="vendaClienteIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><div style="display:flex;gap:0.5rem;"><select id="vendaProdutoIdFull" style="flex:1"><option value="">Selecione</option></select><button id="quickAddProdutoBtnFull" class="btn-small">➕ Novo</button></div></div><div class="input-group"><label>Qtd</label><input type="number" id="vendaQtdFull" value="1" step="any"></div><div class="input-group"><label>Preço Unit. (R$)</label><input type="number" id="vendaPrecoFull" step="any" value="0"></div><button id="addVendaBtnFull">➕ Registrar</button></div><h2>📋 Histórico de Vendas (Cards)</h2><div id="salesCardsContainer" class="cards-grid"></div></div></div>
 </div>
 
-<!-- Demais modais (produtos, compras, clientes, fornecedores, entregador, delivery, anotacoes, calc, calendario, precificacao) -->
+<!-- Demais modais (produtos, compras, clientes, fornecedores, entregador, delivery, anotacoes, calendario, precificacao, relatorio) -->
 <div id="produtosFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeProdutosModalBtn">← Voltar</button><h2>📦 Produtos</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Cadastrar Produto</h2><div class="form-row"><div class="input-group"><label>Nome</label><input type="text" id="produtoNomeFull" placeholder="Ex: Camiseta"></div><div class="input-group"><label>Preço (R$)</label><input type="number" id="produtoPrecoFull" step="any" placeholder="0.00"></div><div class="input-group"><label>Tamanho</label><input type="text" id="produtoTamanhoFull" placeholder="Ex: P, M, G"></div><button id="addProdutoBtnFull">➕ Salvar</button></div><div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;"><h2 style="margin-bottom: 0;">📋 Produtos Cadastrados</h2><button id="toggleProdutosListBtn" class="btn-small">👁️ Ocultar</button></div><div id="produtosCardsContainer" class="cards-grid"></div></div></div></div>
 
 <div id="comprasFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeComprasModalBtn">← Voltar</button><h2>🛒 Compras</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Nova Compra</h2><div class="form-row"><div class="input-group"><label>Fornecedor</label><select id="compraFornecedorIdFull"><option value="">Selecione</option></select></div><div class="input-group"><label>Produto</label><input type="text" id="compraProdutoFull" placeholder="Produto"></div><div class="input-group"><label>Qtd</label><input type="number" id="compraQtdFull" value="1" step="any"></div><div class="input-group"><label>Custo Unit. (R$)</label><input type="number" id="compraPrecoFull" step="any" value="0"></div><button id="addCompraBtnFull">📥 Registrar</button></div><h2>📋 Registro</h2><div id="comprasCardsContainer" class="cards-grid"></div></div></div></div>
@@ -672,44 +751,28 @@
 
 <div id="anotacoesFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeAnotacoesModalBtn">← Voltar</button><h2>📝 Anotações</h2></div><div class="fullscreen-body"><div class="card"><h2>📌 Nova Anotação</h2><textarea id="textoNotaFull" rows="3" placeholder="Digite sua nota..."></textarea><button id="addNotaBtnFull">➕ Salvar</button><h2>📋 Minhas Anotações</h2><div id="notasCardsContainer" class="cards-grid"></div></div><div class="card"><h2>⏰ Lembretes</h2><div class="form-row"><select id="lembreteClienteId"><option value="">Cliente</option></select><input type="number" id="lembreteValor" placeholder="Valor R$"><input type="date" id="lembreteData"><input type="time" id="lembreteHora"></div><input type="text" id="lembreteDesc" placeholder="Descrição"><button id="addLembreteBtn">🔔 Criar</button><button id="testAlarmBtn" class="btn-small">🔊 Testar</button><div id="lembretesCardsContainer" class="cards-grid"></div></div></div></div>
 
-<div id="calcFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div><div class="fullscreen-body"><div class="calc-panel"><div class="calc-screen" id="calcDisplay">0</div><div class="calc-buttons" id="calcButtons"></div></div></div></div>
-
-<div id="calendarioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário</h2></div><div class="fullscreen-body"><div class="calendar-container"><div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">▶</button></div><div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div><div class="calendar-days" id="calendarDaysGrid"></div><div class="agenda-list"><h3>Compromissos</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small">➕ Adicionar</button></div></div></div></div>
-
-<div id="precificacaoFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closePrecificacaoModalBtn">← Voltar</button><h2>💰 Precificação</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Adicionar Item</h2><div class="form-row"><select id="precificacaoProdutoId"><option value="">Produto</option></select><input type="number" id="precificacaoQtd" value="1" step="any"><input type="number" id="precificacaoPreco" step="any" placeholder="Preço"><button id="addPrecificacaoItemBtn" class="btn-small">➕ Adicionar</button></div><div class="table-wrapper"><table class="precificacao-table"><thead><tr><th>Produto</th><th>Qtd</th><th>Preço</th><th>Subtotal</th><th>Ação</th></tr></thead><tbody id="precificacaoTableBody"><tr><td colspan="5">Nenhum item</td></tr></tbody>
-        <tfoot><tr><th colspan="3">Total</th><td id="precificacaoTotal">R$ 0,00</td><td></td></tr></tfoot>
-      </table></div><button id="clearPrecificacaoBtn" class="btn-outline">Limpar</button></div></div></div>
-
-<!-- RELATÓRIO CORRIGIDO E ORGANIZADO -->
-<div id="relatorioFullModal" class="fullscreen-modal">
-  <div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div>
+<div id="calcFullModal" class="fullscreen-modal">
+  <div class="fullscreen-header"><button class="back-btn" id="closeCalcModalBtn">← Voltar</button><h2>🧮 Calculadora</h2></div>
   <div class="fullscreen-body">
-    <div class="relatorio-resumo" id="relatorioResumo"></div>
-    <div class="card relatorio-secao">
-      <h3>🛒 Vendas Realizadas</h3>
-      <div class="table-wrapper"><table class="data-table"><thead><tr><th>Cliente</th><th>Produto/Tamanho</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div>
-    </div>
-    <div class="card relatorio-secao">
-      <h3>📦 Compras Efetuadas</h3>
-      <div class="table-wrapper"><table class="data-table"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div>
-    </div>
-    <div class="card relatorio-secao">
-      <h3>🚚 Entregas (Delivery)</h3>
-      <div class="table-wrapper"><table class="data-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor Prod.</th><th>Taxa</th><th>Total</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div>
-    </div>
-    <div class="card relatorio-secao">
-      <h3>📝 Anotações</h3>
-      <div id="relNotasContainer" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem;"></div>
+    <div class="calc-panel">
+      <div class="calc-screen" id="calcDisplay">0</div>
+      <div class="calc-buttons" id="calcButtons"></div>
     </div>
   </div>
 </div>
+
+<div id="calendarioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeCalendarioModalBtn">← Voltar</button><h2>📅 Calendário</h2></div><div class="fullscreen-body"><div class="calendar-container"><div class="calendar-header"><button id="prevMonthBtn" class="btn-small">◀</button><span class="month-year" id="monthYearDisplay"></span><button id="nextMonthBtn" class="btn-small">▶</button></div><div class="calendar-weekdays"><span>DOM</span><span>SEG</span><span>TER</span><span>QUA</span><span>QUI</span><span>SEX</span><span>SÁB</span></div><div class="calendar-days" id="calendarDaysGrid"></div><div class="agenda-list"><h3>Compromissos</h3><div id="selectedDateAgenda"></div><button id="addEventBtn" class="btn-small">➕ Adicionar</button></div></div></div></div>
+
+<div id="precificacaoFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closePrecificacaoModalBtn">← Voltar</button><h2>💰 Precificação</h2></div><div class="fullscreen-body"><div class="card"><h2>➕ Adicionar Item</h2><div class="form-row"><select id="precificacaoProdutoId"><option value="">Produto</option></select><input type="number" id="precificacaoQtd" value="1" step="any"><input type="number" id="precificacaoPreco" step="any" placeholder="Preço"><button id="addPrecificacaoItemBtn" class="btn-small">➕ Adicionar</button></div><div class="table-wrapper"><table class="precificacao-table"><thead><tr><th>Produto</th><th>Qtd</th><th>Preço</th><th>Subtotal</th><th>Ação</th></tr></thead><tbody id="precificacaoTableBody"><tr><td colspan="5">Nenhum item</td></tr></tbody><tfoot><tr><th colspan="3">Total</th><td id="precificacaoTotal">R$ 0,00</td><td></td></tr></tfoot></table></div><button id="clearPrecificacaoBtn" class="btn-outline">Limpar</button></div></div></div>
+
+<div id="relatorioFullModal" class="fullscreen-modal"><div class="fullscreen-header"><button class="back-btn" id="closeRelatorioModalBtn">← Voltar</button><h2>📄 Relatório Completo</h2></div><div class="fullscreen-body"><div class="relatorio-resumo" id="relatorioResumo"></div><div class="card relatorio-secao"><h3>🛒 Vendas Realizadas</h3><div class="table-wrapper"><table class="data-table"><thead><tr><th>Cliente</th><th>Produto/Tamanho</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relVendasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📦 Compras Efetuadas</h3><div class="table-wrapper"><table class="data-table"><thead><tr><th>Fornecedor</th><th>Produto</th><th>Qtd</th><th>Unit.</th><th>Total</th><th>Data</th></tr></thead><tbody id="relComprasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>🚚 Entregas (Delivery)</h3><div class="table-wrapper"><table class="data-table"><thead><tr><th>Cliente</th><th>Produto</th><th>Entregador</th><th>Bairro</th><th>Valor Prod.</th><th>Taxa</th><th>Total</th><th>Data</th></tr></thead><tbody id="relEntregasTbody"></tbody></table></div></div><div class="card relatorio-secao"><h3>📝 Anotações</h3><div id="relNotasContainer" style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem;"></div></div></div></div>
 
 <div id="editModal" class="modal"><div class="modal-content"><h3 id="modalTitle">Editar</h3><div id="modalFields"></div><div style="display:flex;gap:12px;justify-content:flex-end;margin-top:1.5rem;"><button id="saveEditBtn">Salvar</button><button id="closeEditModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 <div id="quickProdutoModalFull" class="modal"><div class="modal-content"><h3>➕ Novo Produto</h3><input type="text" id="quickProdutoNomeFull" placeholder="Nome"><input type="number" id="quickProdutoPrecoFull" placeholder="Preço"><input type="text" id="quickProdutoTamanhoFull" placeholder="Tamanho"><div style="display:flex;gap:12px;margin-top:1.5rem;"><button id="quickSalvarProdutoBtnFull">Salvar</button><button id="closeQuickModalBtnFull" class="btn-danger">Cancelar</button></div></div></div>
 <div id="eventModal" class="modal"><div class="modal-content"><h3>📌 Compromisso</h3><input type="date" id="eventDate" readonly><input type="text" id="eventTitle" placeholder="Título"><textarea id="eventDesc" rows="2" placeholder="Descrição"></textarea><div style="display:flex;gap:12px;margin-top:1.5rem;"><button id="saveEventBtn">Salvar</button><button id="closeEventModalBtn" class="btn-danger">Cancelar</button></div></div></div>
 
 <script>
-// ========== JAVASCRIPT COMPLETO (funcionalidades preservadas e relatório corrigido) ==========
+// ========== JAVASCRIPT COMPLETO (todas as funcionalidades preservadas, calculadora corrigida) ==========
 (function() {
   // Relógio
   function updateClock() {
@@ -738,7 +801,7 @@
   let dashVendasVisible = true, dashComprasVisible = true, dashLucroVisible = true;
   let bairrosVisible = false, entregasVisible = false;
 
-  // Precificação (mantida)
+  // Precificação
   let precificacaoItems = [];
   function refreshPrecificacaoProdutosSelect() {
     const select = $('#precificacaoProdutoId'); if (!select) return;
@@ -780,53 +843,19 @@
     nota: (n) => `<div class="item-card"><div style="white-space:pre-wrap;">${escapeHtml(n.texto)}</div><div class="item-card-body-line">${n.data}</div><div class="item-card-actions"><button class="edit-btn" data-entity="nota" data-id="${n.id}">✏️ Editar</button><button class="delete-btn" data-entity="nota" data-id="${n.id}">🗑️ Excluir</button></div></div>`,
     lembrete: (l) => { const clienteNome = state.clientes.find(c => c.id === l.clienteId)?.nome || 'Cliente'; return `<div class="item-card"><div class="item-card-title">🔔 ${escapeHtml(clienteNome)}</div><div class="item-card-body-line">💰 ${formatMoney(l.valor)}</div><div class="item-card-body-line">📅 ${l.dataHora}</div><div class="item-card-body-line">${l.desc ? '📝 '+escapeHtml(l.desc) : ''}</div><div class="item-card-actions"><button class="delete-btn" data-entity="lembrete" data-id="${l.id}">🗑️ Excluir</button></div></div>`; }
   };
-  // Função para renderizar cards de vendas
+  // Vendas em cards
   function renderSalesCards() {
     const container = document.getElementById('salesCardsContainer');
     if (!container) return;
-    if (!state.vendas.length) {
-      container.innerHTML = '<div style="padding:1rem;text-align:center;">Nenhuma venda registrada</div>';
-      return;
-    }
+    if (!state.vendas.length) { container.innerHTML = '<div style="padding:1rem;text-align:center;">Nenhuma venda registrada</div>'; return; }
     container.innerHTML = state.vendas.map(v => {
       const produtoDisplay = v.produtoNome + (v.produtoTamanho ? ` (${v.produtoTamanho})` : '');
-      return `
-        <div class="item-card">
-          <div class="item-card-title">${escapeHtml(v.clienteNome)}</div>
-          <div class="item-card-body-line">📦 ${escapeHtml(produtoDisplay)}</div>
-          <div class="item-card-body-line">🔢 Quantidade: ${v.quantidade}</div>
-          <div class="item-card-body-line">💰 Unitário: ${formatMoney(v.precoUnit)}</div>
-          <div class="item-card-value">Total: ${formatMoney(v.quantidade * v.precoUnit)}</div>
-          <div class="item-card-body-line">📅 ${escapeHtml(v.dataStr)}</div>
-          <div class="item-card-actions">
-            <button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button>
-            <button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button>
-          </div>
-        </div>
-      `;
+      return `<div class="item-card"><div class="item-card-title">${escapeHtml(v.clienteNome)}</div><div class="item-card-body-line">📦 ${escapeHtml(produtoDisplay)}</div><div class="item-card-body-line">🔢 Quantidade: ${v.quantidade}</div><div class="item-card-body-line">💰 Unitário: ${formatMoney(v.precoUnit)}</div><div class="item-card-value">Total: ${formatMoney(v.quantidade * v.precoUnit)}</div><div class="item-card-body-line">📅 ${escapeHtml(v.dataStr)}</div><div class="item-card-actions"><button class="edit-btn-table" data-entity="venda" data-id="${v.id}">✏️ Editar</button><button class="delete-btn-table" data-entity="venda" data-id="${v.id}">🗑️ Excluir</button></div></div>`;
     }).join('');
   }
   function refreshVendasModal() { 
-    const clienteSelect = $('#vendaClienteIdFull'); 
-    if(clienteSelect) { 
-      clienteSelect.innerHTML = '<option value="">Selecione</option>'; 
-      state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); 
-    } 
-    const produtoSelect = $('#vendaProdutoIdFull'); 
-    if(produtoSelect) { 
-      produtoSelect.innerHTML = '<option value="">Selecione</option>'; 
-      state.produtos.forEach(p => { 
-        const opt = document.createElement('option'); 
-        opt.value = p.id; 
-        opt.textContent = `${p.nome}${p.tamanho ? ` (${p.tamanho})` : ''} - ${formatMoney(p.preco)}`; 
-        opt.dataset.preco = p.preco; 
-        produtoSelect.appendChild(opt); 
-      }); 
-      produtoSelect.onchange = () => { 
-        const sel = produtoSelect.options[produtoSelect.selectedIndex]; 
-        if(sel && sel.dataset.preco) $('#vendaPrecoFull').value = parseFloat(sel.dataset.preco).toFixed(2); 
-      }; 
-    } 
+    const clienteSelect = $('#vendaClienteIdFull'); if(clienteSelect) { clienteSelect.innerHTML = '<option value="">Selecione</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; clienteSelect.appendChild(opt); }); } 
+    const produtoSelect = $('#vendaProdutoIdFull'); if(produtoSelect) { produtoSelect.innerHTML = '<option value="">Selecione</option>'; state.produtos.forEach(p => { const opt = document.createElement('option'); opt.value = p.id; opt.textContent = `${p.nome}${p.tamanho ? ` (${p.tamanho})` : ''} - ${formatMoney(p.preco)}`; opt.dataset.preco = p.preco; produtoSelect.appendChild(opt); }); produtoSelect.onchange = () => { const sel = produtoSelect.options[produtoSelect.selectedIndex]; if(sel && sel.dataset.preco) $('#vendaPrecoFull').value = parseFloat(sel.dataset.preco).toFixed(2); }; } 
     renderSalesCards(); 
   }
   function refreshProdutosModal() { renderCards('produtosCardsContainer', state.produtos, cardFns.produto, 'Nenhum produto'); refreshVendasModal(); refreshPrecificacaoProdutosSelect(); }
@@ -839,30 +868,59 @@
   function refreshAnotacoesModal() { renderCards('notasCardsContainer', state.notas, cardFns.nota, 'Sem anotações'); }
   function refreshLembretesSelect() { const select = $('#lembreteClienteId'); if(select) { select.innerHTML = '<option value="">Selecione</option>'; state.clientes.forEach(c => { const opt = document.createElement('option'); opt.value = c.id; opt.textContent = c.nome; select.appendChild(opt); }); } }
   function refreshLembretesContainer() { renderCards('lembretesCardsContainer', state.lembretes, cardFns.lembrete, 'Nenhum lembrete'); }
-  
-  // RELATÓRIO CORRIGIDO (compras agora exibe os dados corretos e centralizados)
   function refreshRelatorioModal() { 
     const totalVendas = state.vendas.reduce((s,v)=>s+v.quantidade*v.precoUnit,0);
     const totalCompras = state.compras.reduce((s,c)=>s+c.quantidade*c.precoUnit,0);
     const totalEntregas = state.entregas.reduce((s,e)=>s+e.valor,0);
     const totalTaxa = state.entregas.reduce((s,e)=>s+e.taxaEntrega,0);
     const lucro = totalVendas - totalCompras;
-    $('#relatorioResumo').innerHTML = `
-      <div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div>
-      <div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div>
-      <div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div>
-      <div class="relatorio-card"><h3>💰 Taxa Entregador</h3><div class="r-valor">${formatMoney(totalTaxa)}</div><small>Total das taxas</small></div>
-      <div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div><small>Vendas - Compras</small></div>
-      <div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>
-    `;
-    // Vendas
+    $('#relatorioResumo').innerHTML = `<div class="relatorio-card"><h3>💰 Vendas</h3><div class="r-valor">${formatMoney(totalVendas)}</div><small>${state.vendas.length} registro(s)</small></div><div class="relatorio-card"><h3>📦 Compras</h3><div class="r-valor">${formatMoney(totalCompras)}</div><small>${state.compras.length} registro(s)</small></div><div class="relatorio-card"><h3>🚚 Entregas</h3><div class="r-valor">${formatMoney(totalEntregas)}</div><small>${state.entregas.length} registro(s)</small></div><div class="relatorio-card"><h3>💰 Taxa Entregador</h3><div class="r-valor">${formatMoney(totalTaxa)}</div><small>Total das taxas</small></div><div class="relatorio-card"><h3>📈 Lucro</h3><div class="r-valor" style="color:${lucro>=0?'#6ee7b7':'#FF9999'}">${formatMoney(lucro)}</div><small>Vendas - Compras</small></div><div class="relatorio-card"><h3>📝 Anotações</h3><div class="r-valor">${state.notas.length}</div><small>nota(s)</small></div>`;
     $('#relVendasTbody').innerHTML = state.vendas.length ? state.vendas.map(v => `<tr><td>${escapeHtml(v.clienteNome)}</td><td>${escapeHtml(v.produtoNome)}${v.produtoTamanho ? ' ('+v.produtoTamanho+')' : ''}</td><td>${v.quantidade}</td><td>${formatMoney(v.precoUnit)}</td><td>${formatMoney(v.quantidade*v.precoUnit)}</td><td>${escapeHtml(v.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma venda</td></tr>';
-    // Compras - corrigido: agora exibe os dados reais
     $('#relComprasTbody').innerHTML = state.compras.length ? state.compras.map(c => `<tr><td>${escapeHtml(c.fornecedorNome)}</td><td>${escapeHtml(c.produto)}</td><td>${c.quantidade}</td><td>${formatMoney(c.precoUnit)}</td><td>${formatMoney(c.quantidade*c.precoUnit)}</td><td>${escapeHtml(c.dataStr)}</td></tr>`).join('') : '<tr><td colspan="6">Nenhuma compra</td></tr>';
-    // Entregas
     $('#relEntregasTbody').innerHTML = state.entregas.length ? state.entregas.map(e => `<tr><td>${escapeHtml(e.clienteNome)}</td><td>${escapeHtml(e.produtoNome)}</td><td>${escapeHtml(e.entregadorNome)}</td><td>${escapeHtml(e.bairroNome)}</td><td>${formatMoney(e.valorProduto)}</td><td>${formatMoney(e.taxaEntrega)}</td><td>${formatMoney(e.valor)}</td><td>${escapeHtml(e.dataStr)}</td></tr>`).join('') : '<tr><td colspan="8">Nenhuma entrega</td></tr>';
-    // Anotações em cards
     $('#relNotasContainer').innerHTML = state.notas.length ? state.notas.map(n => `<div class="item-card"><div>${escapeHtml(n.texto)}</div><div class="item-card-body-line">${n.data}</div></div>`).join('') : '<div>Sem anotações</div>';
+  }
+
+  // Calculadora corrigida (layout profissional e lógica segura)
+  let calcExpr = '0';
+  function buildCalc() {
+    const btns = ['C', '(', ')', '/', '7', '8', '9', '*', '4', '5', '6', '-', '1', '2', '3', '+', '0', '.', '⌫', '='];
+    const container = $('#calcButtons');
+    if (!container) return;
+    container.innerHTML = btns.map(b => `<button data-calc="${b}">${b}</button>`).join('');
+    $$('#calcButtons button').forEach(btn => btn.addEventListener('click', () => calcAction(btn.dataset.calc)));
+    $('#calcDisplay').textContent = calcExpr;
+  }
+  function calcAction(val) {
+    const disp = $('#calcDisplay');
+    if (!disp) return;
+    if (val === 'C') {
+      calcExpr = '0';
+      disp.textContent = calcExpr;
+      return;
+    }
+    if (val === '⌫') {
+      calcExpr = (calcExpr.length === 1 || calcExpr === '0') ? '0' : calcExpr.slice(0, -1);
+      disp.textContent = calcExpr;
+      return;
+    }
+    if (val === '=') {
+      try {
+        // Avaliação segura usando Function (evita eval direto)
+        const result = Function('"use strict"; return (' + calcExpr.replace(/×/g, '*').replace(/÷/g, '/') + ')')();
+        if (isNaN(result) || !isFinite(result)) throw new Error('Invalid calculation');
+        calcExpr = String(parseFloat(result.toFixed(8)));
+        disp.textContent = calcExpr;
+      } catch (e) {
+        disp.textContent = 'Erro';
+        setTimeout(() => { calcExpr = '0'; disp.textContent = '0'; }, 800);
+      }
+      return;
+    }
+    if (calcExpr === '0' && /[0-9]/.test(val) && val !== '.') calcExpr = val;
+    else if (calcExpr === 'Erro') calcExpr = val;
+    else calcExpr += val;
+    disp.textContent = calcExpr;
   }
 
   // CRUD adicional (adicionar, editar, excluir)
@@ -879,31 +937,20 @@
   function checkAlarms() { const now = new Date(); let alarmTriggered = false; state.lembretes = state.lembretes.map(lem => { if(!lem.disparado && new Date(lem.dataHora) <= now) { lem.disparado = true; const cliente = state.clientes.find(c=>c.id===lem.clienteId); const nome = cliente ? cliente.nome : 'Cliente'; alert(`🔔 ALARME! ${nome} deve ${formatMoney(lem.valor)}. Data/Hora: ${lem.dataHora}\n${lem.desc||''}`); playExternalAlarm(); alarmTriggered = true; } return lem; }); if(alarmTriggered) { save(); refreshLembretesContainer(); } }
   setInterval(checkAlarms, 30000); setTimeout(checkAlarms, 2000);
 
-  // Calculadora
-  let calcExpr = '0';
-  function buildCalc() { const btns = ['C','(',')','/','7','8','9','*','4','5','6','-','1','2','3','+','0','.','⌫','=']; const container = $('#calcButtons'); if(container) { container.innerHTML = btns.map(b=>`<button data-calc="${b}">${b}</button>`).join(''); $$('#calcButtons button').forEach(btn=>btn.addEventListener('click',()=>calcAction(btn.dataset.calc))); $('#calcDisplay').textContent=calcExpr; } }
-  function calcAction(val) { const disp = $('#calcDisplay'); if(!disp) return; if(val==='C') { calcExpr='0'; disp.textContent=calcExpr; return; } if(val==='⌫') { calcExpr=(calcExpr.length===1||calcExpr==='0')?'0':calcExpr.slice(0,-1); disp.textContent=calcExpr; return; } if(val==='=') { try { const res=Function('"use strict";return ('+calcExpr.replace(/×/g,'*').replace(/÷/g,'/')+')')(); if(isNaN(res)||!isFinite(res)) throw new Error(); calcExpr=String(parseFloat(res.toFixed(8))); disp.textContent=calcExpr; } catch(e) { disp.textContent='Erro'; setTimeout(()=>{ calcExpr='0'; disp.textContent='0'; },800); } return; } if(calcExpr==='0' && /[0-9]/.test(val) && val!=='.') calcExpr=val; else if(calcExpr==='Erro') calcExpr=val; else calcExpr+=val; disp.textContent=calcExpr; }
-
-  // Edição/Exclusão (reutilizando a mesma lógica anterior)
+  // Edição/Exclusão (reutilizada da versão anterior)
   function openEditModal(title, fieldsHtml, onSave) { const modal = $('#editModal'); $('#modalTitle').textContent=title; $('#modalFields').innerHTML=fieldsHtml; modal.classList.add('active'); $('#saveEditBtn').onclick=()=>{ onSave(); modal.classList.remove('active'); }; $('#closeEditModalBtn').onclick=()=>modal.classList.remove('active'); }
-  function handleEditDelete(e) { 
-    const btn = e.target.closest('button'); if(!btn||!btn.dataset.entity) return;
-    const entity=btn.dataset.entity; const id=parseInt(btn.dataset.id); const isDelete=btn.classList.contains('delete-btn')||btn.classList.contains('delete-btn-table');
-    const after=(fns)=>{ save(); updateTotals(); fns.forEach(fn=>fn()); };
-    const actions = { 
-      venda: ()=>{ const v=state.vendas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir venda?')){ state.vendas=state.vendas.filter(x=>x.id!==id); after([refreshVendasModal]); } } else if(v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Tamanho</label><input id="editTamanho" value="${escapeHtml(v.produtoTamanho||'')}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`,()=>{ const q=parseFloat($('#editQtd').value); const p=parseFloat($('#editPreco').value); if(!isNaN(q)&&!isNaN(p)&&q>0){ v.clienteNome=$('#editCliente').value; v.produtoNome=$('#editProduto').value; v.produtoTamanho=$('#editTamanho').value; v.quantidade=q; v.precoUnit=p; v.dataStr=nowStr(); after([refreshVendasModal]); } }); },
-      produto: ()=>{ const p=state.produtos.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir produto?')){ state.produtos=state.produtos.filter(x=>x.id!==id); after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } } else if(p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div><div class="input-group"><label>Tamanho</label><input id="editTamanho" value="${escapeHtml(p.tamanho||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); const np=parseFloat($('#editPreco').value); if(nn&&!isNaN(np)){ p.nome=nn; p.preco=np; p.tamanho=$('#editTamanho').value; after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } }); },
-      compra: ()=>{ const c=state.compras.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir compra?')){ state.compras=state.compras.filter(x=>x.id!==id); after([refreshComprasModal]); } } else if(c) openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`,()=>{ const q=parseFloat($('#editQtd').value); const p=parseFloat($('#editPreco').value); if(!isNaN(q)&&!isNaN(p)){ c.fornecedorNome=$('#editForn').value; c.produto=$('#editProd').value; c.quantidade=q; c.precoUnit=p; c.dataStr=nowStr(); after([refreshComprasModal]); } }); },
-      cliente: ()=>{ const c=state.clientes.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir cliente?')){ state.clientes=state.clientes.filter(x=>x.id!==id); after([refreshVendasModal,refreshClientesModal,refreshDeliveryModal]); refreshLembretesSelect(); } } else if(c) openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ c.nome=nn; c.email=$('#editEmail').value; c.whatsapp=$('#editWhatsapp').value; c.endereco=$('#editEndereco').value; after([refreshVendasModal,refreshClientesModal,refreshDeliveryModal]); refreshLembretesSelect(); } }); },
-      fornecedor: ()=>{ const f=state.fornecedores.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir fornecedor?')){ state.fornecedores=state.fornecedores.filter(x=>x.id!==id); after([refreshComprasModal,refreshFornecedoresModal]); } } else if(f) openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ f.nome=nn; f.cnpj=$('#editCnpj').value; f.contato=$('#editContato').value; after([refreshComprasModal,refreshFornecedoresModal]); } }); },
-      entregador: ()=>{ const e=state.entregadores.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir entregador?')){ state.entregadores=state.entregadores.filter(x=>x.id!==id); after([refreshEntregadorModal,refreshDeliveryModal]); } } else if(e) openEditModal('Editar Entregador', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(e.nome)}"></div><div class="input-group"><label>Telefone</label><input id="editTelefone" value="${escapeHtml(e.telefone||'')}"></div><div class="input-group"><label>Veículo</label><input id="editVeiculo" value="${escapeHtml(e.veiculo||'')}"></div><div class="input-group"><label>Placa</label><input id="editPlaca" value="${escapeHtml(e.placa||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ e.nome=nn; e.telefone=$('#editTelefone').value; e.veiculo=$('#editVeiculo').value; e.placa=$('#editPlaca').value; after([refreshEntregadorModal,refreshDeliveryModal]); } }); },
-      bairro: ()=>{ const b=state.bairros.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir bairro?')){ state.bairros=state.bairros.filter(x=>x.id!==id); after([refreshDeliveryModal]); if(bairrosVisible) renderCards('bairrosCardsContainer',state.bairros,cardFns.bairro,'Nenhum bairro'); } } else if(b) openEditModal('Editar Bairro', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(b.nome)}"></div><div class="input-group"><label>Taxa</label><input id="editTaxa" type="number" step="any" value="${b.taxa}"></div>`,()=>{ const nn=$('#editNome').value.trim(); const np=parseFloat($('#editTaxa').value); if(nn&&!isNaN(np)){ b.nome=nn; b.taxa=np; after([refreshDeliveryModal]); if(bairrosVisible) renderCards('bairrosCardsContainer',state.bairros,cardFns.bairro,'Nenhum bairro'); } }); },
-      entrega: ()=>{ const e=state.entregas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir entrega?')){ state.entregas=state.entregas.filter(x=>x.id!==id); after([refreshDeliveryModal]); if(entregasVisible) renderCards('entregasCardsContainer',state.entregas,cardFns.entrega,'Nenhuma entrega'); } } else if(e) openEditModal('Editar Entrega', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(e.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(e.produtoNome)}"></div><div class="input-group"><label>Valor Produto</label><input id="editValorProduto" type="number" step="any" value="${e.valorProduto}"></div><div class="input-group"><label>Entregador</label><input id="editEntregador" value="${escapeHtml(e.entregadorNome)}"></div><div class="input-group"><label>Bairro</label><input id="editBairro" value="${escapeHtml(e.bairroNome)}"></div><div class="input-group"><label>Taxa Entrega</label><input id="editTaxaEntrega" type="number" step="any" value="${e.taxaEntrega}"></div>`,()=>{ const cn=$('#editCliente').value.trim(); const pn=$('#editProduto').value.trim(); const vp=parseFloat($('#editValorProduto').value); const en=$('#editEntregador').value.trim(); const bn=$('#editBairro').value.trim(); const tx=parseFloat($('#editTaxaEntrega').value); if(cn&&pn&&en&&bn&&!isNaN(vp)&&!isNaN(tx)){ e.clienteNome=cn; e.produtoNome=pn; e.valorProduto=vp; e.taxaEntrega=tx; e.valor=vp+tx; e.entregadorNome=en; e.bairroNome=bn; e.dataStr=nowStr(); after([refreshDeliveryModal]); if(entregasVisible) renderCards('entregasCardsContainer',state.entregas,cardFns.entrega,'Nenhuma entrega'); } }); },
-      nota: ()=>{ const n=state.notas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir anotação?')){ state.notas=state.notas.filter(x=>x.id!==id); save(); refreshAnotacoesModal(); } } else if(n) openEditModal('Editar Anotação', `<textarea id="editTexto" rows="3">${escapeHtml(n.texto)}</textarea>`,()=>{ const nt=$('#editTexto').value.trim(); if(nt){ n.texto=nt; n.data=nowStr(); save(); refreshAnotacoesModal(); } }); },
-      lembrete: ()=>{ if(isDelete && confirm('Excluir lembrete?')){ state.lembretes=state.lembretes.filter(x=>x.id!==id); save(); refreshLembretesContainer(); } }
-    };
-    if(actions[entity]) actions[entity]();
-  }
+  function handleEditDelete(e) { const btn = e.target.closest('button'); if(!btn||!btn.dataset.entity) return; const entity=btn.dataset.entity; const id=parseInt(btn.dataset.id); const isDelete=btn.classList.contains('delete-btn')||btn.classList.contains('delete-btn-table'); const after=(fns)=>{ save(); updateTotals(); fns.forEach(fn=>fn()); }; const actions = { 
+    venda: ()=>{ const v=state.vendas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir venda?')){ state.vendas=state.vendas.filter(x=>x.id!==id); after([refreshVendasModal]); } } else if(v) openEditModal('Editar Venda', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(v.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(v.produtoNome)}"></div><div class="input-group"><label>Tamanho</label><input id="editTamanho" value="${escapeHtml(v.produtoTamanho||'')}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${v.quantidade}"></div><div class="input-group"><label>Preço Unit.</label><input id="editPreco" type="number" step="any" value="${v.precoUnit}"></div>`,()=>{ const q=parseFloat($('#editQtd').value); const p=parseFloat($('#editPreco').value); if(!isNaN(q)&&!isNaN(p)&&q>0){ v.clienteNome=$('#editCliente').value; v.produtoNome=$('#editProduto').value; v.produtoTamanho=$('#editTamanho').value; v.quantidade=q; v.precoUnit=p; v.dataStr=nowStr(); after([refreshVendasModal]); } }); },
+    produto: ()=>{ const p=state.produtos.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir produto?')){ state.produtos=state.produtos.filter(x=>x.id!==id); after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } } else if(p) openEditModal('Editar Produto', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(p.nome)}"></div><div class="input-group"><label>Preço</label><input id="editPreco" type="number" step="any" value="${p.preco}"></div><div class="input-group"><label>Tamanho</label><input id="editTamanho" value="${escapeHtml(p.tamanho||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); const np=parseFloat($('#editPreco').value); if(nn&&!isNaN(np)){ p.nome=nn; p.preco=np; p.tamanho=$('#editTamanho').value; after([refreshVendasModal,refreshProdutosModal,refreshDeliveryModal]); } }); },
+    compra: ()=>{ const c=state.compras.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir compra?')){ state.compras=state.compras.filter(x=>x.id!==id); after([refreshComprasModal]); } } else if(c) openEditModal('Editar Compra', `<div class="input-group"><label>Fornecedor</label><input id="editForn" value="${escapeHtml(c.fornecedorNome)}"></div><div class="input-group"><label>Produto</label><input id="editProd" value="${escapeHtml(c.produto)}"></div><div class="input-group"><label>Quantidade</label><input id="editQtd" type="number" value="${c.quantidade}"></div><div class="input-group"><label>Custo Unit.</label><input id="editPreco" type="number" step="any" value="${c.precoUnit}"></div>`,()=>{ const q=parseFloat($('#editQtd').value); const p=parseFloat($('#editPreco').value); if(!isNaN(q)&&!isNaN(p)){ c.fornecedorNome=$('#editForn').value; c.produto=$('#editProd').value; c.quantidade=q; c.precoUnit=p; c.dataStr=nowStr(); after([refreshComprasModal]); } }); },
+    cliente: ()=>{ const c=state.clientes.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir cliente?')){ state.clientes=state.clientes.filter(x=>x.id!==id); after([refreshVendasModal,refreshClientesModal,refreshDeliveryModal]); refreshLembretesSelect(); } } else if(c) openEditModal('Editar Cliente', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(c.nome)}"></div><div class="input-group"><label>Email</label><input id="editEmail" value="${escapeHtml(c.email||'')}"></div><div class="input-group"><label>WhatsApp</label><input id="editWhatsapp" value="${escapeHtml(c.whatsapp||'')}"></div><div class="input-group"><label>Endereço</label><input id="editEndereco" value="${escapeHtml(c.endereco||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ c.nome=nn; c.email=$('#editEmail').value; c.whatsapp=$('#editWhatsapp').value; c.endereco=$('#editEndereco').value; after([refreshVendasModal,refreshClientesModal,refreshDeliveryModal]); refreshLembretesSelect(); } }); },
+    fornecedor: ()=>{ const f=state.fornecedores.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir fornecedor?')){ state.fornecedores=state.fornecedores.filter(x=>x.id!==id); after([refreshComprasModal,refreshFornecedoresModal]); } } else if(f) openEditModal('Editar Fornecedor', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(f.nome)}"></div><div class="input-group"><label>CNPJ</label><input id="editCnpj" value="${escapeHtml(f.cnpj||'')}"></div><div class="input-group"><label>Contato</label><input id="editContato" value="${escapeHtml(f.contato||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ f.nome=nn; f.cnpj=$('#editCnpj').value; f.contato=$('#editContato').value; after([refreshComprasModal,refreshFornecedoresModal]); } }); },
+    entregador: ()=>{ const e=state.entregadores.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir entregador?')){ state.entregadores=state.entregadores.filter(x=>x.id!==id); after([refreshEntregadorModal,refreshDeliveryModal]); } } else if(e) openEditModal('Editar Entregador', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(e.nome)}"></div><div class="input-group"><label>Telefone</label><input id="editTelefone" value="${escapeHtml(e.telefone||'')}"></div><div class="input-group"><label>Veículo</label><input id="editVeiculo" value="${escapeHtml(e.veiculo||'')}"></div><div class="input-group"><label>Placa</label><input id="editPlaca" value="${escapeHtml(e.placa||'')}"></div>`,()=>{ const nn=$('#editNome').value.trim(); if(nn){ e.nome=nn; e.telefone=$('#editTelefone').value; e.veiculo=$('#editVeiculo').value; e.placa=$('#editPlaca').value; after([refreshEntregadorModal,refreshDeliveryModal]); } }); },
+    bairro: ()=>{ const b=state.bairros.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir bairro?')){ state.bairros=state.bairros.filter(x=>x.id!==id); after([refreshDeliveryModal]); if(bairrosVisible) renderCards('bairrosCardsContainer',state.bairros,cardFns.bairro,'Nenhum bairro'); } } else if(b) openEditModal('Editar Bairro', `<div class="input-group"><label>Nome</label><input id="editNome" value="${escapeHtml(b.nome)}"></div><div class="input-group"><label>Taxa</label><input id="editTaxa" type="number" step="any" value="${b.taxa}"></div>`,()=>{ const nn=$('#editNome').value.trim(); const np=parseFloat($('#editTaxa').value); if(nn&&!isNaN(np)){ b.nome=nn; b.taxa=np; after([refreshDeliveryModal]); if(bairrosVisible) renderCards('bairrosCardsContainer',state.bairros,cardFns.bairro,'Nenhum bairro'); } }); },
+    entrega: ()=>{ const e=state.entregas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir entrega?')){ state.entregas=state.entregas.filter(x=>x.id!==id); after([refreshDeliveryModal]); if(entregasVisible) renderCards('entregasCardsContainer',state.entregas,cardFns.entrega,'Nenhuma entrega'); } } else if(e) openEditModal('Editar Entrega', `<div class="input-group"><label>Cliente</label><input id="editCliente" value="${escapeHtml(e.clienteNome)}"></div><div class="input-group"><label>Produto</label><input id="editProduto" value="${escapeHtml(e.produtoNome)}"></div><div class="input-group"><label>Valor Produto</label><input id="editValorProduto" type="number" step="any" value="${e.valorProduto}"></div><div class="input-group"><label>Entregador</label><input id="editEntregador" value="${escapeHtml(e.entregadorNome)}"></div><div class="input-group"><label>Bairro</label><input id="editBairro" value="${escapeHtml(e.bairroNome)}"></div><div class="input-group"><label>Taxa Entrega</label><input id="editTaxaEntrega" type="number" step="any" value="${e.taxaEntrega}"></div>`,()=>{ const cn=$('#editCliente').value.trim(); const pn=$('#editProduto').value.trim(); const vp=parseFloat($('#editValorProduto').value); const en=$('#editEntregador').value.trim(); const bn=$('#editBairro').value.trim(); const tx=parseFloat($('#editTaxaEntrega').value); if(cn&&pn&&en&&bn&&!isNaN(vp)&&!isNaN(tx)){ e.clienteNome=cn; e.produtoNome=pn; e.valorProduto=vp; e.taxaEntrega=tx; e.valor=vp+tx; e.entregadorNome=en; e.bairroNome=bn; e.dataStr=nowStr(); after([refreshDeliveryModal]); if(entregasVisible) renderCards('entregasCardsContainer',state.entregas,cardFns.entrega,'Nenhuma entrega'); } }); },
+    nota: ()=>{ const n=state.notas.find(x=>x.id===id); if(isDelete){ if(confirm('Excluir anotação?')){ state.notas=state.notas.filter(x=>x.id!==id); save(); refreshAnotacoesModal(); } } else if(n) openEditModal('Editar Anotação', `<textarea id="editTexto" rows="3">${escapeHtml(n.texto)}</textarea>`,()=>{ const nt=$('#editTexto').value.trim(); if(nt){ n.texto=nt; n.data=nowStr(); save(); refreshAnotacoesModal(); } }); },
+    lembrete: ()=>{ if(isDelete && confirm('Excluir lembrete?')){ state.lembretes=state.lembretes.filter(x=>x.id!==id); save(); refreshLembretesContainer(); } }
+  }; if(actions[entity]) actions[entity](); }
 
   // Navegação
   function initNav() {
